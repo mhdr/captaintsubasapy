@@ -1,0 +1,119 @@
+import pyautogui
+
+from template import Template, TemplateProperties
+from os import listdir
+from os.path import isfile, join
+from PIL import Image
+from openpyxl import Workbook, worksheet, load_workbook
+import pyscreeze
+import os
+from PIL import Image
+
+
+class LocateResult:
+    template: TemplateProperties = None
+    position: pyscreeze.Box = None
+
+    def __init__(self, temp: TemplateProperties, pos: pyscreeze.Box):
+        self.template = temp
+        self.position = pos
+
+    def click(self):
+        if self.position is not None:
+            center_x = self.template.region_start_x + self.position.left + self.template.image_width / 2
+            center_y = self.template.region_start_y + self.position.top + self.template.image_height / 2
+            # pyautogui.moveTo(center_x, center_y)
+            pyautogui.click(center_x, center_y)
+            pyautogui.FAILSAFE = False
+            pyautogui.moveTo(0, 0)
+
+    def move_mouse(self):
+        if self.position is not None:
+            center_x = self.template.region_start_x + self.position.left + self.template.image_width / 2
+            center_y = self.template.region_start_y + self.position.top + self.template.image_height / 2
+            pyautogui.moveTo(center_x, center_y)
+
+    def available(self):
+        if self.position is not None:
+            return True
+
+        return False
+
+class LocateAllResult:
+    positions = None
+
+    def __init__(self, pos):
+        self.positions = pos
+
+    def click_center(self):
+        pass
+
+    def available(self):
+        pass
+
+    def count(self):
+        pass
+
+
+class CTDT:
+
+    @staticmethod
+    def initialize_template_cache():
+        tempalates = Template()
+        dir = "templates"
+
+        wb: Workbook = load_workbook(filename="data.xlsx")
+        ws: worksheet = wb.active
+
+        end_row = ws.max_row
+        # start after header
+        start_row = 2
+        row_index = start_row
+
+        while row_index <= end_row:
+            template_number: str = str(ws["A" + str(row_index)].value)
+            start_x = int(ws["B" + str(row_index)].value)
+            start_y = int(ws["C" + str(row_index)].value)
+            end_x = int(ws["D" + str(row_index)].value)
+            end_y = int(ws["E" + str(row_index)].value)
+            filename = join(dir, template_number + ".jpg")
+            image: Image.Image = Image.open(filename)
+            width = image.width
+            height = image.height
+
+            properties: TemplateProperties = TemplateProperties(template_number, image, width, height, start_x, start_y,
+                                                                end_x, end_y)
+
+            tempalates.cache[template_number] = properties
+
+            row_index += 1
+
+    @staticmethod
+    def convert_templates_to_jpeg():
+        src_dir = "templates_original"
+        dest_dir = "templates"
+        files = [f for f in listdir(src_dir) if isfile(join(src_dir, f))]
+
+        for file in files:
+            filename = os.path.splitext(os.path.basename(file))[0]
+            image: Image.Image = Image.open(join(src_dir, file))
+            # image_rgb = image.convert("RGB")
+            image_rgb = image.convert("L")
+            image_rgb.save(join(dest_dir, filename + ".jpg"), format='JPEG', quality=90)
+
+    @staticmethod
+    def locate_template(template_number: str) -> LocateResult:
+        templates = Template()
+        region_start_x = templates.cache[template_number].region_start_x
+        region_start_y = templates.cache[template_number].region_start_y
+        region_width = templates.cache[template_number].region_end_x - templates.cache[template_number].region_start_x
+        region_height = templates.cache[template_number].region_end_y - templates.cache[template_number].region_start_y
+
+        image_region = pyscreeze.screenshot(region=(region_start_x, region_start_y, region_width, region_height))
+        image_template = templates.cache[template_number].image
+
+        position = pyscreeze.locate(image_template, image_region, grayscale=True)
+
+        result = LocateResult(templates.cache[template_number], position)
+
+        return result
