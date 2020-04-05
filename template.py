@@ -1,15 +1,11 @@
 from dataclasses import dataclass
 from typing import Dict, List
 
-import pyautogui
-from PIL.Image import Image
-from pyscreeze import Box
-
 
 @dataclass()
 class TemplateProperties:
     template_number: str
-    image: Image
+    image: any
     image_width: int
     image_height: int
     region_start_x: int
