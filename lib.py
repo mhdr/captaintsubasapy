@@ -4,7 +4,7 @@ from datetime import datetime
 
 import cv2
 import pyautogui
-from template import Template, TemplateProperties
+from cache import Cache, TemplateProperties, LocationProperties
 from os import listdir
 from os.path import isfile, join
 from PIL import Image, ImageGrab
@@ -71,12 +71,13 @@ class CTDT:
     GRAYSCALE_DEFAULT = False
 
     @staticmethod
-    def initialize_template_cache():
-        tempalates = Template()
+    def initialize_cache():
+        caches = Cache()
         dir = "templates"
 
         wb: Workbook = load_workbook(filename="data.xlsx")
-        ws: worksheet = wb.active
+        ws: worksheet = wb["Sheet1"]
+        ws2: worksheet = wb["Sheet2"]
 
         end_row = ws.max_row
         # start after header
@@ -95,12 +96,26 @@ class CTDT:
             image = cv2.imread(filename, 0)
             width, height = image.shape[::-1]
 
-            properties: TemplateProperties = TemplateProperties(template_number, image, width, height, start_x, start_y,
-                                                                end_x, end_y)
+            template_properties: TemplateProperties = TemplateProperties(template_number, image, width, height, start_x,
+                                                                         start_y,
+                                                                         end_x, end_y)
 
-            tempalates.cache[template_number] = properties
-
+            caches.templates[template_number] = template_properties
             row_index += 1
+
+        end_row2 = ws2.max_row
+        start_row2 = 2
+        row_index2 = start_row2
+
+        while row_index2 <= end_row2:
+            location_number: str = str(ws2["A" + str(row_index2)].value)
+            x: int = int(ws2["B" + str(row_index2)].value)
+            y: int = int(ws2["C" + str(row_index2)].value)
+
+            location_properties = LocationProperties(location_number, x, y)
+
+            caches.locations[location_number] = location_properties
+            row_index2 += 1
 
     @staticmethod
     def convert_templates_to_jpeg():
@@ -116,7 +131,10 @@ class CTDT:
             image_rgb.save(join(dest_dir, filename + ".jpg"), format='JPEG', quality=90)
 
     @staticmethod
-    def click_location(x: int, y: int, clicks: int = 1, interval: float = 0, wait: float = 2):
+    def click_location(location_number: str, clicks: int = 1, interval: float = 0, wait: float = 2):
+        caches: Cache = Cache.get_instance()
+        x = caches.locations[location_number].x
+        y = caches.locations[location_number].y
         pyautogui.moveTo(x, y, 0.1)
         pyautogui.click(x, y, clicks=clicks, interval=interval)
         pyautogui.FAILSAFE = False
@@ -125,14 +143,14 @@ class CTDT:
 
     @staticmethod
     def locate_template(template_number: str, threshold=0.9) -> LocateResult:
-        templates = Template()
-        region_start_x = templates.cache[template_number].region_start_x
-        region_start_y = templates.cache[template_number].region_start_y
-        region_end_x = templates.cache[template_number].region_end_x
-        region_end_y = templates.cache[template_number].region_end_y
+        templates = Cache()
+        region_start_x = templates.templates[template_number].region_start_x
+        region_start_y = templates.templates[template_number].region_start_y
+        region_end_x = templates.templates[template_number].region_end_x
+        region_end_y = templates.templates[template_number].region_end_y
 
         image_region = ImageGrab.grab(bbox=(region_start_x, region_start_y, region_end_x, region_end_y))
-        image_template = templates.cache[template_number].image
+        image_template = templates.templates[template_number].image
 
         image_rgb = np.array(image_region)
         image_gray = cv2.cvtColor(image_rgb, cv2.COLOR_BGR2GRAY)
@@ -145,8 +163,8 @@ class CTDT:
         if len(loc[0]) == 0 & len(loc[1]) == 0:
             return result
         else:
-            position = Box(loc[0][0], loc[1][0], templates.cache[template_number].image_width,
-                           templates.cache[template_number].image_height)
-            result = LocateResult(templates.cache[template_number], position)
+            position = Box(loc[0][0], loc[1][0], templates.templates[template_number].image_width,
+                           templates.templates[template_number].image_height)
+            result = LocateResult(templates.templates[template_number], position)
 
         return result

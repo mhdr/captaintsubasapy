@@ -1,13 +1,13 @@
 from datetime import datetime
 from config import Config
 from lib import CTDT
-from template import Template
+from cache import Cache
 import time
-from tsubasa import Tsubasa
+from story_solo import StorySolo
 
 CTDT.convert_templates_to_jpeg()
-templates: Template = Template.get_instance()
-CTDT.initialize_template_cache()
+caches: Cache = Cache.get_instance()
+CTDT.initialize_cache()
 config: Config = Config.get_instance()
 
 print("Start Processing : {0}".format(datetime.now()))
@@ -17,5 +17,5 @@ print("Start Processing : {0}".format(datetime.now()))
 if config.mode == 11:
 
     while True:
-        Tsubasa.solo()
+        StorySolo.run()
         time.sleep(config.sleep)

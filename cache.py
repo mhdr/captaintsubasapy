@@ -14,9 +14,17 @@ class TemplateProperties:
     region_end_y: int
 
 
-class Template:
+@dataclass()
+class LocationProperties:
+    location_number: str
+    x: int
+    y: int
+
+
+class Cache:
     __instance = None
-    cache: Dict[str, TemplateProperties] = {}
+    templates: Dict[str, TemplateProperties] = {}
+    locations: Dict[str, LocationProperties] = {}
 
     @staticmethod
     def get_instance():
@@ -24,13 +32,13 @@ class Template:
         static access method
         :return: Template
         """
-        if Template.__instance is None:
-            Template()
+        if Cache.__instance is None:
+            Cache()
 
-        return Template.__instance
+        return Cache.__instance
 
     def __init__(self):
         """
         Virtually private constructor
         """
-        Template.__instance = self
+        Cache.__instance = self
