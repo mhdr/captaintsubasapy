@@ -119,7 +119,7 @@ class LocateResult:
             pyautogui.click(center_x, center_y)
             pyautogui.FAILSAFE = False
             pyautogui.moveTo(0, 0)
-            print("Click Template => {0} : {1}".format(self.template.template_number, datetime.now()))
+            print("Click Template => {0} : {1}".format(self.template.template_number, datetime.datetime.now()))
             time.sleep(wait)
             return True
 
@@ -191,19 +191,17 @@ class CTDT:
 
     @staticmethod
     def convert_templates_to_jpeg():
-        config: Config = Config.get_instance()
-        base_src_dir = "templates_original"
         dest_dir = "templates"
-        src_dir = ""
-
-        # Story Solo
-        if config.mode == 1:
-            src_dir = join(base_src_dir, "StorySolo")
+        src_dir = "templates_original"
 
         files = [f for f in listdir(src_dir) if isfile(join(src_dir, f))]
 
         for file in files:
             filename = os.path.splitext(os.path.basename(file))[0]
+
+            if filename.endswith("f"):
+                continue
+
             image: Image.Image = Image.open(join(src_dir, file))
             # image_rgb = image.convert("RGB")
             image_rgb = image.convert("L")
@@ -245,6 +243,6 @@ class CTDT:
             position = Box(loc[0][0], loc[1][0], caches.templates[template_number].image_width,
                            caches.templates[template_number].image_height)
             result = LocateResult(caches.templates[template_number], position)
-            caches.templates[template_number].date_seen = datetime.now()
+            caches.templates[template_number].date_seen = datetime.datetime.now()
 
         return result

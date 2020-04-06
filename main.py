@@ -1,7 +1,7 @@
 from datetime import datetime
 from lib import CTDT, Config, Cache
 import time
-from story_solo import StorySolo
+from tsubasa import Tsubasa
 
 CTDT.convert_templates_to_jpeg()
 config: Config = Config.get_instance()
@@ -12,9 +12,9 @@ print("Start Processing : {0}".format(datetime.now()))
 
 ####################################################################
 
-# Story Solo = 1
-if config.mode == 1:
+tsubasa: Tsubasa = Tsubasa()
 
-    while True:
-        StorySolo.run()
-        time.sleep(config.sleep)
+while True:
+    # print("Process Loop : {0}".format(datetime.now()))
+    tsubasa.run()
+    time.sleep(config.sleep)
