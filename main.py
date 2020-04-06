@@ -6,15 +6,16 @@ import time
 from story_solo import StorySolo
 
 CTDT.convert_templates_to_jpeg()
+config: Config = Config.get_instance()
 caches: Cache = Cache.get_instance()
 CTDT.initialize_cache()
-config: Config = Config.get_instance()
 
 print("Start Processing : {0}".format(datetime.now()))
 
 ####################################################################
-# Solo = 11
-if config.mode == 11:
+
+# Story Solo = 1
+if config.mode == 1:
 
     while True:
         StorySolo.run()

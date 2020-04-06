@@ -13,6 +13,8 @@ import os
 from PIL import Image
 import numpy as np
 
+from config import Config
+
 Box = collections.namedtuple('Box', 'left top width height')
 
 
@@ -51,28 +53,11 @@ class LocateResult:
         return False
 
 
-class LocateAllResult:
-    positions = None
-
-    def __init__(self, pos):
-        self.positions = pos
-
-    def click_center(self):
-        pass
-
-    def available(self):
-        pass
-
-    def count(self):
-        pass
-
-
 class CTDT:
-    GRAYSCALE_DEFAULT = False
 
     @staticmethod
     def initialize_cache():
-        caches = Cache()
+        caches: Cache = Cache.get_instance()
         dir = "templates"
 
         wb: Workbook = load_workbook(filename="data.xlsx")
@@ -119,8 +104,15 @@ class CTDT:
 
     @staticmethod
     def convert_templates_to_jpeg():
-        src_dir = "templates_original"
+        config: Config = Config.get_instance()
+        base_src_dir = "templates_original"
         dest_dir = "templates"
+        src_dir = ""
+
+        # Story Solo
+        if config.mode == 1:
+            src_dir = join(base_src_dir, "StorySolo")
+
         files = [f for f in listdir(src_dir) if isfile(join(src_dir, f))]
 
         for file in files:
@@ -143,14 +135,14 @@ class CTDT:
 
     @staticmethod
     def locate_template(template_number: str, threshold=0.9) -> LocateResult:
-        templates = Cache()
-        region_start_x = templates.templates[template_number].region_start_x
-        region_start_y = templates.templates[template_number].region_start_y
-        region_end_x = templates.templates[template_number].region_end_x
-        region_end_y = templates.templates[template_number].region_end_y
+        caches: Cache = Cache.get_instance()
+        region_start_x = caches.templates[template_number].region_start_x
+        region_start_y = caches.templates[template_number].region_start_y
+        region_end_x = caches.templates[template_number].region_end_x
+        region_end_y = caches.templates[template_number].region_end_y
 
         image_region = ImageGrab.grab(bbox=(region_start_x, region_start_y, region_end_x, region_end_y))
-        image_template = templates.templates[template_number].image
+        image_template = caches.templates[template_number].image
 
         image_rgb = np.array(image_region)
         image_gray = cv2.cvtColor(image_rgb, cv2.COLOR_BGR2GRAY)
@@ -163,8 +155,9 @@ class CTDT:
         if len(loc[0]) == 0 & len(loc[1]) == 0:
             return result
         else:
-            position = Box(loc[0][0], loc[1][0], templates.templates[template_number].image_width,
-                           templates.templates[template_number].image_height)
-            result = LocateResult(templates.templates[template_number], position)
+            position = Box(loc[0][0], loc[1][0], caches.templates[template_number].image_width,
+                           caches.templates[template_number].image_height)
+            result = LocateResult(caches.templates[template_number], position)
+            caches.templates[template_number].date_seen = datetime.now()
 
         return result

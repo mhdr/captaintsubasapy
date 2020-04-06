@@ -2,6 +2,9 @@ from lib import CTDT
 
 
 class StorySolo:
+    """
+    story mode solo bonus xp
+    """
 
     @staticmethod
     def run():

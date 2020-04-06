@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from typing import Dict, List
+import datetime
 
 
 @dataclass()
@@ -12,6 +13,7 @@ class TemplateProperties:
     region_start_y: int
     region_end_x: int
     region_end_y: int
+    date_seen: datetime.datetime
 
 
 @dataclass()
