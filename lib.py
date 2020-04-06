@@ -1,10 +1,9 @@
 import collections
 import time
 from datetime import datetime
-
+from typing import Dict, List
 import cv2
 import pyautogui
-from cache import Cache, TemplateProperties, LocationProperties
 from os import listdir
 from os.path import isfile, join
 from PIL import Image, ImageGrab
@@ -12,11 +11,97 @@ from openpyxl import Workbook, worksheet, load_workbook
 import os
 from PIL import Image
 import numpy as np
+from dataclasses import dataclass
+from typing import Dict, List
+import datetime
+import configparser
 
-from config import Config
+#######################################################################################################################
 
 Box = collections.namedtuple('Box', 'left top width height')
 
+
+#######################################################################################################################
+
+@dataclass()
+class TemplateProperties:
+    template_number: str
+    image: any
+    image_width: int
+    image_height: int
+    region_start_x: int
+    region_start_y: int
+    region_end_x: int
+    region_end_y: int
+    date_seen: datetime.datetime
+
+
+#######################################################################################################################
+
+@dataclass()
+class LocationProperties:
+    location_number: str
+    x: int
+    y: int
+
+
+#######################################################################################################################
+
+class Cache:
+    __instance = None
+    templates: Dict[str, TemplateProperties] = {}
+    locations: Dict[str, LocationProperties] = {}
+
+    @staticmethod
+    def get_instance():
+        """
+        static access method
+        :return: Template
+        """
+        if Cache.__instance is None:
+            Cache()
+
+        return Cache.__instance
+
+    def __init__(self):
+        """
+        Virtually private constructor
+        """
+        Cache.__instance = self
+
+
+#######################################################################################################################
+
+class Config:
+    __instance = None
+    mode: int
+    sleep: float
+
+    @staticmethod
+    def get_instance():
+        """
+        static access method
+        :return: Template
+        """
+        if Config.__instance is None:
+            config = configparser.ConfigParser()
+            config.read('config.ini')
+
+            Config.mode = int(config["Game"]["Mode"])
+            Config.sleep = float(config["General"]["Sleep"])
+
+            Config()
+
+        return Config.__instance
+
+    def __init__(self):
+        """
+        Virtually private constructor
+        """
+        Config.__instance = self
+
+
+#######################################################################################################################
 
 class LocateResult:
     template: TemplateProperties = None
@@ -53,6 +138,8 @@ class LocateResult:
         return False
 
 
+#######################################################################################################################
+
 class CTDT:
 
     @staticmethod
@@ -83,7 +170,7 @@ class CTDT:
 
             template_properties: TemplateProperties = TemplateProperties(template_number, image, width, height, start_x,
                                                                          start_y,
-                                                                         end_x, end_y)
+                                                                         end_x, end_y, None)
 
             caches.templates[template_number] = template_properties
             row_index += 1

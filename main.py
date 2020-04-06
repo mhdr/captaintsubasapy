@@ -1,7 +1,5 @@
 from datetime import datetime
-from config import Config
-from lib import CTDT
-from cache import Cache
+from lib import CTDT, Config, Cache
 import time
 from story_solo import StorySolo
 
