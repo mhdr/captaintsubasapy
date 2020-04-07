@@ -76,6 +76,8 @@ class Config:
     __instance = None
     mode: int
     sleep: float
+    energy_recovery: int
+    wait_energy_recovery: int
 
     @staticmethod
     def get_instance():
@@ -89,6 +91,8 @@ class Config:
 
             Config.mode = int(config["Game"]["Mode"])
             Config.sleep = float(config["General"]["Sleep"])
+            Config.energy_recovery = int(config["Game"]["EnergyRecovery"])
+            Config.wait_energy_recovery = int(config["Game"]["WaitForEnergyRecovery"])
 
             Config()
 
@@ -111,7 +115,7 @@ class LocateResult:
         self.template = temp
         self.position = pos
 
-    def click(self, wait: float = 5) -> bool:
+    def click(self, wait: float = 2) -> bool:
         if self.position is not None:
             center_x = self.template.region_start_x + self.position.left + self.template.image_width / 2
             center_y = self.template.region_start_y + self.position.top + self.template.image_height / 2

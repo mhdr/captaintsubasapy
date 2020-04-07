@@ -1,1 +1,1 @@
-pyinstaller run.py --name CaptainTsubasa --onefile
+pyinstaller main.py --name CaptainTsubasa --onefile
