@@ -99,7 +99,7 @@ class Config:
             Config.wait_energy_recovery = int(config["Game"]["WaitForEnergyRecovery"])
 
             Config.telegram_token = str(config["Telegram"]["Token"])
-            Config.telegram_chatid = int(config["Telegram"]["86168181"])
+            Config.telegram_chatid = int(config["Telegram"]["ChatId"])
             Config.telegram_disabled = int(config["Telegram"]["Disabled"])
 
             Config()
