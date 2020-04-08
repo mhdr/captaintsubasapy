@@ -5,7 +5,7 @@ import time
 import os
 import numpy as np
 
-template_number = "018"
+template_number = "020"
 threshold = 0.9
 
 time.sleep(5)
