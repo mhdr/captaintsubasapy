@@ -28,7 +28,7 @@ class Tsubasa:
         :return:
         """
 
-        modes = {self.MODE_ALL, self.MODE_STORY_SOLO}
+        modes = {self.MODE_ALL}
         if self.MODE_ALL not in modes:
             if self.config.mode not in modes: return False
 
@@ -45,7 +45,7 @@ class Tsubasa:
         :return:
         """
 
-        modes = {self.MODE_ALL, self.MODE_STORY_SOLO}
+        modes = {self.MODE_ALL}
         if self.MODE_ALL not in modes:
             if self.config.mode not in modes: return False
 
@@ -270,8 +270,8 @@ class Tsubasa:
 
         if CTDT.locate_template("015").click(wait=2):
             return True
-        else:
-            return False
+
+        return False
 
     ########################################################################################################################
 
@@ -306,7 +306,6 @@ class Tsubasa:
                     # click on  cancel button
                     # app will trigger another play after this
                     if seconds > self.config.wait_energy_recovery:
-
                         # click on cancel button
                         CTDT.locate_template("017").click()
 
@@ -324,37 +323,32 @@ class Tsubasa:
         return False
 
     ########################################################################################################################
+
+    def run_017(self):
+        """
+        close news dialog
+        :return:
+        """
+
+        modes = {self.MODE_ALL}
+        if self.MODE_ALL not in modes:
+            if self.config.mode not in modes: return False
+
+        # check if new title is available
+        if CTDT.locate_template("019").available():
+            # click on close button
+            if CTDT.locate_template("020").click():
+                return True
+
+        return False
+
+    ########################################################################################################################
     ########################################################################################################################
 
     def run(self):
 
-        # enter app
-        if self.run_001():
-            return
-
-        # enter app
-        elif self.run_002():
-            return
-
-        # go to story mode
-        elif self.run_003():
-            return
-
-        # go to story mode - second page
-        elif self.run_004():
-            return
-
-        # if in story mode and if we are at the beginning of the scroll ( scrollbar is on left )
-        # we should scroll to right
-        elif self.run_005():
-            return
-
-        # story mode - road to 2002
-        elif self.run_006():
-            return
-
         # difficulty - very hard
-        elif self.run_007():
+        if self.run_007():
             return
 
         # solo play
@@ -391,4 +385,36 @@ class Tsubasa:
 
         # energy recovery dialog
         elif self.run_016():
+            return
+
+        # go to story mode
+        if self.run_003():
+            return
+
+        # go to story mode - second page
+        elif self.run_004():
+            return
+
+        # if in story mode and if we are at the beginning of the scroll ( scrollbar is on left )
+        # we should scroll to right
+        elif self.run_005():
+            return
+
+        # story mode - road to 2002
+        elif self.run_006():
+            return
+
+
+        ######################################## MODE_ALL ##############################################################
+
+        # enter app
+        elif self.run_001():
+            return
+
+        # enter app
+        elif self.run_002():
+            return
+
+        # close news dialog
+        elif self.run_017():
             return
