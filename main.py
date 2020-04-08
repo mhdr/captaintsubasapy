@@ -15,6 +15,9 @@ print("Start Processing : {0}".format(datetime.now()))
 tsubasa: Tsubasa = Tsubasa()
 
 while True:
-    # print("Process Loop : {0}".format(datetime.now()))
-    tsubasa.run()
-    time.sleep(config.sleep)
+    
+    try:
+        tsubasa.run()
+        time.sleep(config.sleep)
+    except Exception as ex:
+        print(str(ex))
