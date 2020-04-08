@@ -1,7 +1,6 @@
 import collections
 import time
 from datetime import datetime
-from typing import Dict, List
 import cv2
 import pyautogui
 from os import listdir
@@ -79,6 +78,10 @@ class Config:
     energy_recovery: int
     wait_energy_recovery: int
 
+    telegram_token: str
+    telegram_chatid: int
+    telegram_disabled: int
+
     @staticmethod
     def get_instance():
         """
@@ -91,8 +94,13 @@ class Config:
 
             Config.mode = int(config["Game"]["Mode"])
             Config.sleep = float(config["General"]["Sleep"])
+
             Config.energy_recovery = int(config["Game"]["EnergyRecovery"])
             Config.wait_energy_recovery = int(config["Game"]["WaitForEnergyRecovery"])
+
+            Config.telegram_token = str(config["Telegram"]["Token"])
+            Config.telegram_chatid = int(config["Telegram"]["86168181"])
+            Config.telegram_disabled = int(config["Telegram"]["Disabled"])
 
             Config()
 

@@ -1,5 +1,6 @@
+from telegram import Bot
+
 from lib import CTDT, Config
-import inspect
 from datetime import datetime
 
 
@@ -17,8 +18,20 @@ class Tsubasa:
 
     energy_recovery_dialog_datetime: datetime = None
 
+    count_played_match: int = 0
+    bot: Bot
+
     def __init__(self):
         self.config = Config.get_instance()
+        self.bot = Bot(token=self.config.telegram_token)
+
+    def increase_count_played_match(self):
+        self.count_played_match += 1
+
+    def send_count_played_match(self):
+        if self.config.telegram_disabled == 0:
+            output: str = "Count : {0}, Date : {1}".format(self.count_played_match, datetime.now())
+            self.bot.send_message(self.config.telegram_chatid, output)
 
     ########################################################################################################################
 
@@ -203,6 +216,10 @@ class Tsubasa:
             if self.config.mode not in modes: return False
 
         if CTDT.locate_template("011").click():
+            # send number of matched played to telegram bot
+            self.increase_count_played_match()
+            self.send_count_played_match()
+
             return True
 
         return False
@@ -293,6 +310,7 @@ class Tsubasa:
         # if energy recovery dialog is open
         if CTDT.locate_template("016").available():
 
+            # if energy recovery config is wait to recover energy over time
             if self.config.energy_recovery == self.EnergyRecovery_WaitToRecover:
 
                 if self.energy_recovery_dialog_datetime is None:
@@ -317,8 +335,14 @@ class Tsubasa:
                 return True
             elif self.config.energy_recovery == self.EnergyRecovery_Ad:
                 pass
+
+            # if energy recovery config is using energy balls
             elif self.config.energy_recovery == self.EnergyRecovery_Energyball:
-                pass
+
+                # click on restore button to recover energy
+                if CTDT.locate_template("018").click():
+                    return True
+
             elif self.config.energy_recovery == self.EnergyRecovery_Dreamball:
                 pass
 
