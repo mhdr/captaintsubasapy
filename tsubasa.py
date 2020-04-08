@@ -34,8 +34,8 @@ class Tsubasa:
 
         if CTDT.locate_template("001").click(wait=4):
             return True
-        else:
-            return False
+
+        return False
 
     ########################################################################################################################
 
@@ -51,8 +51,8 @@ class Tsubasa:
 
         if CTDT.locate_template("002").click(wait=5):
             return True
-        else:
-            return False
+
+        return False
 
     ########################################################################################################################
 
@@ -68,8 +68,8 @@ class Tsubasa:
 
         if CTDT.locate_template("003").click():
             return True
-        else:
-            return False
+
+        return False
 
     ########################################################################################################################
 
@@ -85,8 +85,8 @@ class Tsubasa:
 
         if CTDT.locate_template("004").click():
             return True
-        else:
-            return False
+
+        return False
 
     ########################################################################################################################
 
@@ -105,6 +105,8 @@ class Tsubasa:
             CTDT.click_location("001", clicks=5, interval=0.1)
             return True
 
+        return False
+
     ########################################################################################################################
 
     def run_006(self):
@@ -118,8 +120,8 @@ class Tsubasa:
 
         if CTDT.locate_template("006").click():
             return True
-        else:
-            return False
+
+        return False
 
     ########################################################################################################################
 
@@ -135,8 +137,8 @@ class Tsubasa:
 
         if CTDT.locate_template("007").click(2):
             return True
-        else:
-            return False
+
+        return False
 
     ########################################################################################################################
 
@@ -152,8 +154,8 @@ class Tsubasa:
 
         if CTDT.locate_template("008").click(1):
             return True
-        else:
-            return False
+
+        return False
 
     ########################################################################################################################
 
@@ -169,8 +171,8 @@ class Tsubasa:
 
         if CTDT.locate_template("009").click():
             return True
-        else:
-            return False
+
+        return False
 
     ########################################################################################################################
 
@@ -185,8 +187,8 @@ class Tsubasa:
 
         if CTDT.locate_template("010").click():
             return True
-        else:
-            return False
+
+        return False
 
     ########################################################################################################################
 
@@ -202,8 +204,8 @@ class Tsubasa:
 
         if CTDT.locate_template("011").click():
             return True
-        else:
-            return False
+
+        return False
 
     ########################################################################################################################
 
@@ -219,8 +221,8 @@ class Tsubasa:
 
         if CTDT.locate_template("012").click():
             return True
-        else:
-            return False
+
+        return False
 
     ########################################################################################################################
 
@@ -236,8 +238,8 @@ class Tsubasa:
 
         if CTDT.locate_template("013").click(wait=1):
             return True
-        else:
-            return False
+
+        return False
 
     ########################################################################################################################
 
@@ -253,8 +255,8 @@ class Tsubasa:
 
         if CTDT.locate_template("014").click(wait=2):
             return True
-        else:
-            return False
+
+        return False
 
     ########################################################################################################################
 
