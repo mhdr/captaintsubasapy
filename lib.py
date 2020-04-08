@@ -160,8 +160,8 @@ class CTDT:
         dir = "templates"
 
         wb: Workbook = load_workbook(filename="data.xlsx")
-        ws: worksheet = wb["Sheet1"]
-        ws2: worksheet = wb["Sheet2"]
+        ws: worksheet = wb["Templates"]
+        ws2: worksheet = wb["Points"]
 
         end_row = ws.max_row
         # start after header

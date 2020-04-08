@@ -10,7 +10,7 @@ import openpyxl
 from openpyxl import Workbook, load_workbook, worksheet
 
 wb: Workbook = load_workbook("data.xlsx")
-ws: worksheet = wb["Sheet1"]
+ws: worksheet = wb["Templates"]
 
 threshold = 0.9
 
