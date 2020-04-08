@@ -30,8 +30,11 @@ class Tsubasa:
 
     def send_count_played_match(self):
         if self.config.telegram_disabled == 0:
-            output: str = "Count : {0}, Date : {1}".format(self.count_played_match, datetime.now())
+            output: str = "Count : {0} , Date : {1}".format(self.count_played_match, datetime.now())
             self.bot.send_message(self.config.telegram_chatid, output)
+
+    def send_telegram_message(self, msg: str):
+        self.bot.send_message(self.config.telegram_chatid, msg)
 
     ########################################################################################################################
 
@@ -46,6 +49,7 @@ class Tsubasa:
             if self.config.mode not in modes: return False
 
         if CTDT.locate_template("001").click(wait=4):
+            self.send_telegram_message("Run App : {0}".format(datetime.now()))
             return True
 
         return False
@@ -369,6 +373,26 @@ class Tsubasa:
         return False
 
     ########################################################################################################################
+
+    def run_018(self):
+        """
+        restart match
+        :return:
+        """
+
+        modes = {self.MODE_ALL}
+        if self.MODE_ALL not in modes:
+            if self.config.mode not in modes: return False
+
+        # check if restart match dialog in open
+        if CTDT.locate_template("021").available():
+            # click on restart button
+            if CTDT.locate_template("022").click():
+                return True
+
+        return False
+
+    ########################################################################################################################
     ########################################################################################################################
 
     def run(self):
@@ -443,4 +467,8 @@ class Tsubasa:
 
         # close news dialog
         elif self.run_017():
+            return
+
+        # restart match dialog
+        elif self.run_018():
             return

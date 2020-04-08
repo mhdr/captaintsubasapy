@@ -15,7 +15,7 @@ ws: worksheet = wb["Sheet1"]
 threshold = 0.9
 
 start_index = 1
-end_index = 20
+end_index = 22
 index = start_index
 
 while index <= end_index:
