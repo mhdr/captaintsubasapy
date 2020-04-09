@@ -6,7 +6,7 @@ import os
 import numpy as np
 
 threshold = 0.9
-index=28
+index=31
 
 template_number = "{0}".format(str(index).zfill(3))
 

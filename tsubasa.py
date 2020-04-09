@@ -395,7 +395,7 @@ class Tsubasa:
 
     def run_018(self):
         """
-        restart match
+        restart match after game crash
         :return:
         """
 
@@ -433,7 +433,7 @@ class Tsubasa:
 
     def run_020(self):
         """
-        event matche -> select event
+        event match -> select event
         :return:
         """
 
@@ -505,7 +505,7 @@ class Tsubasa:
 
     def run_024(self):
         """
-        energy recovered dialog
+        energy recovered dialog -> appears after energy recovery dialog
         :return:
         """
 
@@ -611,16 +611,16 @@ class Tsubasa:
 
         # enter app
         elif self.run_001():
-            return
+            return "001"
 
         # enter app
         elif self.run_002():
-            return
+            return "002"
 
         # close news dialog
         elif self.run_017():
-            return
+            return "017"
 
         # restart match dialog
         elif self.run_018():
-            return
+            return "018"

@@ -125,11 +125,12 @@ class LocateResult:
         self.template = temp
         self.position = pos
 
-    def click(self, wait: float = 2) -> bool:
+    def click(self, wait: float = 2, delay=0) -> bool:
         if self.position is not None:
             center_x = self.template.region_start_x + self.position.left + self.template.image_width / 2
             center_y = self.template.region_start_y + self.position.top + self.template.image_height / 2
             # pyautogui.moveTo(center_x, center_y)
+            time.sleep(delay)
             pyautogui.click(center_x, center_y)
             pyautogui.FAILSAFE = False
             pyautogui.moveTo(0, 0)
