@@ -5,14 +5,13 @@ import time
 import os
 import numpy as np
 
-template_number = "020"
 threshold = 0.9
+index=28
 
-time.sleep(5)
-CTDT.convert_templates_to_jpeg()
+template_number = "{0}".format(str(index).zfill(3))
 
-image_screen = ImageGrab.grab()
-image_template = cv2.imread(os.path.join("templates", template_number + ".jpg"), 0)
+image_screen = cv2.imread(os.path.join("templates_original", template_number + "f.png"))
+image_template = cv2.imread(os.path.join("templates_original", template_number + ".png"), 0)
 width, height = image_template.shape[::-1]
 
 image_rgb = np.array(image_screen)
@@ -24,8 +23,9 @@ loc = np.where(res >= threshold)
 if len(loc[0]) == 0 & len(loc[1]) == 0:
     print("Not found")
 else:
-    start_y = loc[0][0]
+
     start_x = loc[1][0]
+    start_y = loc[0][0]
 
     end_x = start_x + width
     end_y = start_y + height

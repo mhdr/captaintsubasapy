@@ -75,6 +75,7 @@ class Config:
     __instance = None
     mode: int
     sleep: float
+    difficulty: int
     energy_recovery: int
     wait_energy_recovery: int
 
@@ -92,9 +93,10 @@ class Config:
             config = configparser.ConfigParser()
             config.read('config.ini')
 
-            Config.mode = int(config["Game"]["Mode"])
             Config.sleep = float(config["General"]["Sleep"])
 
+            Config.mode = int(config["Game"]["Mode"])
+            Config.difficulty = int(config["Game"]["Difficulty"])
             Config.energy_recovery = int(config["Game"]["EnergyRecovery"])
             Config.wait_energy_recovery = int(config["Game"]["WaitForEnergyRecovery"])
 

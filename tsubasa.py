@@ -9,12 +9,18 @@ class Tsubasa:
 
     MODE_ALL = 0
     MODE_STORY_SOLO = 1
+    MODE_EVENT_SOLO = 2
 
     EnergyRecovery_None = 1
     EnergyRecovery_WaitToRecover = 2
     EnergyRecovery_Ad = 3
     EnergyRecovery_Energyball = 4
     EnergyRecovery_Dreamball = 5
+
+    Difficulty_Normal = 1
+    Difficulty_Hard = 2
+    Difficulty_VeryHard = 3
+    Difficulty_Extreme = 4
 
     energy_recovery_dialog_datetime: datetime = None
 
@@ -79,7 +85,7 @@ class Tsubasa:
         :return:
         """
 
-        modes = {self.MODE_STORY_SOLO}
+        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO}
         if self.MODE_ALL not in modes:
             if self.config.mode not in modes: return False
 
@@ -144,16 +150,29 @@ class Tsubasa:
 
     def run_007(self):
         """
-        difficulty - very hard
+        difficulty
         :return:
         """
 
-        modes = {self.MODE_STORY_SOLO}
+        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO}
         if self.MODE_ALL not in modes:
             if self.config.mode not in modes: return False
 
-        if CTDT.locate_template("007").click(2):
-            return True
+        if self.config.difficulty == self.Difficulty_Normal:
+            pass
+        elif self.config.difficulty == self.Difficulty_Hard:
+            pass
+        elif self.config.difficulty == self.Difficulty_VeryHard:
+
+            # difficulty - very hard
+            if CTDT.locate_template("007").click(2):
+                return True
+
+        elif self.config.difficulty == self.Difficulty_Extreme:
+
+            # difficulty - extreme
+            if CTDT.locate_template("025").click(2):
+                return True
 
         return False
 
@@ -161,7 +180,7 @@ class Tsubasa:
 
     def run_008(self):
         """
-        play match button
+        play match button -> with skip ticket
         :return:
         """
 
@@ -182,7 +201,7 @@ class Tsubasa:
         :return:
         """
 
-        modes = {self.MODE_STORY_SOLO}
+        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO}
         if self.MODE_ALL not in modes:
             if self.config.mode not in modes: return False
 
@@ -195,10 +214,10 @@ class Tsubasa:
 
     def run_010(self):
         """
-        select friend
+        select friend -> FP
         :return:
         """
-        modes = {self.MODE_STORY_SOLO}
+        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO}
         if self.MODE_ALL not in modes:
             if self.config.mode not in modes: return False
 
@@ -215,7 +234,7 @@ class Tsubasa:
         :return:
         """
 
-        modes = {self.MODE_STORY_SOLO}
+        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO}
         if self.MODE_ALL not in modes:
             if self.config.mode not in modes: return False
 
@@ -236,7 +255,7 @@ class Tsubasa:
         :return:
         """
 
-        modes = {self.MODE_STORY_SOLO}
+        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO}
         if self.MODE_ALL not in modes:
             if self.config.mode not in modes: return False
 
@@ -253,7 +272,7 @@ class Tsubasa:
         :return:
         """
 
-        modes = {self.MODE_STORY_SOLO}
+        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO}
         if self.MODE_ALL not in modes:
             if self.config.mode not in modes: return False
 
@@ -270,7 +289,7 @@ class Tsubasa:
         :return:
         """
 
-        modes = {self.MODE_STORY_SOLO}
+        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO}
         if self.MODE_ALL not in modes:
             if self.config.mode not in modes: return False
 
@@ -287,7 +306,7 @@ class Tsubasa:
         :return:
         """
 
-        modes = {self.MODE_STORY_SOLO}
+        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO}
         if self.MODE_ALL not in modes:
             if self.config.mode not in modes: return False
 
@@ -304,12 +323,12 @@ class Tsubasa:
         :return:
         """
 
-        modes = {self.MODE_STORY_SOLO}
+        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO}
         if self.MODE_ALL not in modes:
             if self.config.mode not in modes: return False
 
         if self.config.energy_recovery == self.EnergyRecovery_None:
-            return True
+            return False
 
         # if energy recovery dialog is open
         if CTDT.locate_template("016").available():
@@ -393,67 +412,200 @@ class Tsubasa:
         return False
 
     ########################################################################################################################
+
+    def run_019(self):
+        """
+        story mode home -> select events
+        :return:
+        """
+
+        modes = {self.MODE_EVENT_SOLO}
+        if self.MODE_ALL not in modes:
+            if self.config.mode not in modes: return False
+
+        # select events mode
+        if CTDT.locate_template("023").click():
+            return True
+
+        return False
+
+    ########################################################################################################################
+
+    def run_020(self):
+        """
+        event matche -> select event
+        :return:
+        """
+
+        modes = {self.MODE_EVENT_SOLO}
+        if self.MODE_ALL not in modes:
+            if self.config.mode not in modes: return False
+
+        # select events mode
+        if CTDT.locate_template("024").click():
+            return True
+
+        return False
+
+    ########################################################################################################################
+
+    def run_021(self):
+        """
+        after match -> special bonus
+        :return:
+        """
+
+        modes = {self.MODE_EVENT_SOLO}
+        if self.MODE_ALL not in modes:
+            if self.config.mode not in modes: return False
+
+        # after match -> special bonus
+        if CTDT.locate_template("026").click():
+            return True
+
+        return False
+
+    ########################################################################################################################
+
+    def run_022(self):
+        """
+        after match -> clear rewards
+        :return:
+        """
+
+        modes = {self.MODE_EVENT_SOLO}
+        if self.MODE_ALL not in modes:
+            if self.config.mode not in modes: return False
+
+        # after match -> clear rewards
+        if CTDT.locate_template("027").click():
+            return True
+
+        return False
+
+    ########################################################################################################################
+
+    def run_023(self):
+        """
+        play match button -> without skip ticket
+        :return:
+        """
+
+        modes = {self.MODE_EVENT_SOLO}
+        if self.MODE_ALL not in modes:
+            if self.config.mode not in modes: return False
+
+        # after match -> clear rewards
+        if CTDT.locate_template("028").click():
+            return True
+
+        return False
+
+    ########################################################################################################################
+
+    def run_024(self):
+        """
+        energy recovered dialog
+        :return:
+        """
+
+        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO}
+        if self.MODE_ALL not in modes:
+            if self.config.mode not in modes: return False
+
+        # if energy recovered dialog
+        if CTDT.locate_template("029").available():
+            #  click ok button
+            CTDT.locate_template("030").click()
+            return True
+
+        return False
+
+    ########################################################################################################################
     ########################################################################################################################
 
     def run(self):
 
-        # difficulty - very hard
+        # difficulty
         if self.run_007():
-            return
+            return "007"
 
         # solo play
         elif self.run_009():
-            return
+            return "009"
 
-        # play match button
+        # play match button -> with skip ticket
         elif self.run_008():
-            return
+            return "008"
+
+        # play match button -> without skip ticket
+        elif self.run_023():
+            return "023"
 
         # select friend
         elif self.run_010():
-            return
+            return "010"
 
         # kick off button
         elif self.run_011():
-            return
+            return "011"
 
         # go to scenario list
         elif self.run_012():
-            return
+            return "012"
 
         # after match - you win
         elif self.run_013():
-            return
+            return "013"
 
         # after match - breakdown
         elif self.run_014():
-            return
+            return "014"
 
         # after match - rank up
         elif self.run_015():
-            return
+            return "015"
+
+        # energy recovered dialog
+        elif self.run_024():
+            return "024"
 
         # energy recovery dialog
         elif self.run_016():
-            return
+            return "016"
 
         # go to story mode
-        if self.run_003():
-            return
+        elif self.run_003():
+            return "003"
 
         # go to story mode - second page
         elif self.run_004():
-            return
+            return "004"
 
         # if in story mode and if we are at the beginning of the scroll ( scrollbar is on left )
         # we should scroll to right
         elif self.run_005():
-            return
+            return "005"
 
         # story mode - road to 2002
         elif self.run_006():
-            return
+            return "006"
 
+        # story mode home -> select events
+        elif self.run_019():
+            return "019"
+
+        # event matche -> select event
+        elif self.run_020():
+            return "020"
+
+        # after match -> special bonus
+        elif self.run_021():
+            return "021"
+
+        # after match -> clear rewards
+        elif self.run_022():
+            return "022"
 
         ######################################## MODE_ALL ##############################################################
 

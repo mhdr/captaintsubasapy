@@ -17,7 +17,8 @@ tsubasa: Tsubasa = Tsubasa()
 while True:
 
     try:
-        tsubasa.run()
+        result = tsubasa.run()
+        # print(result)
         time.sleep(config.sleep)
     except Exception as ex:
         print(str(ex))
