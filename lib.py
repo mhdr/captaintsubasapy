@@ -78,6 +78,8 @@ class Config:
     difficulty: int
     energy_recovery: int
     wait_energy_recovery: int
+    wait_telegram_msg_energy_recovery: int
+    play_match_with_skip_ticket_button: int
 
     telegram_token: str
     telegram_chatid: int
@@ -99,6 +101,8 @@ class Config:
             Config.difficulty = int(config["Game"]["Difficulty"])
             Config.energy_recovery = int(config["Game"]["EnergyRecovery"])
             Config.wait_energy_recovery = int(config["Game"]["WaitForEnergyRecovery"])
+            Config.wait_telegram_msg_energy_recovery = int(config["Game"]["WaitTelegramMsgEnergyRecovery"])
+            Config.play_match_with_skip_ticket_button = int(config["Game"]["PlayMatchWithSkipTicketButton"])
 
             Config.telegram_token = str(config["Telegram"]["Token"])
             Config.telegram_chatid = int(config["Telegram"]["ChatId"])
@@ -151,6 +155,25 @@ class LocateResult:
             return True
 
         return False
+
+
+#######################################################################################################################
+
+class PointResult:
+    location: LocationProperties = None
+
+    def __init__(self, location=None):
+        self.location = location
+
+    def click(self, clicks: int = 1, interval: float = 0, wait: float = 2,
+              delay: float = 0, duration=0.1) -> bool:
+        time.sleep(delay)
+        pyautogui.moveTo(self.location.x, self.location.y, duration)
+        pyautogui.click(self.location.x, self.location.y, clicks=clicks, interval=interval)
+        pyautogui.FAILSAFE = False
+        pyautogui.moveTo(0, 0)
+        time.sleep(wait)
+        return True
 
 
 #######################################################################################################################
@@ -223,18 +246,19 @@ class CTDT:
             image_rgb.save(join(dest_dir, filename + ".jpg"), format='JPEG', quality=90)
 
     @staticmethod
-    def click_location(location_number: str, clicks: int = 1, interval: float = 0, wait: float = 2):
+    def point(location_number: str) -> PointResult:
         caches: Cache = Cache.get_instance()
         x = caches.locations[location_number].x
         y = caches.locations[location_number].y
-        pyautogui.moveTo(x, y, 0.1)
-        pyautogui.click(x, y, clicks=clicks, interval=interval)
-        pyautogui.FAILSAFE = False
-        pyautogui.moveTo(0, 0)
-        time.sleep(wait)
+
+        result: PointResult = PointResult()
+        result.location.x = x
+        result.location.y = y
+
+        return result
 
     @staticmethod
-    def locate_template(template_number: str, threshold=0.9) -> LocateResult:
+    def template(template_number: str, threshold=0.9) -> LocateResult:
         caches: Cache = Cache.get_instance()
         region_start_x = caches.templates[template_number].region_start_x
         region_start_y = caches.templates[template_number].region_start_y

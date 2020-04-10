@@ -15,7 +15,7 @@ ws: worksheet = wb["Templates"]
 threshold = 0.9
 
 start_index = 1
-end_index = 30
+end_index = 38
 index = start_index
 
 while index <= end_index:
