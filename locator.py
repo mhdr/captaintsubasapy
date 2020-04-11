@@ -6,9 +6,10 @@ import os
 import numpy as np
 
 threshold = 0.97
-index = 7
+# template number
+index = 1
 # first match =0
-match = 1
+match = 0
 
 # Window name in which image is displayed
 window_name = 'Image'

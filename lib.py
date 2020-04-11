@@ -15,9 +15,15 @@ from typing import Dict, List
 import datetime
 import configparser
 
+
 #######################################################################################################################
 
-Box = collections.namedtuple('Box', 'left top width height')
+@dataclass()
+class Box:
+    left: int
+    top: int
+    width: int
+    height: int
 
 
 #######################################################################################################################
