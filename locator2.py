@@ -8,6 +8,10 @@ from os.path import isfile, join
 from os import listdir
 import openpyxl
 from openpyxl import Workbook, load_workbook, worksheet
+import ctypes
+
+user32 = ctypes.windll.user32
+user32.SetProcessDPIAware()
 
 wb: Workbook = load_workbook("data.xlsx")
 ws: worksheet = wb["Templates"]

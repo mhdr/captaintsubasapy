@@ -3,6 +3,7 @@ from lib import CTDT, Config, Cache
 import time
 from tsubasa import Tsubasa
 
+CTDT.initialize()
 CTDT.convert_templates_to_jpeg()
 config: Config = Config.get_instance()
 caches: Cache = Cache.get_instance()

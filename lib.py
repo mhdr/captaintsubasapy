@@ -14,6 +14,7 @@ from dataclasses import dataclass
 from typing import Dict, List
 import datetime
 import configparser
+import ctypes
 
 
 #######################################################################################################################
@@ -185,6 +186,11 @@ class PointResult:
 #######################################################################################################################
 
 class CTDT:
+
+    @staticmethod
+    def initialize():
+        user32 = ctypes.windll.user32
+        user32.SetProcessDPIAware()
 
     @staticmethod
     def initialize_cache():

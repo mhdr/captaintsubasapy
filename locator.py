@@ -4,6 +4,10 @@ from lib import CTDT
 import time
 import os
 import numpy as np
+import ctypes
+
+user32 = ctypes.windll.user32
+user32.SetProcessDPIAware()
 
 threshold = 0.97
 # template number
