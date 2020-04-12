@@ -42,7 +42,8 @@ class Tsubasa:
 
     def __init__(self):
         self.config = Config.get_instance()
-        self.bot = Bot(token=self.config.telegram_token)
+        if self.config.telegram_disabled == 0:
+            self.bot = Bot(token=self.config.telegram_token)
 
     def increase_count_played_match(self):
         self.count_played_match += 1
@@ -53,7 +54,8 @@ class Tsubasa:
             self.bot.send_message(self.config.telegram_chatid, output)
 
     def send_telegram_message(self, msg: str):
-        self.bot.send_message(self.config.telegram_chatid, msg)
+        if self.config.telegram_disabled == 0:
+            self.bot.send_message(self.config.telegram_chatid, msg)
 
     ########################################################################################################################
 
