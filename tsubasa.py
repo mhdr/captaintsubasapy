@@ -303,7 +303,7 @@ class Tsubasa:
         if self.MODE_ALL not in modes:
             if self.config.mode not in modes: return False
 
-        if CTDT.template("012").click():
+        if CTDT.template("012").click(delay=1):
             return True
 
         return False
@@ -320,7 +320,7 @@ class Tsubasa:
         if self.MODE_ALL not in modes:
             if self.config.mode not in modes: return False
 
-        if CTDT.template("013").click(wait=1):
+        if CTDT.template("013").click():
             return True
 
         return False
@@ -337,7 +337,7 @@ class Tsubasa:
         if self.MODE_ALL not in modes:
             if self.config.mode not in modes: return False
 
-        if CTDT.template("014").click(wait=2):
+        if CTDT.template("014").click():
             return True
 
         return False
@@ -354,7 +354,7 @@ class Tsubasa:
         if self.MODE_ALL not in modes:
             if self.config.mode not in modes: return False
 
-        if CTDT.template("015").click(wait=2):
+        if CTDT.template("015").click():
             return True
 
         return False
