@@ -10,17 +10,25 @@ user32 = ctypes.windll.user32
 user32.SetProcessDPIAware()
 
 threshold = 0.97
-# template number
-index = 39
-# first match =0
+
+# template number like : 007.png
+# Column F in excel
+index_template = 7
+
+# file name like : 031f.png
+# Column A in excel
+index_fimage = 31
+
+# first match = 0
 match = 0
 
 # Window name in which image is displayed
 window_name = 'Image'
 
-template_number = "{0}".format(str(index).zfill(3))
+template_number = "{0}".format(str(index_template).zfill(3))
+f_image_number = "{0}".format(str(index_fimage).zfill(3))
 
-image_screen = cv2.imread(os.path.join("templates_original", template_number + "f.png"))
+image_screen = cv2.imread(os.path.join("templates_original", f_image_number + "f.png"))
 image_template = cv2.imread(os.path.join("templates_original", template_number + ".png"), 0)
 width, height = image_template.shape[::-1]
 
