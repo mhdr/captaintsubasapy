@@ -320,7 +320,7 @@ class Tsubasa:
         if self.MODE_ALL not in modes:
             if self.config.mode not in modes: return False
 
-        if CTDT.template("013").click():
+        if CTDT.template("013").click(delay=1):
             return True
 
         return False
