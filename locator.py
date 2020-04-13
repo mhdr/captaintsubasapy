@@ -11,7 +11,7 @@ user32.SetProcessDPIAware()
 
 threshold = 0.97
 # template number
-index = 1
+index = 38
 # first match =0
 match = 0
 
