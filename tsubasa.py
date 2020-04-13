@@ -29,8 +29,8 @@ class Tsubasa:
     Difficulty_VeryHard_Vertical = 7
     Difficulty_Extreme_Vertical = 8
 
-    Telegram_Disabled=0
-    Telegram_Enabled=1
+    Telegram_Disabled = 0
+    Telegram_Enabled = 1
 
     # the time energy recovery dialog is opened
     # we use this to open and close energy recovery dialog once in a three minutes
@@ -68,7 +68,7 @@ class Tsubasa:
         :return:
         """
 
-        modes = {self.MODE_ALL}
+        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_CLUB_SHARED}
         if self.MODE_ALL not in modes:
             if self.config.mode not in modes: return False
 
@@ -86,7 +86,7 @@ class Tsubasa:
         :return:
         """
 
-        modes = {self.MODE_ALL}
+        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_CLUB_SHARED}
         if self.MODE_ALL not in modes:
             if self.config.mode not in modes: return False
 
@@ -445,7 +445,7 @@ class Tsubasa:
         :return:
         """
 
-        modes = {self.MODE_ALL}
+        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_CLUB_SHARED}
         if self.MODE_ALL not in modes:
             if self.config.mode not in modes: return False
 
@@ -465,7 +465,7 @@ class Tsubasa:
         :return:
         """
 
-        modes = {self.MODE_ALL}
+        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_CLUB_SHARED}
         if self.MODE_ALL not in modes:
             if self.config.mode not in modes: return False
 
