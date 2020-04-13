@@ -248,6 +248,10 @@ class CTDT:
         dest_dir = "templates"
         src_dir = "templates_original"
 
+        files_to_remove = [f for f in listdir(dest_dir) if isfile(join(dest_dir, f))]
+        for fr in files_to_remove:
+            os.remove(join(dest_dir, fr))
+
         files = [f for f in listdir(src_dir) if isfile(join(src_dir, f))]
 
         for file in files:
