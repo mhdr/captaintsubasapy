@@ -7,7 +7,6 @@ from datetime import datetime
 class Tsubasa:
     config: Config = None
 
-    MODE_ALL = 0
     MODE_STORY_SOLO = 1
     MODE_EVENT_SOLO = 2
     MODE_SOLO = 3
@@ -52,13 +51,19 @@ class Tsubasa:
         self.count_played_match += 1
 
     def send_count_played_match(self):
-        if self.config.telegram_disabled == 0:
-            output: str = "Count : {0} , Date : {1}".format(self.count_played_match, datetime.now())
-            self.bot.send_message(self.config.telegram_chatid, output)
+        try:
+            if self.config.telegram_disabled == 0:
+                output: str = "Count : {0} , Date : {1}".format(self.count_played_match, datetime.now())
+                self.bot.send_message(self.config.telegram_chatid, output)
+        except Exception as ex:
+            print(str(ex))
 
     def send_telegram_message(self, msg: str):
-        if self.config.telegram_disabled == 0:
-            self.bot.send_message(self.config.telegram_chatid, msg)
+        try:
+            if self.config.telegram_disabled == 0:
+                self.bot.send_message(self.config.telegram_chatid, msg)
+        except Exception as ex:
+            print(str(ex))
 
     ########################################################################################################################
 
@@ -69,8 +74,7 @@ class Tsubasa:
         """
 
         modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_CLUB_SHARED}
-        if self.MODE_ALL not in modes:
-            if self.config.mode not in modes: return False
+        if self.config.mode not in modes: return False
 
         if CTDT.template("001").click(wait=4):
             self.send_telegram_message("Run App : {0}".format(datetime.now()))
@@ -87,8 +91,7 @@ class Tsubasa:
         """
 
         modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_CLUB_SHARED}
-        if self.MODE_ALL not in modes:
-            if self.config.mode not in modes: return False
+        if self.config.mode not in modes: return False
 
         if CTDT.template("002").click(wait=5):
             return True
@@ -104,8 +107,7 @@ class Tsubasa:
         """
 
         modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_CLUB_SHARED}
-        if self.MODE_ALL not in modes:
-            if self.config.mode not in modes: return False
+        if self.config.mode not in modes: return False
 
         if CTDT.template("003").click():
             return True
@@ -121,8 +123,7 @@ class Tsubasa:
         """
 
         modes = {self.MODE_STORY_SOLO}
-        if self.MODE_ALL not in modes:
-            if self.config.mode not in modes: return False
+        if self.config.mode not in modes: return False
 
         if CTDT.template("004").click():
             return True
@@ -139,8 +140,7 @@ class Tsubasa:
         """
 
         modes = {self.MODE_STORY_SOLO}
-        if self.MODE_ALL not in modes:
-            if self.config.mode not in modes: return False
+        if self.config.mode not in modes: return False
 
         if CTDT.template("005").available():
             CTDT.point("001").click(clicks=5, interval=0.1)
@@ -156,8 +156,7 @@ class Tsubasa:
         :return:
         """
         modes = {self.MODE_STORY_SOLO}
-        if self.MODE_ALL not in modes:
-            if self.config.mode not in modes: return False
+        if self.config.mode not in modes: return False
 
         if CTDT.template("006").click():
             return True
@@ -173,8 +172,7 @@ class Tsubasa:
         """
 
         modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO}
-        if self.MODE_ALL not in modes:
-            if self.config.mode not in modes: return False
+        if self.config.mode not in modes: return False
 
         if self.config.difficulty == self.Difficulty_Normal_Horizontal:
             pass
@@ -218,8 +216,7 @@ class Tsubasa:
         """
 
         modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO}
-        if self.MODE_ALL not in modes:
-            if self.config.mode not in modes: return False
+        if self.config.mode not in modes: return False
 
         # skip ticket button is not present beside play match button = 0
         if self.config.play_match_with_skip_ticket_button == 0:
@@ -246,8 +243,7 @@ class Tsubasa:
         """
 
         modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO}
-        if self.MODE_ALL not in modes:
-            if self.config.mode not in modes: return False
+        if self.config.mode not in modes: return False
 
         if CTDT.template("009").click():
             return True
@@ -262,8 +258,7 @@ class Tsubasa:
         :return:
         """
         modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO}
-        if self.MODE_ALL not in modes:
-            if self.config.mode not in modes: return False
+        if self.config.mode not in modes: return False
 
         if CTDT.template("010").click():
             return True
@@ -279,8 +274,7 @@ class Tsubasa:
         """
 
         modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO}
-        if self.MODE_ALL not in modes:
-            if self.config.mode not in modes: return False
+        if self.config.mode not in modes: return False
 
         if CTDT.template("011").click():
             # send number of matched played to telegram bot
@@ -300,8 +294,7 @@ class Tsubasa:
         """
 
         modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO}
-        if self.MODE_ALL not in modes:
-            if self.config.mode not in modes: return False
+        if self.config.mode not in modes: return False
 
         if CTDT.template("012").click(delay=1):
             return True
@@ -317,8 +310,7 @@ class Tsubasa:
         """
 
         modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_SHARED}
-        if self.MODE_ALL not in modes:
-            if self.config.mode not in modes: return False
+        if self.config.mode not in modes: return False
 
         if CTDT.template("013").click(delay=1):
             return True
@@ -334,8 +326,7 @@ class Tsubasa:
         """
 
         modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO}
-        if self.MODE_ALL not in modes:
-            if self.config.mode not in modes: return False
+        if self.config.mode not in modes: return False
 
         if CTDT.template("014").click(delay=1):
             return True
@@ -351,8 +342,7 @@ class Tsubasa:
         """
 
         modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO}
-        if self.MODE_ALL not in modes:
-            if self.config.mode not in modes: return False
+        if self.config.mode not in modes: return False
 
         if CTDT.template("015").click():
             return True
@@ -368,8 +358,7 @@ class Tsubasa:
         """
 
         modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO}
-        if self.MODE_ALL not in modes:
-            if self.config.mode not in modes: return False
+        if self.config.mode not in modes: return False
 
         if self.config.energy_recovery == self.EnergyRecovery_None:
             return False
@@ -446,8 +435,7 @@ class Tsubasa:
         """
 
         modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_CLUB_SHARED}
-        if self.MODE_ALL not in modes:
-            if self.config.mode not in modes: return False
+        if self.config.mode not in modes: return False
 
         # check if new title is available
         if CTDT.template("019").available():
@@ -466,8 +454,7 @@ class Tsubasa:
         """
 
         modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_CLUB_SHARED}
-        if self.MODE_ALL not in modes:
-            if self.config.mode not in modes: return False
+        if self.config.mode not in modes: return False
 
         # check if restart match dialog in open
         if CTDT.template("021").available():
@@ -486,8 +473,7 @@ class Tsubasa:
         """
 
         modes = {self.MODE_EVENT_SOLO}
-        if self.MODE_ALL not in modes:
-            if self.config.mode not in modes: return False
+        if self.config.mode not in modes: return False
 
         # select events mode
         if CTDT.template("023").click():
@@ -504,8 +490,7 @@ class Tsubasa:
         """
 
         modes = {self.MODE_EVENT_SOLO}
-        if self.MODE_ALL not in modes:
-            if self.config.mode not in modes: return False
+        if self.config.mode not in modes: return False
 
         # select events mode
         if CTDT.template("024").click():
@@ -522,8 +507,7 @@ class Tsubasa:
         """
 
         modes = {self.MODE_EVENT_SOLO, self.MODE_CLUB_SHARED}
-        if self.MODE_ALL not in modes:
-            if self.config.mode not in modes: return False
+        if self.config.mode not in modes: return False
 
         # after match -> special bonus
         if CTDT.template("026").click():
@@ -540,8 +524,7 @@ class Tsubasa:
         """
 
         modes = {self.MODE_EVENT_SOLO, self.MODE_CLUB_SHARED}
-        if self.MODE_ALL not in modes:
-            if self.config.mode not in modes: return False
+        if self.config.mode not in modes: return False
 
         # after match -> clear rewards
         if CTDT.template("027").click():
@@ -558,8 +541,7 @@ class Tsubasa:
         """
 
         modes = {self.MODE_CLUB_SHARED}
-        if self.MODE_ALL not in modes:
-            if self.config.mode not in modes: return False
+        if self.config.mode not in modes: return False
 
         # click on club shared play button
         if CTDT.template("032").click():
@@ -576,8 +558,7 @@ class Tsubasa:
         """
 
         modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO}
-        if self.MODE_ALL not in modes:
-            if self.config.mode not in modes: return False
+        if self.config.mode not in modes: return False
 
         # if energy recovered dialog
         if CTDT.template("029").available():
@@ -596,8 +577,7 @@ class Tsubasa:
         """
 
         modes = {self.MODE_CLUB_SHARED}
-        if self.MODE_ALL not in modes:
-            if self.config.mode not in modes: return False
+        if self.config.mode not in modes: return False
 
         if CTDT.template("035").available():
             # click on rank
@@ -618,8 +598,7 @@ class Tsubasa:
         """
 
         modes = {self.MODE_CLUB_SHARED}
-        if self.MODE_ALL not in modes:
-            if self.config.mode not in modes: return False
+        if self.config.mode not in modes: return False
 
         # click on join button
         if CTDT.template("034").click():
@@ -638,8 +617,7 @@ class Tsubasa:
         """
 
         modes = {self.MODE_CLUB_SHARED}
-        if self.MODE_ALL not in modes:
-            if self.config.mode not in modes: return False
+        if self.config.mode not in modes: return False
 
         # failed to join dialog -> title
         if CTDT.template("036").available():
@@ -659,8 +637,7 @@ class Tsubasa:
         """
 
         modes = {self.MODE_CLUB_SHARED}
-        if self.MODE_ALL not in modes:
-            if self.config.mode not in modes: return False
+        if self.config.mode not in modes: return False
 
         # go to scenario list button
         if CTDT.template("038").click():
