@@ -29,6 +29,9 @@ class Tsubasa:
     Difficulty_VeryHard_Vertical = 7
     Difficulty_Extreme_Vertical = 8
 
+    Telegram_Disabled=0
+    Telegram_Enabled=1
+
     # the time energy recovery dialog is opened
     # we use this to open and close energy recovery dialog once in a three minutes
     energy_recovery_dialog_datetime: datetime = None
