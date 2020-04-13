@@ -181,17 +181,20 @@ class Tsubasa:
         elif self.config.difficulty == self.Difficulty_VeryHard_Horizontal:
 
             # difficulty - very hard horizontal
-            if CTDT.template("007").click(2):
+            if CTDT.template("007").click():
                 return True
 
         elif self.config.difficulty == self.Difficulty_Extreme_Horizontal:
 
             # difficulty - extreme horizontal
-            if CTDT.template("025").click(2):
+            if CTDT.template("025").click():
                 return True
 
         elif self.config.difficulty == self.Difficulty_Normal_Vertical:
-            pass
+
+            # difficulty - normal vertical
+            if CTDT.template("039").click():
+                return True
 
         elif self.config.difficulty == self.Difficulty_Hard_Vertical:
             pass
@@ -199,7 +202,7 @@ class Tsubasa:
         elif self.config.difficulty == self.Difficulty_VeryHard_Vertical:
 
             # difficulty - very hard vertical
-            if CTDT.template("031").click(2):
+            if CTDT.template("031").click():
                 return True
 
         elif self.config.difficulty == self.Difficulty_Extreme_Vertical:
