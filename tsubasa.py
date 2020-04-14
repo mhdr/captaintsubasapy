@@ -315,7 +315,7 @@ class Tsubasa:
         modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_SHARED}
         if self.config.mode not in modes: return False
 
-        if CTDT.template("013").click(delay=1):
+        if CTDT.template("013").click():
             return True
 
         return False
