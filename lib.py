@@ -87,6 +87,7 @@ class Config:
     wait_energy_recovery: int
     wait_telegram_msg_energy_recovery: int
     play_match_with_skip_ticket_button: int
+    global_shared_play_enable: int
 
     telegram_token: str
     telegram_chatid: int
@@ -110,6 +111,7 @@ class Config:
             Config.wait_energy_recovery = int(config["Game"]["WaitForEnergyRecovery"])
             Config.wait_telegram_msg_energy_recovery = int(config["Game"]["WaitTelegramMsgEnergyRecovery"])
             Config.play_match_with_skip_ticket_button = int(config["Game"]["PlayMatchWithSkipTicketButton"])
+            Config.global_shared_play_enable = int(config["Game"]["GlobalSharedPlayEnable"])
 
             Config.telegram_token = str(config["Telegram"]["Token"])
             Config.telegram_chatid = int(config["Telegram"]["ChatId"])

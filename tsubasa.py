@@ -11,6 +11,9 @@ class Tsubasa:
     MODE_EVENT_SOLO = 2
     MODE_SOLO = 3
     MODE_CLUB_SHARED = 4
+    MODE_CLUB_JOIN = 5
+    MODE_GLOBAL_SHARED = 6
+    MODE_GLOBAL_JOIN = 7
 
     EnergyRecovery_None = 1
     EnergyRecovery_WaitToRecover = 2
