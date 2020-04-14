@@ -585,7 +585,7 @@ class Tsubasa:
 
     def run_025(self):
         """
-        club shared play - accepting member list -> rank
+        club shared play - search again -> members
         :return:
         """
 
@@ -646,7 +646,7 @@ class Tsubasa:
 
     def run(self):
 
-        # club shared play - accepting member list -> rank
+        # club shared play - search again -> members
         if self.run_025():
             return "025"
 
