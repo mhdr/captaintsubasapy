@@ -519,7 +519,7 @@ class Tsubasa:
         :return:
         """
 
-        modes = {self.MODE_EVENT_SOLO, self.MODE_CLUB_SHARED}
+        modes = {self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_SHARED}
         if self.config.mode not in modes: return False
 
         # after match -> special bonus
@@ -536,7 +536,7 @@ class Tsubasa:
         :return:
         """
 
-        modes = {self.MODE_EVENT_SOLO, self.MODE_CLUB_SHARED}
+        modes = {self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_SHARED}
         if self.config.mode not in modes: return False
 
         # after match -> clear rewards
