@@ -299,11 +299,18 @@ class Tsubasa:
         :return:
         """
 
+        # sometimes 012 and sometimes 028 appears fo scenario list
+        # this one is when the result is win
         modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_SHARED}
         if self.config.mode not in modes: return False
 
-        if CTDT.template("012").click(delay=1):
+        if CTDT.template("012").click():
             return True
+        else:
+            # go to scenario list button
+            # this one is when the result is loss
+            if CTDT.template("038").click():
+                return True
 
         return False
 
@@ -635,23 +642,6 @@ class Tsubasa:
         return False
 
     ########################################################################################################################
-
-    def run_028(self):
-        """
-        go to scenario list ->  shared play
-        :return:
-        """
-
-        modes = {self.MODE_CLUB_SHARED}
-        if self.config.mode not in modes: return False
-
-        # go to scenario list button
-        if CTDT.template("038").click():
-            return True
-
-        return False
-
-    ########################################################################################################################
     ########################################################################################################################
 
     def run(self):
@@ -689,12 +679,9 @@ class Tsubasa:
             return "011"
 
         # go to scenario list
+        # it should run before owned FP (run_014)
         elif self.run_012():
             return "012"
-
-        # go to scenario list -> shared play
-        elif self.run_028():
-            return "028"
 
         # after match - you win
         elif self.run_013():
