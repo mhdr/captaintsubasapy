@@ -42,7 +42,17 @@ class Tsubasa:
     # because we send this msg once in an hour
     energy_recovery_send_telegram_datetime = None
 
+    # the time that there is a change in joining members in accepting members in join play
+    # if None it means no member is joined or we are not on accepting members page
+    member_joined_datetime: datetime = None
+
+    # count the number of users in accepting members using in join play
+    member_joined_count: int = 0
+
+    # count the number of matched played
     count_played_match: int = 0
+
+    # telegral bot
     bot: Bot
 
     def __init__(self):
@@ -174,7 +184,7 @@ class Tsubasa:
         :return:
         """
 
-        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO}
+        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_JOIN}
         if self.config.mode not in modes: return False
 
         if self.config.difficulty == self.Difficulty_Normal_Horizontal:
@@ -221,7 +231,7 @@ class Tsubasa:
         :return:
         """
 
-        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO}
+        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_JOIN}
         if self.config.mode not in modes: return False
 
         # skip ticket button is not present beside play match button = 0
@@ -244,15 +254,44 @@ class Tsubasa:
 
     def run_009(self):
         """
-        solo play
+        play type : solo, shared play
         :return:
         """
 
-        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO}
+        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_JOIN}
         if self.config.mode not in modes: return False
 
-        if CTDT.template("009").click():
-            return True
+        if self.config.mode == self.MODE_STORY_SOLO:
+
+            if self.config.global_shared_play_enabled == 1:
+                pass
+            else:
+                if CTDT.template("009").click():
+                    return True
+
+        elif self.config.mode == self.MODE_EVENT_SOLO:
+
+            if self.config.global_shared_play_enabled == 1:
+                pass
+            else:
+                if CTDT.template("009").click():
+                    return True
+
+        elif self.config.mode == self.MODE_SOLO:
+
+            if self.config.global_shared_play_enabled == 1:
+                pass
+            else:
+                if CTDT.template("009").click():
+                    return True
+
+        elif self.config.mode == self.MODE_CLUB_JOIN:
+
+            if self.config.global_shared_play_enabled == 1:
+                pass
+            else:
+                if CTDT.template("040").click():
+                    return True
 
         return False
 
@@ -301,7 +340,7 @@ class Tsubasa:
 
         # sometimes 012 and sometimes 028 appears fo scenario list
         # this one is when the result is win
-        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_SHARED}
+        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_SHARED, self.MODE_CLUB_JOIN}
         if self.config.mode not in modes: return False
 
         if CTDT.template("012").click():
@@ -322,7 +361,7 @@ class Tsubasa:
         :return:
         """
 
-        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_SHARED}
+        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_SHARED, self.MODE_CLUB_JOIN}
         if self.config.mode not in modes: return False
 
         if CTDT.template("013").click():
@@ -338,7 +377,7 @@ class Tsubasa:
         :return:
         """
 
-        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_SHARED}
+        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_SHARED, self.MODE_CLUB_JOIN}
         if self.config.mode not in modes: return False
 
         if CTDT.template("014").click():
@@ -354,7 +393,7 @@ class Tsubasa:
         :return:
         """
 
-        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO}
+        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_JOIN}
         if self.config.mode not in modes: return False
 
         if CTDT.template("015").click():
@@ -370,7 +409,7 @@ class Tsubasa:
         :return:
         """
 
-        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO}
+        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_JOIN}
         if self.config.mode not in modes: return False
 
         if self.config.energy_recovery == self.EnergyRecovery_None:
@@ -519,7 +558,7 @@ class Tsubasa:
         :return:
         """
 
-        modes = {self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_SHARED}
+        modes = {self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_SHARED, self.MODE_SOLO, self.MODE_CLUB_JOIN}
         if self.config.mode not in modes: return False
 
         # after match -> special bonus
@@ -536,7 +575,7 @@ class Tsubasa:
         :return:
         """
 
-        modes = {self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_SHARED}
+        modes = {self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_SHARED, self.MODE_CLUB_JOIN}
         if self.config.mode not in modes: return False
 
         # after match -> clear rewards
@@ -570,7 +609,7 @@ class Tsubasa:
         :return:
         """
 
-        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO}
+        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_JOIN}
         if self.config.mode not in modes: return False
 
         # if energy recovered dialog
@@ -642,19 +681,97 @@ class Tsubasa:
         return False
 
     ########################################################################################################################
+
+    def run_028(self):
+        """
+        kick off button - join
+        :return:
+        """
+
+        modes = {self.MODE_CLUB_JOIN}
+        if self.config.mode not in modes: return False
+
+        # if kick off button available
+        if CTDT.template("045").available():
+
+            # first we should count the number of members
+            # and check if there is a change on it
+            count_members = 0
+
+            if not CTDT.template("042").available():
+                count_members = 1
+                if not CTDT.template("043").available():
+                    count_members = 2
+                    if not CTDT.template("044").available():
+                        count_members = 3
+
+            # if there is a change in number of members we should update datetime and number of members
+            if count_members != self.member_joined_count:
+                # there is a change in number of members
+                self.member_joined_datetime = datetime.now()
+                self.member_joined_count = count_members
+
+            # calculate seconds that members are waiting
+            diff = datetime.now() - self.member_joined_datetime
+            seconds = diff.total_seconds()
+
+            # compare number of members with predefined wait time in config
+            # for example if there 1 member wait 60 seconds then kick off
+            # if there are 2 members wait 30 seconds and then kick off
+            # if there are 3 members wait 5 seconds and then kick off
+            kickoff = False
+            if self.member_joined_count == 1:
+                if seconds > self.config.wait_after_member1_join:
+                    kickoff = True
+            elif self.member_joined_count == 2:
+                if seconds > self.config.wait_after_member2_join:
+                    kickoff = True
+            elif self.member_joined_count == 3:
+                if seconds > self.config.wait_after_member3_join:
+                    kickoff = True
+
+            # we can kick off
+            if kickoff:
+                # click on kick off button
+                CTDT.template("045").click()
+
+                # reset variables
+                self.member_joined_datetime = None
+                self.member_joined_count = 0
+
+        return False
+
+    ########################################################################################################################
+
+    def run_029(self):
+        """
+        recruit button - join
+        :return:
+        """
+
+        modes = {self.MODE_CLUB_JOIN}
+        if self.config.mode not in modes: return False
+
+        # recruit button
+        if CTDT.template("041").click():
+            return True
+
+        return False
+
+    ########################################################################################################################
     ########################################################################################################################
 
     def run(self):
 
-        # club shared play - search again -> members
+        # shared play - search again -> members
         if self.run_025():
             return "025"
 
-        # club shared play button
+        # shared play button
         elif self.run_023():
             return "023"
 
-        # join button
+        # shared play - join button
         elif self.run_026():
             return "024"
 
@@ -662,9 +779,13 @@ class Tsubasa:
         if self.run_007():
             return "007"
 
-        # solo play
+        # play type : solo, shared play, join
         elif self.run_009():
             return "009"
+
+        # recruit button - join
+        elif self.run_029():
+            return "029"
 
         # play match button
         elif self.run_008():
@@ -677,6 +798,10 @@ class Tsubasa:
         # kick off button
         elif self.run_011():
             return "011"
+
+        # kick off button join
+        elif self.run_028():
+            return "028"
 
         # go to scenario list
         # it should run before owned FP (run_014)

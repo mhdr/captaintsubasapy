@@ -87,11 +87,15 @@ class Config:
     wait_energy_recovery: int
     wait_telegram_msg_energy_recovery: int
     play_match_with_skip_ticket_button: int
-    global_shared_play_enable: int
+    global_shared_play_enabled: int
 
     telegram_token: str
     telegram_chatid: int
     telegram_disabled: int
+
+    wait_after_member1_join: int
+    wait_after_member2_join: int
+    wait_after_member3_join: int
 
     @staticmethod
     def get_instance():
@@ -111,7 +115,11 @@ class Config:
             Config.wait_energy_recovery = int(config["Game"]["WaitForEnergyRecovery"])
             Config.wait_telegram_msg_energy_recovery = int(config["Game"]["WaitTelegramMsgEnergyRecovery"])
             Config.play_match_with_skip_ticket_button = int(config["Game"]["PlayMatchWithSkipTicketButton"])
-            Config.global_shared_play_enable = int(config["Game"]["GlobalSharedPlayEnable"])
+            Config.global_shared_play_enabled = int(config["Game"]["GlobalSharedPlayEnabled"])
+
+            Config.wait_after_member1_join = int(config["Game"]["WaitAfterMember1Joined"])
+            Config.wait_after_member2_join = int(config["Game"]["WaitAfterMember2Joined"])
+            Config.wait_after_member3_join = int(config["Game"]["WaitAfterMember3Joined"])
 
             Config.telegram_token = str(config["Telegram"]["Token"])
             Config.telegram_chatid = int(config["Telegram"]["ChatId"])
