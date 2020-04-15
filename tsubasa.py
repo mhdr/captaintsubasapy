@@ -781,8 +781,7 @@ class Tsubasa:
         diff = datetime.now() - self.prevent_screen_datetime
         seconds = diff.total_seconds()
 
-        if seconds > 60:
-
+        if seconds > 300:
             # click on 0,0
             pyautogui.moveTo(0, 0)
             pyautogui.click(0, 0)
