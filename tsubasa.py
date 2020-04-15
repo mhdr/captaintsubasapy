@@ -1,3 +1,4 @@
+import pyautogui
 from telegram import Bot
 
 from lib import CTDT, Config
@@ -51,6 +52,9 @@ class Tsubasa:
 
     # count the number of matched played
     count_played_match: int = 0
+
+    # the time we clicked on 0,0 to prevent screen off
+    prevent_screen_datetime = None
 
     # telegral bot
     bot: Bot
@@ -764,6 +768,33 @@ class Tsubasa:
         return False
 
     ########################################################################################################################
+
+    def run_030(self):
+        """
+        prevent screen off
+        :return:
+        """
+
+        if self.prevent_screen_datetime is None:
+            self.prevent_screen_datetime = datetime.now()
+
+        diff = datetime.now() - self.prevent_screen_datetime
+        seconds = diff.total_seconds()
+
+        if seconds > 60:
+
+            # click on 0,0
+            pyautogui.moveTo(0, 0)
+            pyautogui.click(0, 0)
+
+            # reset datetime value
+            self.prevent_screen_datetime = None
+
+            return True
+
+        return False
+
+    ########################################################################################################################
     ########################################################################################################################
 
     def run(self):
@@ -887,3 +918,7 @@ class Tsubasa:
         # restart match dialog
         elif self.run_018():
             return "018"
+
+        # prevent screen off
+        elif self.run_030():
+            return "030"
