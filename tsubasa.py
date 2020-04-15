@@ -733,11 +733,15 @@ class Tsubasa:
             # we can kick off
             if kickoff:
                 # click on kick off button
-                CTDT.template("045").click()
+                if CTDT.template("045").click():
 
-                # reset variables
-                self.member_joined_datetime = None
-                self.member_joined_count = 0
+                    # send number of matched played to telegram bot
+                    self.increase_count_played_match()
+                    self.send_count_played_match()
+
+                    # reset variables
+                    self.member_joined_datetime = None
+                    self.member_joined_count = 0
 
         return False
 
