@@ -797,11 +797,11 @@ class Tsubasa:
 
     def run_031(self):
         """
-        unable to play dialog - max number of player -> join
+        unable to play dialog - max number of player -> shared
         :return:
         """
 
-        modes = {self.MODE_CLUB_JOIN}
+        modes = {self.MODE_CLUB_SHARED}
         if self.config.mode not in modes: return False
 
         # unable to play dialog - max number of player
@@ -817,11 +817,11 @@ class Tsubasa:
 
     def run_032(self):
         """
-        match condition have not met dialog - join
+        match condition have not met dialog - shared
         :return:
         """
 
-        modes = {self.MODE_CLUB_JOIN}
+        modes = {self.MODE_CLUB_SHARED}
         if self.config.mode not in modes: return False
 
         # match condition have not met dialog - join
@@ -939,11 +939,11 @@ class Tsubasa:
         elif self.run_027():
             return "027"
 
-        # unable to play dialog - max number of player -> join
+        # unable to play dialog - max number of player -> shared
         elif self.run_031():
             return "031"
 
-        # match condition have not met dialog - join
+        # match condition have not met dialog - shared
         elif self.run_032():
             return "032"
 
