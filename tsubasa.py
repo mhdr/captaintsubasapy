@@ -70,7 +70,8 @@ class Tsubasa:
     def send_count_played_match(self):
         try:
             if self.config.telegram_disabled == 0:
-                output: str = "Count : {0} , Date : {1}".format(self.count_played_match, datetime.now())
+                output: str = "Count : {0} , Date : {1}".format(self.count_played_match,
+                                                                datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
                 self.bot.send_message(self.config.telegram_chatid, output)
         except Exception as ex:
             print(str(ex))
