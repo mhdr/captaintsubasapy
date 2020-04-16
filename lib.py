@@ -82,6 +82,7 @@ class Config:
     __instance = None
     mode: int
     sleep: float
+    prevent_screen_off: int
     difficulty: int
     energy_recovery: int
     wait_energy_recovery: int
@@ -108,6 +109,7 @@ class Config:
             config.read('config.ini')
 
             Config.sleep = float(config["General"]["Sleep"])
+            Config.prevent_screen_off = int(config["General"]["PreventScreenOff"])
 
             Config.mode = int(config["Game"]["Mode"])
             Config.difficulty = int(config["Game"]["Difficulty"])

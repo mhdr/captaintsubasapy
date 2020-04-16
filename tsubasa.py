@@ -781,7 +781,7 @@ class Tsubasa:
         diff = datetime.now() - self.prevent_screen_datetime
         seconds = diff.total_seconds()
 
-        if seconds > 300:
+        if seconds > self.config.prevent_screen_off:
             # click on 0,0
             pyautogui.moveTo(0, 0)
             pyautogui.click(0, 0)
@@ -811,7 +811,6 @@ class Tsubasa:
                 return True
 
         return False
-
 
     ########################################################################################################################
 
