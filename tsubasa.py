@@ -794,6 +794,45 @@ class Tsubasa:
         return False
 
     ########################################################################################################################
+
+    def run_031(self):
+        """
+        unable to play dialog - max number of player -> join
+        :return:
+        """
+
+        modes = {self.MODE_CLUB_JOIN}
+        if self.config.mode not in modes: return False
+
+        # unable to play dialog - max number of player
+        if CTDT.template("046").available():
+            # ok button - unable to play dialog
+            if CTDT.template("047").click():
+                return True
+
+        return False
+
+
+    ########################################################################################################################
+
+    def run_032(self):
+        """
+        match condition have not met dialog - join
+        :return:
+        """
+
+        modes = {self.MODE_CLUB_JOIN}
+        if self.config.mode not in modes: return False
+
+        # match condition have not met dialog - join
+        if CTDT.template("048").available():
+            # close button - match condition have not met dialog
+            if CTDT.template("049").click():
+                return True
+
+        return False
+
+    ########################################################################################################################
     ########################################################################################################################
 
     def run(self):
@@ -899,6 +938,14 @@ class Tsubasa:
         # failed to join dialog
         elif self.run_027():
             return "027"
+
+        # unable to play dialog - max number of player -> join
+        elif self.run_031():
+            return "031"
+
+        # match condition have not met dialog - join
+        elif self.run_032():
+            return "032"
 
         ######################################## MODE_ALL ##############################################################
 

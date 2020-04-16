@@ -9,15 +9,15 @@ import ctypes
 user32 = ctypes.windll.user32
 user32.SetProcessDPIAware()
 
-threshold = 0.95
-
-# template number like : 007.png
-# Column F in excel
-index_template = 45
+threshold = 0.9
 
 # file name like : 031f.png
 # Column A in excel
-index_fimage = 45
+index_fimage = 49
+
+# template number like : 007.png
+# Column F in excel
+index_template = 20
 
 # first match = 0
 match = 0
