@@ -15,6 +15,7 @@ from typing import Dict, List
 import datetime
 import configparser
 import ctypes
+import win32api, win32process, win32con
 
 
 #######################################################################################################################
@@ -201,6 +202,13 @@ class CTDT:
 
     @staticmethod
     def initialize():
+
+        # make current process high priority
+        pid = win32api.GetCurrentProcessId()
+        handle = win32api.OpenProcess(win32con.PROCESS_ALL_ACCESS, True, pid)
+        win32process.SetPriorityClass(handle, win32process.HIGH_PRIORITY_CLASS)
+
+        # make current process dpi aware
         user32 = ctypes.windll.user32
         user32.SetProcessDPIAware()
 
