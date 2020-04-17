@@ -95,7 +95,7 @@ class Tsubasa:
         if self.config.mode not in modes: return False
 
         if CTDT.template("001").click(wait=4):
-            self.send_telegram_message("Run App : {0}".format(datetime.now()))
+            self.send_telegram_message("Run App : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
             return True
 
         return False
@@ -473,7 +473,8 @@ class Tsubasa:
 
                 if self.energy_recovery_send_telegram_datetime is None:
                     # inform in telegram that we are out of energy
-                    self.send_telegram_message("Out of energy : {0}".format(datetime.now()))
+                    self.send_telegram_message(
+                        "Out of energy : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
 
                     self.energy_recovery_send_telegram_datetime = datetime.now()
                 else:
