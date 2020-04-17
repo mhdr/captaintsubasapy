@@ -295,7 +295,7 @@ class Tsubasa:
                 if CTDT.template("050").click():
                     return True
             else:
-                
+
                 if CTDT.template("009").click():
                     return True
 
