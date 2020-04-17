@@ -862,6 +862,14 @@ class Tsubasa:
         if self.run_007():
             return "007"
 
+        # energy recovered dialog
+        elif self.run_024():
+            return "024"
+
+        # energy recovery dialog
+        elif self.run_016():
+            return "016"
+
         # play type : solo, shared play, join
         elif self.run_009():
             return "009"
@@ -902,14 +910,6 @@ class Tsubasa:
         # after match - rank up
         elif self.run_015():
             return "015"
-
-        # energy recovered dialog
-        elif self.run_024():
-            return "024"
-
-        # energy recovery dialog
-        elif self.run_016():
-            return "016"
 
         # go to story mode
         elif self.run_003():
