@@ -269,24 +269,33 @@ class Tsubasa:
         if self.config.mode == self.MODE_STORY_SOLO:
 
             if self.config.global_shared_play_enabled == 1:
-                pass
+
+                if CTDT.template("050").click():
+                    return True
             else:
+
                 if CTDT.template("009").click():
                     return True
 
         elif self.config.mode == self.MODE_EVENT_SOLO:
 
             if self.config.global_shared_play_enabled == 1:
-                pass
+
+                if CTDT.template("050").click():
+                    return True
             else:
+
                 if CTDT.template("009").click():
                     return True
 
         elif self.config.mode == self.MODE_SOLO:
 
             if self.config.global_shared_play_enabled == 1:
-                pass
+
+                if CTDT.template("050").click():
+                    return True
             else:
+                
                 if CTDT.template("009").click():
                     return True
 
