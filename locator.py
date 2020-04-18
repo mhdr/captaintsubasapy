@@ -13,7 +13,7 @@ threshold = 0.9
 
 # file name like : 031f.png
 # Column A in excel
-index_fimage = 53
+index_fimage = 56
 
 # template number like : 007.png
 # Column F in excel

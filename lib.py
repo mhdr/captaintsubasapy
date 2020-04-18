@@ -187,13 +187,16 @@ class PointResult:
 
     def click(self, clicks: int = 1, interval: float = 0, wait: float = 2,
               delay: float = 0, duration=0.1) -> bool:
-        time.sleep(delay)
-        pyautogui.moveTo(self.location.x, self.location.y, duration)
-        pyautogui.click(self.location.x, self.location.y, clicks=clicks, interval=interval)
-        pyautogui.FAILSAFE = False
-        pyautogui.moveTo(0, 0)
-        time.sleep(wait)
-        return True
+        if self.location is not None:
+            time.sleep(delay)
+            pyautogui.moveTo(self.location.x, self.location.y, duration)
+            pyautogui.click(self.location.x, self.location.y, clicks=clicks, interval=interval)
+            pyautogui.FAILSAFE = False
+            pyautogui.moveTo(0, 0)
+            time.sleep(wait)
+            return True
+
+        return False
 
 
 #######################################################################################################################
@@ -291,9 +294,8 @@ class CTDT:
         x = caches.locations[location_number].x
         y = caches.locations[location_number].y
 
-        result: PointResult = PointResult()
-        result.location.x = x
-        result.location.y = y
+        location: LocationProperties = LocationProperties(location_number, x, y)
+        result: PointResult = PointResult(location)
 
         return result
 

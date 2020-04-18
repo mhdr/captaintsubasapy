@@ -3,6 +3,7 @@ from lib import CTDT, Config, Cache
 import time
 from tsubasa import Tsubasa
 
+DEBUG = False
 CTDT.initialize()
 CTDT.convert_templates_to_jpeg()
 config: Config = Config.get_instance()
@@ -17,9 +18,13 @@ tsubasa: Tsubasa = Tsubasa()
 
 while True:
 
-    try:
+    if DEBUG:
         result = tsubasa.run()
-        # print(result)
+        print(result)
         time.sleep(config.sleep)
-    except Exception as ex:
-        print(str(ex))
+    else:
+        try:
+            result = tsubasa.run()
+            time.sleep(config.sleep)
+        except Exception as ex:
+            print(str(ex))

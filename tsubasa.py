@@ -91,7 +91,7 @@ class Tsubasa:
         :return:
         """
 
-        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_CLUB_SHARED}
+        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_CLUB_SHARED, self.MODE_GLOBAL_SHARED}
         if self.config.mode not in modes: return False
 
         if CTDT.template("001").click(wait=4):
@@ -108,7 +108,7 @@ class Tsubasa:
         :return:
         """
 
-        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_CLUB_SHARED}
+        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_CLUB_SHARED, self.MODE_GLOBAL_SHARED}
         if self.config.mode not in modes: return False
 
         if CTDT.template("002").click(wait=5):
@@ -124,7 +124,7 @@ class Tsubasa:
         :return:
         """
 
-        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_CLUB_SHARED}
+        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_CLUB_SHARED, self.MODE_GLOBAL_SHARED}
         if self.config.mode not in modes: return False
 
         if CTDT.template("003").click():
@@ -137,6 +137,7 @@ class Tsubasa:
     def run_004(self):
         """
         go to story mode - second page
+        use to play story mode only
         :return:
         """
 
@@ -152,12 +153,13 @@ class Tsubasa:
 
     def run_005(self):
         """
+        begin scroll
         if in story mode and if we are at the beginning of the scroll ( scrollbar is on left )
         we should scroll to right
         :return:
         """
 
-        modes = {self.MODE_STORY_SOLO}
+        modes = {self.MODE_STORY_SOLO, self.MODE_GLOBAL_SHARED}
         if self.config.mode not in modes: return False
 
         if CTDT.template("005").available():
@@ -170,10 +172,12 @@ class Tsubasa:
 
     def run_006(self):
         """
-        story mode - road to 2002
+        end scroll
+        exact game picture ( it should change always to match)
+        for now -> story mode - evolve -> get drills all types
         :return:
         """
-        modes = {self.MODE_STORY_SOLO}
+        modes = {self.MODE_STORY_SOLO, self.MODE_GLOBAL_SHARED}
         if self.config.mode not in modes: return False
 
         if CTDT.template("006").click():
@@ -879,6 +883,61 @@ class Tsubasa:
         return False
 
     ########################################################################################################################
+
+    def run_035(self):
+        """
+        go to game -> change always
+        :return:
+        """
+
+        modes = {self.MODE_GLOBAL_SHARED}
+        if self.config.mode not in modes: return False
+
+        # go to story mode - second page
+        # use to play story mode only
+        # elif CTDT.template("004").click():
+        #     return True
+
+        # go to evolve player
+        if CTDT.template("054").click():
+            return True
+
+        # begin scroll
+        # if in story mode and if we are at the beginning of the scroll ( scrollbar is on left )
+        # we should scroll to right
+        elif CTDT.template("005").available():
+            CTDT.point("001").click(clicks=5, interval=0.1)
+            return True
+
+        # end scroll
+        # exact game picture ( it should change always to match)
+        # for now -> story mode - evolve -> get drills all types
+        elif CTDT.template("006").click():
+            return True
+
+        return False
+
+    ########################################################################################################################
+
+    def run_036(self):
+        """
+        room closed dialog
+        :return:
+        """
+
+        modes = {self.MODE_CLUB_SHARED, self.MODE_GLOBAL_SHARED}
+        if self.config.mode not in modes: return False
+
+        # room closed dialog -> title
+        if CTDT.template("055").available():
+
+            # ok button
+            if CTDT.template("056").click():
+                return True
+
+        return False
+
+    ########################################################################################################################
     ########################################################################################################################
 
     def run(self):
@@ -948,31 +1007,6 @@ class Tsubasa:
         elif self.run_015():
             return "015"
 
-        # go to story mode
-        elif self.run_003():
-            return "003"
-
-        # go to story mode - second page
-        elif self.run_004():
-            return "004"
-
-        # if in story mode and if we are at the beginning of the scroll ( scrollbar is on left )
-        # we should scroll to right
-        elif self.run_005():
-            return "005"
-
-        # story mode - road to 2002
-        elif self.run_006():
-            return "006"
-
-        # story mode home -> select events
-        elif self.run_019():
-            return "019"
-
-        # event matche -> select event
-        elif self.run_020():
-            return "020"
-
         # after match -> special bonus
         elif self.run_021():
             return "021"
@@ -985,6 +1019,10 @@ class Tsubasa:
         elif self.run_027():
             return "027"
 
+        # room closed dialog
+        elif self.run_036():
+            return "036"
+
         # unable to play dialog - max number of player -> shared
         elif self.run_031():
             return "031"
@@ -993,7 +1031,7 @@ class Tsubasa:
         elif self.run_032():
             return "032"
 
-        ######################################## MODE_ALL ##############################################################
+        #######################################################################################################
 
         # enter app
         elif self.run_001():
@@ -1002,6 +1040,38 @@ class Tsubasa:
         # enter app
         elif self.run_002():
             return "002"
+
+        # go to story mode
+        elif self.run_003():
+            return "003"
+
+        # go to game ***
+        elif self.run_035():
+            return "035"
+
+        # go to story mode - second page
+        # elif self.run_004():
+        #     return "004"
+
+        # begin scroll
+        # if in story mode and if we are at the beginning of the scroll ( scrollbar is on left )
+        # we should scroll to right
+        # elif self.run_005():
+        #     return "005"
+
+        # end scroll
+        # exact game picture ( it should change always to match)
+        # for now -> story mode - road to 2002
+        # elif self.run_006():
+        #     return "006"
+
+        # story mode home -> select events
+        # elif self.run_019():
+        #     return "019"
+
+        # event match -> select event
+        # elif self.run_020():
+        #     return "020"
 
         # close news dialog
         elif self.run_017():
