@@ -207,9 +207,9 @@ class CTDT:
     def initialize():
 
         # make current process high priority
-        pid = win32api.GetCurrentProcessId()
-        handle = win32api.OpenProcess(win32con.PROCESS_ALL_ACCESS, True, pid)
-        win32process.SetPriorityClass(handle, win32process.HIGH_PRIORITY_CLASS)
+        # pid = win32api.GetCurrentProcessId()
+        # handle = win32api.OpenProcess(win32con.PROCESS_ALL_ACCESS, True, pid)
+        # win32process.SetPriorityClass(handle, win32process.HIGH_PRIORITY_CLASS)
 
         # make current process dpi aware
         user32 = ctypes.windll.user32
