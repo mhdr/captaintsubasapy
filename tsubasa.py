@@ -868,9 +868,9 @@ class Tsubasa:
 
         # connection error
         if CTDT.template("052").available():
-            # ok button - connection error dialog
-            if CTDT.template("053").click():
-                return True
+            # after connection error the game goes to the first page
+            self.send_telegram_message("Connection Error : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+            return True
 
         return False
 
