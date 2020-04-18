@@ -189,7 +189,8 @@ class Tsubasa:
         :return:
         """
 
-        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_JOIN}
+        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_JOIN,
+                 self.MODE_GLOBAL_SHARED}
         if self.config.mode not in modes: return False
 
         if self.config.difficulty == self.Difficulty_Normal_Horizontal:
@@ -236,7 +237,8 @@ class Tsubasa:
         :return:
         """
 
-        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_JOIN}
+        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_JOIN,
+                 self.MODE_GLOBAL_SHARED}
         if self.config.mode not in modes: return False
 
         # skip ticket button is not present beside play match button = 0
@@ -263,7 +265,8 @@ class Tsubasa:
         :return:
         """
 
-        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_JOIN}
+        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_JOIN,
+                 self.MODE_GLOBAL_SHARED}
         if self.config.mode not in modes: return False
 
         if self.config.mode == self.MODE_STORY_SOLO:
@@ -306,6 +309,11 @@ class Tsubasa:
             else:
                 if CTDT.template("040").click():
                     return True
+
+        elif self.config.mode == self.MODE_GLOBAL_SHARED:
+
+            if CTDT.template("051").click():
+                return True
 
         return False
 
@@ -354,7 +362,8 @@ class Tsubasa:
 
         # sometimes 012 and sometimes 028 appears fo scenario list
         # this one is when the result is win
-        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_SHARED, self.MODE_CLUB_JOIN}
+        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_SHARED,
+                 self.MODE_CLUB_JOIN, self.MODE_GLOBAL_SHARED}
         if self.config.mode not in modes: return False
 
         if CTDT.template("012").click():
@@ -375,7 +384,8 @@ class Tsubasa:
         :return:
         """
 
-        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_SHARED, self.MODE_CLUB_JOIN}
+        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_SHARED,
+                 self.MODE_CLUB_JOIN, self.MODE_GLOBAL_SHARED}
         if self.config.mode not in modes: return False
 
         if CTDT.template("013").click():
@@ -391,7 +401,8 @@ class Tsubasa:
         :return:
         """
 
-        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_SHARED, self.MODE_CLUB_JOIN}
+        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_SHARED,
+                 self.MODE_CLUB_JOIN, self.MODE_GLOBAL_SHARED}
         if self.config.mode not in modes: return False
 
         if CTDT.template("014").click():
@@ -573,7 +584,8 @@ class Tsubasa:
         :return:
         """
 
-        modes = {self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_SHARED, self.MODE_SOLO, self.MODE_CLUB_JOIN}
+        modes = {self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_SHARED, self.MODE_SOLO,
+                 self.MODE_CLUB_JOIN, self.MODE_GLOBAL_SHARED}
         if self.config.mode not in modes: return False
 
         # after match -> special bonus
@@ -590,7 +602,8 @@ class Tsubasa:
         :return:
         """
 
-        modes = {self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_SHARED, self.MODE_CLUB_JOIN}
+        modes = {self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_SHARED, self.MODE_CLUB_JOIN,
+                 self.MODE_GLOBAL_SHARED}
         if self.config.mode not in modes: return False
 
         # after match -> clear rewards
@@ -664,7 +677,7 @@ class Tsubasa:
         :return:
         """
 
-        modes = {self.MODE_CLUB_SHARED}
+        modes = {self.MODE_CLUB_SHARED, self.MODE_GLOBAL_SHARED}
         if self.config.mode not in modes: return False
 
         # click on join button
@@ -683,7 +696,7 @@ class Tsubasa:
         :return:
         """
 
-        modes = {self.MODE_CLUB_SHARED}
+        modes = {self.MODE_CLUB_SHARED, self.MODE_GLOBAL_SHARED}
         if self.config.mode not in modes: return False
 
         # failed to join dialog -> title
