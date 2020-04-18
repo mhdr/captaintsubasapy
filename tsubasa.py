@@ -134,59 +134,6 @@ class Tsubasa:
 
     ########################################################################################################################
 
-    def run_004(self):
-        """
-        go to story mode - second page
-        use to play story mode only
-        :return:
-        """
-
-        modes = {self.MODE_STORY_SOLO}
-        if self.config.mode not in modes: return False
-
-        if CTDT.template("004").click():
-            return True
-
-        return False
-
-    ########################################################################################################################
-
-    def run_005(self):
-        """
-        begin scroll
-        if in story mode and if we are at the beginning of the scroll ( scrollbar is on left )
-        we should scroll to right
-        :return:
-        """
-
-        modes = {self.MODE_STORY_SOLO, self.MODE_GLOBAL_SHARED}
-        if self.config.mode not in modes: return False
-
-        if CTDT.template("005").available():
-            CTDT.point("001").click(clicks=5, interval=0.1)
-            return True
-
-        return False
-
-    ########################################################################################################################
-
-    def run_006(self):
-        """
-        end scroll
-        exact game picture ( it should change always to match)
-        for now -> story mode - evolve -> get drills all types
-        :return:
-        """
-        modes = {self.MODE_STORY_SOLO, self.MODE_GLOBAL_SHARED}
-        if self.config.mode not in modes: return False
-
-        if CTDT.template("006").click():
-            return True
-
-        return False
-
-    ########################################################################################################################
-
     def run_007(self):
         """
         difficulty
@@ -535,7 +482,7 @@ class Tsubasa:
         :return:
         """
 
-        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_CLUB_SHARED}
+        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_CLUB_SHARED, self.MODE_GLOBAL_SHARED}
         if self.config.mode not in modes: return False
 
         # check if restart match dialog in open
@@ -543,40 +490,6 @@ class Tsubasa:
             # click on restart button
             if CTDT.template("022").click():
                 return True
-
-        return False
-
-    ########################################################################################################################
-
-    def run_019(self):
-        """
-        story mode home -> select events
-        :return:
-        """
-
-        modes = {self.MODE_EVENT_SOLO}
-        if self.config.mode not in modes: return False
-
-        # select events mode
-        if CTDT.template("023").click():
-            return True
-
-        return False
-
-    ########################################################################################################################
-
-    def run_020(self):
-        """
-        event match -> select event
-        :return:
-        """
-
-        modes = {self.MODE_EVENT_SOLO}
-        if self.config.mode not in modes: return False
-
-        # select events mode
-        if CTDT.template("024").click():
-            return True
 
         return False
 
@@ -1048,30 +961,6 @@ class Tsubasa:
         # go to game ***
         elif self.run_035():
             return "035"
-
-        # go to story mode - second page
-        # elif self.run_004():
-        #     return "004"
-
-        # begin scroll
-        # if in story mode and if we are at the beginning of the scroll ( scrollbar is on left )
-        # we should scroll to right
-        # elif self.run_005():
-        #     return "005"
-
-        # end scroll
-        # exact game picture ( it should change always to match)
-        # for now -> story mode - road to 2002
-        # elif self.run_006():
-        #     return "006"
-
-        # story mode home -> select events
-        # elif self.run_019():
-        #     return "019"
-
-        # event match -> select event
-        # elif self.run_020():
-        #     return "020"
 
         # close news dialog
         elif self.run_017():
