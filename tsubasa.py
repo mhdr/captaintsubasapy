@@ -85,13 +85,12 @@ class Tsubasa:
 
     ########################################################################################################################
 
-    def run_001(self):
+    def run_001(self, modes: set):
         """
         run app
         :return:
         """
 
-        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_CLUB_SHARED, self.MODE_GLOBAL_SHARED}
         if self.config.mode not in modes: return False
 
         if CTDT.template("001").click(wait=4):
@@ -102,13 +101,12 @@ class Tsubasa:
 
     ########################################################################################################################
 
-    def run_002(self):
+    def run_002(self, modes: set):
         """
         enter app
         :return:
         """
 
-        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_CLUB_SHARED, self.MODE_GLOBAL_SHARED}
         if self.config.mode not in modes: return False
 
         if CTDT.template("002").click(wait=5):
@@ -118,13 +116,12 @@ class Tsubasa:
 
     ########################################################################################################################
 
-    def run_003(self):
+    def run_003(self, modes: set):
         """
         go to story mode
         :return:
         """
 
-        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_CLUB_SHARED, self.MODE_GLOBAL_SHARED}
         if self.config.mode not in modes: return False
 
         if CTDT.template("003").click():
@@ -134,14 +131,12 @@ class Tsubasa:
 
     ########################################################################################################################
 
-    def run_007(self):
+    def run_007(self, modes: set):
         """
         difficulty
         :return:
         """
 
-        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_JOIN,
-                 self.MODE_GLOBAL_SHARED}
         if self.config.mode not in modes: return False
 
         if self.config.difficulty == self.Difficulty_Normal_Horizontal:
@@ -182,14 +177,12 @@ class Tsubasa:
 
     ########################################################################################################################
 
-    def run_008(self):
+    def run_008(self, modes: set):
         """
         play match button
         :return:
         """
 
-        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_JOIN,
-                 self.MODE_GLOBAL_SHARED}
         if self.config.mode not in modes: return False
 
         # skip ticket button is not present beside play match button = 0
@@ -210,14 +203,12 @@ class Tsubasa:
 
     ########################################################################################################################
 
-    def run_009(self):
+    def run_009(self, modes: set):
         """
         play type : solo, shared play
         :return:
         """
 
-        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_JOIN,
-                 self.MODE_GLOBAL_SHARED}
         if self.config.mode not in modes: return False
 
         if self.config.mode == self.MODE_STORY_SOLO:
@@ -270,12 +261,12 @@ class Tsubasa:
 
     ########################################################################################################################
 
-    def run_010(self):
+    def run_010(self, modes: set):
         """
         select friend -> FP
         :return:
         """
-        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO}
+
         if self.config.mode not in modes: return False
 
         if CTDT.template("010").click():
@@ -285,13 +276,12 @@ class Tsubasa:
 
     ########################################################################################################################
 
-    def run_011(self):
+    def run_011(self, modes: set):
         """
         kick off button
         :return:
         """
 
-        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO}
         if self.config.mode not in modes: return False
 
         if CTDT.template("011").click():
@@ -305,7 +295,7 @@ class Tsubasa:
 
     ########################################################################################################################
 
-    def run_012(self):
+    def run_012(self, modes: set):
         """
         after match -> go to scenario list
         :return:
@@ -313,8 +303,6 @@ class Tsubasa:
 
         # sometimes 012 and sometimes 028 appears fo scenario list
         # this one is when the result is win
-        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_SHARED,
-                 self.MODE_CLUB_JOIN, self.MODE_GLOBAL_SHARED}
         if self.config.mode not in modes: return False
 
         if CTDT.template("012").click():
@@ -329,14 +317,12 @@ class Tsubasa:
 
     ########################################################################################################################
 
-    def run_013(self):
+    def run_013(self, modes: set):
         """
         after match - you win
         :return:
         """
 
-        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_SHARED,
-                 self.MODE_CLUB_JOIN, self.MODE_GLOBAL_SHARED}
         if self.config.mode not in modes: return False
 
         if CTDT.template("013").click():
@@ -346,14 +332,12 @@ class Tsubasa:
 
     ########################################################################################################################
 
-    def run_014(self):
+    def run_014(self, modes: set):
         """
         after match - breakdown
         :return:
         """
 
-        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_SHARED,
-                 self.MODE_CLUB_JOIN, self.MODE_GLOBAL_SHARED}
         if self.config.mode not in modes: return False
 
         if CTDT.template("014").click():
@@ -363,13 +347,12 @@ class Tsubasa:
 
     ########################################################################################################################
 
-    def run_015(self):
+    def run_015(self, modes: set):
         """
         after match - rank up
         :return:
         """
 
-        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_JOIN}
         if self.config.mode not in modes: return False
 
         if CTDT.template("015").click():
@@ -379,13 +362,12 @@ class Tsubasa:
 
     ########################################################################################################################
 
-    def run_016(self):
+    def run_016(self, modes: set):
         """
         energy recovery dialog
         :return:
         """
 
-        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_JOIN}
         if self.config.mode not in modes: return False
 
         if self.config.energy_recovery == self.EnergyRecovery_None:
@@ -457,13 +439,12 @@ class Tsubasa:
 
     ########################################################################################################################
 
-    def run_017(self):
+    def run_017(self, modes: set):
         """
         close news dialog
         :return:
         """
 
-        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_CLUB_SHARED}
         if self.config.mode not in modes: return False
 
         # check if new title is available
@@ -476,13 +457,12 @@ class Tsubasa:
 
     ########################################################################################################################
 
-    def run_018(self):
+    def run_018(self, modes: set):
         """
         restart match after game crash
         :return:
         """
 
-        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_CLUB_SHARED, self.MODE_GLOBAL_SHARED}
         if self.config.mode not in modes: return False
 
         # check if restart match dialog in open
@@ -495,14 +475,12 @@ class Tsubasa:
 
     ########################################################################################################################
 
-    def run_021(self):
+    def run_021(self, modes: set):
         """
         after match -> special bonus
         :return:
         """
 
-        modes = {self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_SHARED, self.MODE_SOLO,
-                 self.MODE_CLUB_JOIN, self.MODE_GLOBAL_SHARED}
         if self.config.mode not in modes: return False
 
         # after match -> special bonus
@@ -513,14 +491,12 @@ class Tsubasa:
 
     ########################################################################################################################
 
-    def run_022(self):
+    def run_022(self, modes: set):
         """
         after match -> clear rewards
         :return:
         """
 
-        modes = {self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_SHARED, self.MODE_CLUB_JOIN,
-                 self.MODE_GLOBAL_SHARED}
         if self.config.mode not in modes: return False
 
         # after match -> clear rewards
@@ -531,13 +507,12 @@ class Tsubasa:
 
     ########################################################################################################################
 
-    def run_023(self):
+    def run_023(self, modes: set):
         """
         club shared play button
         :return:
         """
 
-        modes = {self.MODE_CLUB_SHARED}
         if self.config.mode not in modes: return False
 
         # click on club shared play button
@@ -548,13 +523,12 @@ class Tsubasa:
 
     ########################################################################################################################
 
-    def run_024(self):
+    def run_024(self, modes: set):
         """
         energy recovered dialog -> appears after energy recovery dialog
         :return:
         """
 
-        modes = {self.MODE_STORY_SOLO, self.MODE_EVENT_SOLO, self.MODE_SOLO, self.MODE_CLUB_JOIN}
         if self.config.mode not in modes: return False
 
         # if energy recovered dialog
@@ -567,13 +541,12 @@ class Tsubasa:
 
     ########################################################################################################################
 
-    def run_025(self):
+    def run_025(self, modes: set):
         """
         club shared play - search again -> members
         :return:
         """
 
-        modes = {self.MODE_CLUB_SHARED}
         if self.config.mode not in modes: return False
 
         if CTDT.template("035").available():
@@ -588,13 +561,12 @@ class Tsubasa:
 
     ########################################################################################################################
 
-    def run_026(self):
+    def run_026(self, modes: set):
         """
         join button
         :return:
         """
 
-        modes = {self.MODE_CLUB_SHARED, self.MODE_GLOBAL_SHARED}
         if self.config.mode not in modes: return False
 
         # click on join button
@@ -607,13 +579,12 @@ class Tsubasa:
 
     ########################################################################################################################
 
-    def run_027(self):
+    def run_027(self, modes: set):
         """
         failed to join dialog
         :return:
         """
 
-        modes = {self.MODE_CLUB_SHARED, self.MODE_GLOBAL_SHARED}
         if self.config.mode not in modes: return False
 
         # failed to join dialog -> title
@@ -627,13 +598,12 @@ class Tsubasa:
 
     ########################################################################################################################
 
-    def run_028(self):
+    def run_028(self, modes: set):
         """
         kick off button - join
         :return:
         """
 
-        modes = {self.MODE_CLUB_JOIN}
         if self.config.mode not in modes: return False
 
         # if kick off button available
@@ -693,13 +663,12 @@ class Tsubasa:
 
     ########################################################################################################################
 
-    def run_029(self):
+    def run_029(self, modes: set):
         """
         recruit button - join
         :return:
         """
 
-        modes = {self.MODE_CLUB_JOIN}
         if self.config.mode not in modes: return False
 
         # recruit button
@@ -736,13 +705,12 @@ class Tsubasa:
 
     ########################################################################################################################
 
-    def run_031(self):
+    def run_031(self, modes: set):
         """
         unable to play dialog - max number of player -> shared
         :return:
         """
 
-        modes = {self.MODE_CLUB_SHARED}
         if self.config.mode not in modes: return False
 
         # unable to play dialog - max number of player
@@ -755,13 +723,12 @@ class Tsubasa:
 
     ########################################################################################################################
 
-    def run_032(self):
+    def run_032(self, modes: set):
         """
         match condition have not met dialog - shared
         :return:
         """
 
-        modes = {self.MODE_CLUB_SHARED}
         if self.config.mode not in modes: return False
 
         # match condition have not met dialog - join
@@ -774,13 +741,12 @@ class Tsubasa:
 
     ########################################################################################################################
 
-    def run_033(self):
+    def run_033(self, modes: set):
         """
         connection error dialog
         :return:
         """
 
-        modes = {self.MODE_CLUB_SHARED, self.MODE_GLOBAL_SHARED}
         if self.config.mode not in modes: return False
 
         # connection error
@@ -797,13 +763,12 @@ class Tsubasa:
 
     ########################################################################################################################
 
-    def run_035(self):
+    def run_035(self, modes: set):
         """
         go to game -> change always
         :return:
         """
 
-        modes = {self.MODE_GLOBAL_SHARED}
         if self.config.mode not in modes: return False
 
         # go to story mode - second page
@@ -832,13 +797,12 @@ class Tsubasa:
 
     ########################################################################################################################
 
-    def run_036(self):
+    def run_036(self, modes: set):
         """
         room closed dialog
         :return:
         """
 
-        modes = {self.MODE_CLUB_SHARED, self.MODE_GLOBAL_SHARED}
         if self.config.mode not in modes: return False
 
         # room closed dialog -> title
@@ -856,122 +820,188 @@ class Tsubasa:
     def run(self):
 
         # shared play - search again -> members
-        if self.run_025():
+        if self.run_025(modes={self.MODE_CLUB_SHARED}):
             return "025"
 
         # shared play button
-        elif self.run_023():
+        elif self.run_023(modes={self.MODE_CLUB_SHARED}):
             return "023"
 
         # shared play - join button
-        elif self.run_026():
-            return "024"
+        elif self.run_026(modes={self.MODE_CLUB_SHARED,
+                                 self.MODE_GLOBAL_SHARED}):
+            return "026"
 
         # difficulty
-        if self.run_007():
+        if self.run_007(modes={self.MODE_STORY_SOLO,
+                               self.MODE_EVENT_SOLO,
+                               self.MODE_SOLO,
+                               self.MODE_CLUB_JOIN,
+                               self.MODE_GLOBAL_SHARED}):
             return "007"
 
         # energy recovered dialog
-        elif self.run_024():
+        elif self.run_024(modes={self.MODE_STORY_SOLO,
+                                 self.MODE_EVENT_SOLO,
+                                 self.MODE_SOLO,
+                                 self.MODE_CLUB_JOIN}):
             return "024"
 
         # energy recovery dialog
-        elif self.run_016():
+        elif self.run_016(modes={self.MODE_STORY_SOLO,
+                                 self.MODE_EVENT_SOLO,
+                                 self.MODE_SOLO,
+                                 self.MODE_CLUB_JOIN}):
             return "016"
 
         # play type : solo, shared play, join
-        elif self.run_009():
+        elif self.run_009(modes={self.MODE_STORY_SOLO,
+                                 self.MODE_EVENT_SOLO,
+                                 self.MODE_SOLO,
+                                 self.MODE_CLUB_JOIN,
+                                 self.MODE_GLOBAL_SHARED}):
             return "009"
 
         # recruit button - join
-        elif self.run_029():
+        elif self.run_029(modes={self.MODE_CLUB_JOIN}):
             return "029"
 
         # play match button
-        elif self.run_008():
+        elif self.run_008(modes={self.MODE_STORY_SOLO,
+                                 self.MODE_EVENT_SOLO,
+                                 self.MODE_SOLO,
+                                 self.MODE_CLUB_JOIN,
+                                 self.MODE_GLOBAL_SHARED}):
             return "008"
 
         # select friend
-        elif self.run_010():
+        elif self.run_010(modes={self.MODE_STORY_SOLO,
+                                 self.MODE_EVENT_SOLO,
+                                 self.MODE_SOLO}):
             return "010"
 
         # kick off button
-        elif self.run_011():
+        elif self.run_011(modes={self.MODE_STORY_SOLO,
+                                 self.MODE_EVENT_SOLO,
+                                 self.MODE_SOLO}):
             return "011"
 
         # kick off button join
-        elif self.run_028():
+        elif self.run_028(modes={self.MODE_CLUB_JOIN}):
             return "028"
 
         # go to scenario list
         # it should run before owned FP (run_014)
-        elif self.run_012():
+        elif self.run_012(modes={self.MODE_STORY_SOLO,
+                                 self.MODE_EVENT_SOLO,
+                                 self.MODE_SOLO,
+                                 self.MODE_CLUB_SHARED,
+                                 self.MODE_CLUB_JOIN,
+                                 self.MODE_GLOBAL_SHARED}):
             return "012"
 
         # after match - you win
-        elif self.run_013():
+        elif self.run_013(modes={self.MODE_STORY_SOLO,
+                                 self.MODE_EVENT_SOLO,
+                                 self.MODE_SOLO,
+                                 self.MODE_CLUB_SHARED,
+                                 self.MODE_CLUB_JOIN,
+                                 self.MODE_GLOBAL_SHARED}):
             return "013"
 
         # after match - breakdown
-        elif self.run_014():
+        elif self.run_014(modes={self.MODE_STORY_SOLO,
+                                 self.MODE_EVENT_SOLO,
+                                 self.MODE_SOLO,
+                                 self.MODE_CLUB_SHARED,
+                                 self.MODE_CLUB_JOIN,
+                                 self.MODE_GLOBAL_SHARED}):
             return "014"
 
         # after match - rank up
-        elif self.run_015():
+        elif self.run_015(modes={self.MODE_STORY_SOLO,
+                                 self.MODE_EVENT_SOLO,
+                                 self.MODE_SOLO,
+                                 self.MODE_CLUB_JOIN}):
             return "015"
 
         # after match -> special bonus
-        elif self.run_021():
+        elif self.run_021(modes={self.MODE_EVENT_SOLO,
+                                 self.MODE_SOLO,
+                                 self.MODE_CLUB_SHARED,
+                                 self.MODE_SOLO,
+                                 self.MODE_CLUB_JOIN,
+                                 self.MODE_GLOBAL_SHARED}):
             return "021"
 
         # after match -> clear rewards
-        elif self.run_022():
+        elif self.run_022(modes={self.MODE_EVENT_SOLO,
+                                 self.MODE_SOLO,
+                                 self.MODE_CLUB_SHARED,
+                                 self.MODE_CLUB_JOIN,
+                                 self.MODE_GLOBAL_SHARED}):
             return "022"
 
         # failed to join dialog
-        elif self.run_027():
+        elif self.run_027(modes={self.MODE_CLUB_SHARED,
+                                 self.MODE_GLOBAL_SHARED}):
             return "027"
 
         # room closed dialog
-        elif self.run_036():
+        elif self.run_036(modes={self.MODE_CLUB_SHARED,
+                                 self.MODE_GLOBAL_SHARED}):
             return "036"
 
         # unable to play dialog - max number of player -> shared
-        elif self.run_031():
+        elif self.run_031(modes={self.MODE_CLUB_SHARED}):
             return "031"
 
         # match condition have not met dialog - shared
-        elif self.run_032():
+        elif self.run_032(modes={self.MODE_CLUB_SHARED}):
             return "032"
 
-        #######################################################################################################
-
         # enter app
-        elif self.run_001():
+        elif self.run_001(modes={self.MODE_STORY_SOLO,
+                                 self.MODE_EVENT_SOLO,
+                                 self.MODE_CLUB_SHARED,
+                                 self.MODE_GLOBAL_SHARED}):
             return "001"
 
         # enter app
-        elif self.run_002():
+        elif self.run_002(modes={self.MODE_STORY_SOLO,
+                                 self.MODE_EVENT_SOLO,
+                                 self.MODE_CLUB_SHARED,
+                                 self.MODE_GLOBAL_SHARED}):
             return "002"
 
         # go to story mode
-        elif self.run_003():
+        elif self.run_003(
+                modes={self.MODE_STORY_SOLO,
+                       self.MODE_EVENT_SOLO,
+                       self.MODE_CLUB_SHARED,
+                       self.MODE_GLOBAL_SHARED}):
             return "003"
 
         # go to game ***
-        elif self.run_035():
+        elif self.run_035(modes={self.MODE_GLOBAL_SHARED}):
             return "035"
 
         # close news dialog
-        elif self.run_017():
+        elif self.run_017(modes={self.MODE_STORY_SOLO,
+                                 self.MODE_EVENT_SOLO,
+                                 self.MODE_CLUB_SHARED}):
             return "017"
 
         # restart match dialog
-        elif self.run_018():
+        elif self.run_018(modes={self.MODE_STORY_SOLO,
+                                 self.MODE_EVENT_SOLO,
+                                 self.MODE_CLUB_SHARED,
+                                 self.MODE_GLOBAL_SHARED}):
             return "018"
 
         # connection error dialog
-        elif self.run_033():
+        elif self.run_033(modes={self.MODE_CLUB_SHARED,
+                                 self.MODE_GLOBAL_SHARED}):
             return "033"
 
         # prevent screen off
