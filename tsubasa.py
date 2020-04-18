@@ -856,6 +856,25 @@ class Tsubasa:
         return False
 
     ########################################################################################################################
+
+    def run_033(self):
+        """
+        connection error dialog
+        :return:
+        """
+
+        modes = {self.MODE_CLUB_SHARED, self.MODE_GLOBAL_SHARED}
+        if self.config.mode not in modes: return False
+
+        # connection error
+        if CTDT.template("052").available():
+            # ok button - connection error dialog
+            if CTDT.template("053").click():
+                return True
+
+        return False
+
+    ########################################################################################################################
     ########################################################################################################################
 
     def run(self):
@@ -987,6 +1006,10 @@ class Tsubasa:
         # restart match dialog
         elif self.run_018():
             return "018"
+
+        # connection error dialog
+        elif self.run_033():
+            return "033"
 
         # prevent screen off
         elif self.run_030():
