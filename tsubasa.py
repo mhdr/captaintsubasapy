@@ -989,7 +989,8 @@ class Tsubasa:
         # close news dialog
         elif self.run_017(modes={self.MODE_STORY_SOLO,
                                  self.MODE_EVENT_SOLO,
-                                 self.MODE_CLUB_SHARED}):
+                                 self.MODE_CLUB_SHARED,
+                                 self.MODE_GLOBAL_SHARED}):
             return "017"
 
         # restart match dialog
