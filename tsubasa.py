@@ -276,25 +276,6 @@ class Tsubasa:
 
     ########################################################################################################################
 
-    def run_011(self, modes: set):
-        """
-        kick off button
-        :return:
-        """
-
-        if self.config.mode not in modes: return False
-
-        if CTDT.template("011").click():
-            # send number of matched played to telegram bot
-            self.increase_count_played_match()
-            self.send_count_played_match()
-
-            return True
-
-        return False
-
-    ########################################################################################################################
-
     def run_012(self, modes: set):
         """
         after match -> go to scenario list
@@ -606,58 +587,78 @@ class Tsubasa:
 
         if self.config.mode not in modes: return False
 
-        # if kick off button available
-        if CTDT.template("045").available():
+        modes1 = {self.MODE_STORY_SOLO,
+                  self.MODE_EVENT_SOLO,
+                  self.MODE_SOLO}
 
-            # first we should count the number of members
-            # and check if there is a change on it
-            count_members = 0
+        # modes with join
+        modes2 = {self.MODE_CLUB_JOIN}
 
-            if not CTDT.template("042").available():
-                count_members = 1
-                if not CTDT.template("043").available():
-                    count_members = 2
-                    if not CTDT.template("044").available():
-                        count_members = 3
+        if self.config.mode in modes1:
 
-            # if there is a change in number of members we should update datetime and number of members
-            if count_members != self.member_joined_count:
-                # there is a change in number of members
-                self.member_joined_datetime = datetime.now()
-                self.member_joined_count = count_members
+            # kick off button for simple matches
+            if CTDT.template("011").click():
+                # send number of matched played to telegram bot
+                self.increase_count_played_match()
+                self.send_count_played_match()
 
-            # calculate seconds that members are waiting
-            diff = datetime.now() - self.member_joined_datetime
-            seconds = diff.total_seconds()
+                return True
 
-            # compare number of members with predefined wait time in config
-            # for example if there 1 member wait 60 seconds then kick off
-            # if there are 2 members wait 30 seconds and then kick off
-            # if there are 3 members wait 5 seconds and then kick off
-            kickoff = False
-            if self.member_joined_count == 1:
-                if seconds > self.config.wait_after_member1_join:
-                    kickoff = True
-            elif self.member_joined_count == 2:
-                if seconds > self.config.wait_after_member2_join:
-                    kickoff = True
-            elif self.member_joined_count == 3:
-                if seconds > self.config.wait_after_member3_join:
-                    kickoff = True
+        # kick off button with join matches
+        elif self.config.mode in modes2:
 
-            # we can kick off
-            if kickoff:
-                # click on kick off button
-                if CTDT.template("045").click():
-                    # send number of matched played to telegram bot
-                    self.increase_count_played_match()
-                    self.send_count_played_match()
+            # if kick off button available
+            if CTDT.template("045").available():
 
-                    # reset variables
-                    self.member_joined_datetime = None
-                    self.member_joined_count = 0
+                # first we should count the number of members
+                # and check if there is a change on it
+                count_members = 0
 
-            return True
+                if not CTDT.template("042").available():
+                    count_members = 1
+                    if not CTDT.template("043").available():
+                        count_members = 2
+                        if not CTDT.template("044").available():
+                            count_members = 3
+
+                # if there is a change in number of members we should update datetime and number of members
+                if count_members != self.member_joined_count:
+                    # there is a change in number of members
+                    self.member_joined_datetime = datetime.now()
+                    self.member_joined_count = count_members
+
+                # calculate seconds that members are waiting
+                diff = datetime.now() - self.member_joined_datetime
+                seconds = diff.total_seconds()
+
+                # compare number of members with predefined wait time in config
+                # for example if there 1 member wait 60 seconds then kick off
+                # if there are 2 members wait 30 seconds and then kick off
+                # if there are 3 members wait 5 seconds and then kick off
+                kickoff = False
+                if self.member_joined_count == 1:
+                    if seconds > self.config.wait_after_member1_join:
+                        kickoff = True
+                elif self.member_joined_count == 2:
+                    if seconds > self.config.wait_after_member2_join:
+                        kickoff = True
+                elif self.member_joined_count == 3:
+                    if seconds > self.config.wait_after_member3_join:
+                        kickoff = True
+
+                # we can kick off
+                if kickoff:
+                    # click on kick off button
+                    if CTDT.template("045").click():
+                        # send number of matched played to telegram bot
+                        self.increase_count_played_match()
+                        self.send_count_played_match()
+
+                        # reset variables
+                        self.member_joined_datetime = None
+                        self.member_joined_count = 0
+
+                return True
 
         return False
 
@@ -881,13 +882,10 @@ class Tsubasa:
             return "010"
 
         # kick off button
-        elif self.run_011(modes={self.MODE_STORY_SOLO,
+        elif self.run_028(modes={self.MODE_STORY_SOLO,
                                  self.MODE_EVENT_SOLO,
-                                 self.MODE_SOLO}):
-            return "011"
-
-        # kick off button join
-        elif self.run_028(modes={self.MODE_CLUB_JOIN}):
+                                 self.MODE_SOLO,
+                                 self.MODE_CLUB_JOIN}):
             return "028"
 
         # go to scenario list
@@ -960,7 +958,7 @@ class Tsubasa:
         elif self.run_032(modes={self.MODE_CLUB_SHARED}):
             return "032"
 
-        # enter app
+        # run app
         elif self.run_001(modes={self.MODE_STORY_SOLO,
                                  self.MODE_EVENT_SOLO,
                                  self.MODE_CLUB_SHARED,
@@ -982,7 +980,7 @@ class Tsubasa:
                        self.MODE_GLOBAL_SHARED}):
             return "003"
 
-        # go to game ***
+        # *** go to game ***
         elif self.run_035(modes={self.MODE_GLOBAL_SHARED}):
             return "035"
 
