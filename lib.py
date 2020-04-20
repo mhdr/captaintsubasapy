@@ -282,8 +282,8 @@ class CTDT:
                 continue
 
             image: Image.Image = Image.open(join(src_dir, file))
-            # image_rgb = image.convert("RGB")
-            image_rgb = image.convert("L")
+            image_rgb = image.convert("RGB")
+            # image_rgb = image.convert("L")
             image_rgb.save(join(dest_dir, filename + ".jpg"), format='JPEG', quality=90)
 
     @staticmethod

@@ -1,21 +1,24 @@
 from PIL import ImageGrab
 import cv2
+from openpyxl.worksheet.worksheet import Worksheet
+
 from lib import CTDT
 import time
 import os
 import numpy as np
 import ctypes
+from openpyxl import Workbook, load_workbook
 
 user32 = ctypes.windll.user32
 user32.SetProcessDPIAware()
 
 threshold = 0.9
 
-# file name like : 031f.png
+# file name like : 031f.jpg
 # Column A in excel
 index_fimage = 57
 
-# template number like : 007.png
+# template number like : 007.jpg
 # Column F in excel
 index_template = 57
 
@@ -75,4 +78,22 @@ else:
     # Displaying the image
     cv2.imshow(window_name, image)
 
+    # save to data file
+    wb: Workbook = load_workbook(filename="data.xlsx")
+    ws: Worksheet = wb["Templates"]
+    end_row = ws.max_row
+    # start after header
+    start_row = 2
+    row_index = start_row
+    while row_index <= end_row:
+
+        if ws["A" + str(row_index)].value == template_number:
+            ws.cell(row_index, 2, start_x)
+            ws.cell(row_index, 3, start_y)
+            ws.cell(row_index, 4, end_x)
+            ws.cell(row_index, 5, end_y)
+            break
+        row_index += 1
+
+    wb.save("data.xlsx")
     k = cv2.waitKey(0)  # 0==wait forever
