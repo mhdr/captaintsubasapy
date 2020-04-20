@@ -23,15 +23,6 @@ class Tsubasa:
     EnergyRecovery_Dreamball = 5
     EnergyRecovery_None_Telegram = 6
 
-    Difficulty_Normal_Horizontal = 1
-    Difficulty_Hard_Horizontal = 2
-    Difficulty_VeryHard_Horizontal = 3
-    Difficulty_Extreme_Horizontal = 4
-    Difficulty_Normal_Vertical = 5
-    Difficulty_Hard_Vertical = 6
-    Difficulty_VeryHard_Vertical = 7
-    Difficulty_Extreme_Vertical = 8
-
     Telegram_Disabled = 0
     Telegram_Enabled = 1
 
@@ -139,39 +130,9 @@ class Tsubasa:
 
         if self.config.mode not in modes: return False
 
-        if self.config.difficulty == self.Difficulty_Normal_Horizontal:
-            pass
-        elif self.config.difficulty == self.Difficulty_Hard_Horizontal:
-            pass
-        elif self.config.difficulty == self.Difficulty_VeryHard_Horizontal:
-
-            # difficulty - very hard horizontal
-            if CTDT.template("007").click():
-                return True
-
-        elif self.config.difficulty == self.Difficulty_Extreme_Horizontal:
-
-            # difficulty - extreme horizontal
-            if CTDT.template("025").click():
-                return True
-
-        elif self.config.difficulty == self.Difficulty_Normal_Vertical:
-
-            # difficulty - normal vertical
-            if CTDT.template("039").click():
-                return True
-
-        elif self.config.difficulty == self.Difficulty_Hard_Vertical:
-            pass
-
-        elif self.config.difficulty == self.Difficulty_VeryHard_Vertical:
-
-            # difficulty - very hard vertical
-            if CTDT.template("031").click():
-                return True
-
-        elif self.config.difficulty == self.Difficulty_Extreme_Vertical:
-            pass
+        # difficulty
+        if CTDT.template("057").click():
+            return True
 
         return False
 
