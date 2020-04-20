@@ -794,7 +794,7 @@ class Tsubasa:
                                  self.MODE_GLOBAL_SHARED}):
             return "026"
 
-        # difficulty
+        # *** difficulty
         if self.run_007(modes={self.MODE_STORY_SOLO,
                                self.MODE_EVENT_SOLO,
                                self.MODE_SOLO,
@@ -941,7 +941,7 @@ class Tsubasa:
                        self.MODE_GLOBAL_SHARED}):
             return "003"
 
-        # *** go to game ***
+        # *** go to game
         elif self.run_035(modes={self.MODE_GLOBAL_SHARED}):
             return "035"
 
