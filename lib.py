@@ -18,6 +18,7 @@ import ctypes
 import shutil
 from openpyxl.worksheet.worksheet import Worksheet
 
+
 #######################################################################################################################
 
 @dataclass()
@@ -81,8 +82,8 @@ class Cache:
 
 class Config:
     __instance = None
-    game: int
     mode: int
+    difficulty: int
     sleep: float
     prevent_screen_off: int
     energy_recovery: int
@@ -112,8 +113,8 @@ class Config:
             Config.sleep = float(config["General"]["Sleep"])
             Config.prevent_screen_off = int(config["General"]["PreventScreenOff"])
 
-            Config.game = int(config["Game"]["Game"])
             Config.mode = int(config["Game"]["Mode"])
+            Config.game = int(config["Game"]["Difficulty"])
             Config.energy_recovery = int(config["Game"]["EnergyRecovery"])
             Config.wait_energy_recovery = int(config["Game"]["WaitForEnergyRecovery"])
             Config.wait_telegram_msg_energy_recovery = int(config["Game"]["WaitTelegramMsgEnergyRecovery"])
@@ -214,21 +215,6 @@ class CTDT:
         # make current process dpi aware
         user32 = ctypes.windll.user32
         user32.SetProcessDPIAware()
-
-        config: Config = Config.get_instance()
-        dir: str = "{0}".format(str(config.game).zfill(3))
-
-        ########## 057 ###########################
-
-        src1 = os.path.join("images", "057", dir, "057.png")
-        dst1 = os.path.join("templates_original", "057.png")
-        shutil.copyfile(src1, dst1)
-
-        src2 = os.path.join("images", "057", dir, "057f.png")
-        dst2 = os.path.join("templates_original", "057f.png")
-        shutil.copyfile(src2, dst2)
-
-        CTDT.data(57, 57)
 
     @staticmethod
     def initialize_cache():

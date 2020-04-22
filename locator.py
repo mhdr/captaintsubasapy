@@ -12,15 +12,15 @@ from openpyxl import Workbook, load_workbook
 user32 = ctypes.windll.user32
 user32.SetProcessDPIAware()
 
-threshold = 0.9
+threshold = 0.97
 
 # file name like : 031f.jpg
 # Column A in excel
-index_fimage = 6
+index_fimage = 60
 
 # template number like : 007.jpg
 # Column F in excel
-index_template = 6
+index_template = 60
 
 # first match = 0
 match = 0
@@ -96,4 +96,4 @@ else:
         row_index += 1
 
     wb.save("data.xlsx")
-    CTDT.convert_templates_to_jpeg()
+    cv2.waitKey(0)

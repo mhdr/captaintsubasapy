@@ -130,9 +130,33 @@ class Tsubasa:
 
         if self.config.mode not in modes: return False
 
-        # difficulty
-        if CTDT.template("057").click():
-            return True
+        # normal
+        if self.config.difficulty == 1:
+
+            # difficulty normal
+            if CTDT.template("057").click():
+                return True
+
+        # hard
+        elif self.config.difficulty == 2:
+
+            # difficulty hard
+            if CTDT.template("058").click():
+                return True
+
+        # very hard
+        elif self.config.difficulty == 3:
+
+            # difficulty very hard
+            if CTDT.template("059").click():
+                return True
+
+        # extreme
+        elif self.config.difficulty == 4:
+
+            # difficulty extreme
+            if CTDT.template("060").click():
+                return True
 
         return False
 
