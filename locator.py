@@ -16,11 +16,11 @@ threshold = 0.9
 
 # file name like : 031f.jpg
 # Column A in excel
-index_fimage = 57
+index_fimage = 6
 
 # template number like : 007.jpg
 # Column F in excel
-index_template = 57
+index_template = 6
 
 # first match = 0
 match = 0
@@ -88,10 +88,10 @@ else:
     while row_index <= end_row:
 
         if ws["A" + str(row_index)].value == template_number:
-            ws.cell(row_index, 2, start_x)
-            ws.cell(row_index, 3, start_y)
-            ws.cell(row_index, 4, end_x)
-            ws.cell(row_index, 5, end_y)
+            ws.cell(row_index, 2, start_x - 5)
+            ws.cell(row_index, 3, start_y - 5)
+            ws.cell(row_index, 4, end_x + 5)
+            ws.cell(row_index, 5, end_y + 5)
             break
         row_index += 1
 
