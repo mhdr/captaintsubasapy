@@ -20,8 +20,6 @@ from openpyxl.worksheet.worksheet import Worksheet
 
 #######################################################################################################################
 
-
-
 @dataclass()
 class Box:
     left: int
