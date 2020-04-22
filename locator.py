@@ -96,4 +96,4 @@ else:
         row_index += 1
 
     wb.save("data.xlsx")
-    k = cv2.waitKey(0)  # 0==wait forever
+    CTDT.convert_templates_to_jpeg()
