@@ -70,12 +70,12 @@ else:
     while row_index <= end_row:
 
         if ws["A" + str(row_index)].value == template_number:
-            ws.cell(row_index, 2, start_x)
-            ws.cell(row_index, 3, start_y)
-            ws.cell(row_index, 4, end_x)
-            ws.cell(row_index, 5, end_y)
+            ws.cell(row_index, 2, start_x - 5)
+            ws.cell(row_index, 3, start_y - 5)
+            ws.cell(row_index, 4, end_x + 5)
+            ws.cell(row_index, 5, end_y + 5)
             break
         row_index += 1
 
     wb.save("data.xlsx")
-    k = cv2.waitKey(0)  # 0==wait forever
+    CTDT.convert_templates_to_jpeg()
