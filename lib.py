@@ -114,7 +114,7 @@ class Config:
             Config.prevent_screen_off = int(config["General"]["PreventScreenOff"])
 
             Config.mode = int(config["Game"]["Mode"])
-            Config.game = int(config["Game"]["Difficulty"])
+            Config.difficulty = int(config["Game"]["Difficulty"])
             Config.energy_recovery = int(config["Game"]["EnergyRecovery"])
             Config.wait_energy_recovery = int(config["Game"]["WaitForEnergyRecovery"])
             Config.wait_telegram_msg_energy_recovery = int(config["Game"]["WaitTelegramMsgEnergyRecovery"])
