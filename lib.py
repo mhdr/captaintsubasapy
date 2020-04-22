@@ -15,10 +15,12 @@ from typing import Dict, List
 import datetime
 import configparser
 import ctypes
+import shutil
 import win32api, win32process, win32con
 
-
 #######################################################################################################################
+from openpyxl.worksheet.worksheet import Worksheet
+
 
 @dataclass()
 class Box:
@@ -81,6 +83,7 @@ class Cache:
 
 class Config:
     __instance = None
+    game: int
     mode: int
     sleep: float
     prevent_screen_off: int
@@ -111,6 +114,7 @@ class Config:
             Config.sleep = float(config["General"]["Sleep"])
             Config.prevent_screen_off = int(config["General"]["PreventScreenOff"])
 
+            Config.game = int(config["Game"]["Game"])
             Config.mode = int(config["Game"]["Mode"])
             Config.energy_recovery = int(config["Game"]["EnergyRecovery"])
             Config.wait_energy_recovery = int(config["Game"]["WaitForEnergyRecovery"])
@@ -212,6 +216,21 @@ class CTDT:
         # make current process dpi aware
         user32 = ctypes.windll.user32
         user32.SetProcessDPIAware()
+
+        config: Config = Config.get_instance()
+        dir: str = "{0}".format(str(config.game).zfill(3))
+
+        ########## 057 ###########################
+
+        src1 = os.path.join("images", "057", dir, "057.png")
+        dst1 = os.path.join("templates_original", "057.png")
+        shutil.copyfile(src1, dst1)
+
+        src2 = os.path.join("images", "057", dir, "057f.png")
+        dst2 = os.path.join("templates_original", "057f.png")
+        shutil.copyfile(src2, dst2)
+
+        CTDT.data(57, 57)
 
     @staticmethod
     def initialize_cache():
@@ -325,3 +344,59 @@ class CTDT:
             caches.templates[template_number].date_seen = datetime.datetime.now()
 
         return result
+
+    @staticmethod
+    def data(index_fimage: int, index_template: int, threshold=0.9, match=0):
+
+        # file name like : 031f.jpg
+        # Column A in excel
+        # index_fimage = 57
+
+        # template number like : 007.jpg
+        # Column F in excel
+        # index_template = 57
+
+        # first match = 0
+        # match = 0
+
+        template_number = "{0}".format(str(index_template).zfill(3))
+        f_image_number = "{0}".format(str(index_fimage).zfill(3))
+
+        image_screen = cv2.imread(os.path.join("templates_original", f_image_number + "f.png"))
+        image_template = cv2.imread(os.path.join("templates_original", template_number + ".png"), 0)
+        width, height = image_template.shape[::-1]
+
+        image_rgb = np.array(image_screen)
+        image_gray = cv2.cvtColor(image_rgb, cv2.COLOR_BGR2GRAY)
+        res = cv2.matchTemplate(image_gray, image_template, cv2.TM_CCOEFF_NORMED)
+
+        loc = np.where(res >= threshold)
+
+        if len(loc[0]) == 0 & len(loc[1]) == 0:
+            print("Image not found")
+        else:
+
+            start_x = loc[1][match]
+            start_y = loc[0][match]
+
+            end_x = start_x + width
+            end_y = start_y + height
+
+            # save to data file
+            wb: Workbook = load_workbook(filename="data.xlsx")
+            ws: Worksheet = wb["Templates"]
+            end_row = ws.max_row
+            # start after header
+            start_row = 2
+            row_index = start_row
+            while row_index <= end_row:
+
+                if ws["A" + str(row_index)].value == template_number:
+                    ws.cell(row_index, 2, start_x - 5)
+                    ws.cell(row_index, 3, start_y - 5)
+                    ws.cell(row_index, 4, end_x + 5)
+                    ws.cell(row_index, 5, end_y + 5)
+                    break
+                row_index += 1
+
+            wb.save("data.xlsx")
