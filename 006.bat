@@ -1,1 +1,0 @@
-python 006.py
