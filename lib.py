@@ -344,7 +344,7 @@ class CTDT:
         return result
 
     @staticmethod
-    def data(index_fimage: int, index_template: int, threshold=0.9, match=0):
+    def data(index_fimage: int, index_template: int, threshold=0.97, match=0):
 
         # file name like : 031f.jpg
         # Column A in excel
