@@ -5,21 +5,21 @@ import cv2
 import pyautogui
 from os import listdir
 from os.path import isfile, join
-from PIL import Image, ImageGrab
+from PIL import ImageGrab
 from openpyxl import Workbook, worksheet, load_workbook
 import os
 from PIL import Image
 import numpy as np
 from dataclasses import dataclass
-from typing import Dict, List
+from typing import Dict
 import datetime
 import configparser
 import ctypes
 import shutil
-import win32api, win32process, win32con
+from openpyxl.worksheet.worksheet import Worksheet
 
 #######################################################################################################################
-from openpyxl.worksheet.worksheet import Worksheet
+
 
 
 @dataclass()
