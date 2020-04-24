@@ -945,6 +945,7 @@ class Tsubasa:
 
         # after match -> clear rewards
         elif self.run_037(modes={self.MODE_GLOBAL_SHARED}):
+            return "037"
 
         # after match -> clear rewards
         elif self.run_022(modes={self.MODE_EVENT_SOLO,
