@@ -812,6 +812,20 @@ class Tsubasa:
 
         return False
 
+    def run_037(self, modes: set):
+        """
+        after match -> shared play reward
+        :return:
+        """
+
+        if self.config.mode not in modes: return False
+
+        # after match -> shared play reward
+        if CTDT.template("062").click():
+            return True
+
+        return False
+
     ########################################################################################################################
     ########################################################################################################################
 
@@ -928,6 +942,9 @@ class Tsubasa:
                                  self.MODE_CLUB_JOIN,
                                  self.MODE_GLOBAL_SHARED}):
             return "021"
+
+        # after match -> clear rewards
+        elif self.run_037(modes={self.MODE_GLOBAL_SHARED}):
 
         # after match -> clear rewards
         elif self.run_022(modes={self.MODE_EVENT_SOLO,
