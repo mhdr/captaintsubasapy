@@ -231,27 +231,34 @@ class CTDT:
         row_index = start_row
 
         while row_index <= end_row:
-            template_number: str = str(ws["A" + str(row_index)].value)
-            start_x: int = int(ws["B" + str(row_index)].value)
-            start_y: int = int(ws["C" + str(row_index)].value)
-            end_x: int = int(ws["D" + str(row_index)].value)
-            end_y: int = int(ws["E" + str(row_index)].value)
-            # using separate file name help to use one image with multiple location
-            # for most of the templates file name is the same as template number
-            # but for some of them it is not
-            template_file_name: str = str(ws["F" + str(row_index)].value)
-            filename = join(dir, template_file_name + ".jpg")
+            try:
 
-            # Using 0 to read image in grayscale mode
-            image = cv2.imread(filename, 0)
-            width, height = image.shape[::-1]
+                template_number: str = str(ws["A" + str(row_index)].value)
+                start_x: int = int(ws["B" + str(row_index)].value)
+                start_y: int = int(ws["C" + str(row_index)].value)
+                end_x: int = int(ws["D" + str(row_index)].value)
+                end_y: int = int(ws["E" + str(row_index)].value)
+                # using separate file name help to use one image with multiple location
+                # for most of the templates file name is the same as template number
+                # but for some of them it is not
+                template_file_name: str = str(ws["F" + str(row_index)].value)
+                filename = join(dir, template_file_name + ".jpg")
 
-            template_properties: TemplateProperties = TemplateProperties(template_number, image, width, height, start_x,
-                                                                         start_y,
-                                                                         end_x, end_y, None)
+                # Using 0 to read image in grayscale mode
+                image = cv2.imread(filename, 0)
+                width, height = image.shape[::-1]
 
-            caches.templates[template_number] = template_properties
-            row_index += 1
+                template_properties: TemplateProperties = TemplateProperties(template_number, image, width, height,
+                                                                             start_x,
+                                                                             start_y,
+                                                                             end_x, end_y, None)
+
+                caches.templates[template_number] = template_properties
+                row_index += 1
+
+            except Exception as ex:
+                raise ex
+                # breakpoint()
 
         end_row2 = ws2.max_row
         start_row2 = 2
