@@ -758,7 +758,7 @@ class Tsubasa:
         if self.config.mode not in modes: return False
 
         # go to event
-        elif CTDT.template("023").click():
+        if CTDT.template("023").click():
             return True
 
         # go to event match
