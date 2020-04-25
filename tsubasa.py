@@ -239,7 +239,14 @@ class Tsubasa:
 
         elif self.config.mode == self.MODE_GLOBAL_SHARED:
 
+            # global shared play
             if CTDT.template("051").click():
+                return True
+
+        elif self.config.mode == self.MODE_GLOBAL_JOIN:
+
+            # recruit share play
+            if CTDT.template("063").click():
                 return True
 
         return False
@@ -577,7 +584,7 @@ class Tsubasa:
                   self.MODE_SOLO}
 
         # modes with join
-        modes2 = {self.MODE_CLUB_JOIN}
+        modes2 = {self.MODE_CLUB_JOIN, self.MODE_GLOBAL_JOIN}
 
         if self.config.mode in modes1:
 
@@ -849,21 +856,24 @@ class Tsubasa:
                                self.MODE_EVENT_SOLO,
                                self.MODE_SOLO,
                                self.MODE_CLUB_JOIN,
-                               self.MODE_GLOBAL_SHARED}):
+                               self.MODE_GLOBAL_SHARED,
+                               self.MODE_GLOBAL_JOIN}):
             return "007"
 
         # energy recovered dialog
         elif self.run_024(modes={self.MODE_STORY_SOLO,
                                  self.MODE_EVENT_SOLO,
                                  self.MODE_SOLO,
-                                 self.MODE_CLUB_JOIN}):
+                                 self.MODE_CLUB_JOIN,
+                                 self.MODE_GLOBAL_JOIN}):
             return "024"
 
         # energy recovery dialog
         elif self.run_016(modes={self.MODE_STORY_SOLO,
                                  self.MODE_EVENT_SOLO,
                                  self.MODE_SOLO,
-                                 self.MODE_CLUB_JOIN}):
+                                 self.MODE_CLUB_JOIN,
+                                 self.MODE_GLOBAL_JOIN}):
             return "016"
 
         # play type : solo, shared play, join
@@ -871,11 +881,13 @@ class Tsubasa:
                                  self.MODE_EVENT_SOLO,
                                  self.MODE_SOLO,
                                  self.MODE_CLUB_JOIN,
-                                 self.MODE_GLOBAL_SHARED}):
+                                 self.MODE_GLOBAL_SHARED,
+                                 self.MODE_GLOBAL_JOIN}):
             return "009"
 
         # recruit button - join
-        elif self.run_029(modes={self.MODE_CLUB_JOIN}):
+        elif self.run_029(modes={self.MODE_CLUB_JOIN,
+                                 self.MODE_GLOBAL_JOIN}):
             return "029"
 
         # play match button
@@ -883,7 +895,8 @@ class Tsubasa:
                                  self.MODE_EVENT_SOLO,
                                  self.MODE_SOLO,
                                  self.MODE_CLUB_JOIN,
-                                 self.MODE_GLOBAL_SHARED}):
+                                 self.MODE_GLOBAL_SHARED,
+                                 self.MODE_GLOBAL_JOIN}):
             return "008"
 
         # select friend
@@ -906,7 +919,8 @@ class Tsubasa:
                                  self.MODE_SOLO,
                                  self.MODE_CLUB_SHARED,
                                  self.MODE_CLUB_JOIN,
-                                 self.MODE_GLOBAL_SHARED}):
+                                 self.MODE_GLOBAL_SHARED,
+                                 self.MODE_GLOBAL_JOIN}):
             return "012"
 
         # after match - you win
@@ -915,7 +929,8 @@ class Tsubasa:
                                  self.MODE_SOLO,
                                  self.MODE_CLUB_SHARED,
                                  self.MODE_CLUB_JOIN,
-                                 self.MODE_GLOBAL_SHARED}):
+                                 self.MODE_GLOBAL_SHARED,
+                                 self.MODE_GLOBAL_JOIN}):
             return "013"
 
         # after match - breakdown
@@ -924,14 +939,16 @@ class Tsubasa:
                                  self.MODE_SOLO,
                                  self.MODE_CLUB_SHARED,
                                  self.MODE_CLUB_JOIN,
-                                 self.MODE_GLOBAL_SHARED}):
+                                 self.MODE_GLOBAL_SHARED,
+                                 self.MODE_GLOBAL_JOIN}):
             return "014"
 
         # after match - rank up
         elif self.run_015(modes={self.MODE_STORY_SOLO,
                                  self.MODE_EVENT_SOLO,
                                  self.MODE_SOLO,
-                                 self.MODE_CLUB_JOIN}):
+                                 self.MODE_CLUB_JOIN,
+                                 self.MODE_GLOBAL_JOIN}):
             return "015"
 
         # after match -> special bonus
@@ -940,11 +957,13 @@ class Tsubasa:
                                  self.MODE_CLUB_SHARED,
                                  self.MODE_SOLO,
                                  self.MODE_CLUB_JOIN,
-                                 self.MODE_GLOBAL_SHARED}):
+                                 self.MODE_GLOBAL_SHARED,
+                                 self.MODE_GLOBAL_JOIN}):
             return "021"
 
         # after match -> clear rewards
-        elif self.run_037(modes={self.MODE_GLOBAL_SHARED}):
+        elif self.run_037(modes={self.MODE_GLOBAL_SHARED,
+                                 self.MODE_GLOBAL_JOIN}):
             return "037"
 
         # after match -> clear rewards
@@ -952,7 +971,8 @@ class Tsubasa:
                                  self.MODE_SOLO,
                                  self.MODE_CLUB_SHARED,
                                  self.MODE_CLUB_JOIN,
-                                 self.MODE_GLOBAL_SHARED}):
+                                 self.MODE_GLOBAL_SHARED,
+                                 self.MODE_GLOBAL_JOIN}):
             return "022"
 
         # failed to join dialog
@@ -977,14 +997,16 @@ class Tsubasa:
         elif self.run_001(modes={self.MODE_STORY_SOLO,
                                  self.MODE_EVENT_SOLO,
                                  self.MODE_CLUB_SHARED,
-                                 self.MODE_GLOBAL_SHARED}):
+                                 self.MODE_GLOBAL_SHARED,
+                                 self.MODE_GLOBAL_JOIN}):
             return "001"
 
         # enter app
         elif self.run_002(modes={self.MODE_STORY_SOLO,
                                  self.MODE_EVENT_SOLO,
                                  self.MODE_CLUB_SHARED,
-                                 self.MODE_GLOBAL_SHARED}):
+                                 self.MODE_GLOBAL_SHARED,
+                                 self.MODE_GLOBAL_JOIN}):
             return "002"
 
         # go to story mode
@@ -992,30 +1014,35 @@ class Tsubasa:
                 modes={self.MODE_STORY_SOLO,
                        self.MODE_EVENT_SOLO,
                        self.MODE_CLUB_SHARED,
-                       self.MODE_GLOBAL_SHARED}):
+                       self.MODE_GLOBAL_SHARED,
+                       self.MODE_GLOBAL_JOIN}):
             return "003"
 
         # *** go to game
-        elif self.run_035(modes={self.MODE_GLOBAL_SHARED}):
+        elif self.run_035(modes={self.MODE_GLOBAL_SHARED,
+                                 self.MODE_GLOBAL_JOIN}):
             return "035"
 
         # close news dialog
         elif self.run_017(modes={self.MODE_STORY_SOLO,
                                  self.MODE_EVENT_SOLO,
                                  self.MODE_CLUB_SHARED,
-                                 self.MODE_GLOBAL_SHARED}):
+                                 self.MODE_GLOBAL_SHARED,
+                                 self.MODE_GLOBAL_JOIN}):
             return "017"
 
         # restart match dialog
         elif self.run_018(modes={self.MODE_STORY_SOLO,
                                  self.MODE_EVENT_SOLO,
                                  self.MODE_CLUB_SHARED,
-                                 self.MODE_GLOBAL_SHARED}):
+                                 self.MODE_GLOBAL_SHARED,
+                                 self.MODE_GLOBAL_JOIN}):
             return "018"
 
         # connection error dialog
         elif self.run_033(modes={self.MODE_CLUB_SHARED,
-                                 self.MODE_GLOBAL_SHARED}):
+                                 self.MODE_GLOBAL_SHARED,
+                                 self.MODE_GLOBAL_JOIN}):
             return "033"
 
         # prevent screen off
