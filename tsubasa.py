@@ -909,7 +909,8 @@ class Tsubasa:
         elif self.run_028(modes={self.MODE_STORY_SOLO,
                                  self.MODE_EVENT_SOLO,
                                  self.MODE_SOLO,
-                                 self.MODE_CLUB_JOIN}):
+                                 self.MODE_CLUB_JOIN,
+                                 self.MODE_GLOBAL_JOIN}):
             return "028"
 
         # go to scenario list
