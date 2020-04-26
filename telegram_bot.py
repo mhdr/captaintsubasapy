@@ -29,12 +29,7 @@ class TelegramBot:
         dp = updater.dispatcher
 
         # on different commands - answer in Telegram
-        dp.add_handler(CommandHandler("start", self.start))
-        dp.add_handler(CommandHandler("help", self.help))
         dp.add_handler(CommandHandler("screenshot", self.screenshot))
-
-        # on noncommand i.e message - echo the message on Telegram
-        dp.add_handler(MessageHandler(Filters.text, self.msg))
 
         # log all errors
         dp.add_error_handler(self.error)
@@ -46,21 +41,6 @@ class TelegramBot:
         # SIGTERM or SIGABRT. This should be used most of the time, since
         # start_polling() is non-blocking and will stop the bot gracefully.
         # self.updater.idle()
-
-
-    # Define a few command handlers. These usually take the two arguments update and
-    # context. Error handlers also receive the raised TelegramError object in error.
-    def start(self, update, context):
-        """Send a message when the command /start is issued."""
-        update.message.reply_text('Hi!')
-
-    def help(self, update, context):
-        """Send a message when the command /help is issued."""
-        update.message.reply_text('Help!')
-
-    def msg(self, update, context):
-        """Echo the user message."""
-        update.message.reply_text(self, update.message.text)
 
     def error(self, update, context):
         """Log Errors caused by Updates."""
