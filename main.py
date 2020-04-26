@@ -24,8 +24,6 @@ CTDT.initialize_cache()
 
 # telegram bot updater
 updater: Updater = None
-thread_telegram = None
-thread_ctdt = None
 
 print("Start Processing : {0}".format(datetime.now()))
 
@@ -107,23 +105,12 @@ def ctdt():
                 print(str(ex))
 
 
-if config.telegram_disabled == 0:
-    thread_telegram = Thread(target=telegram_bot)
-thread_ctdt = Thread(target=ctdt)
-
 if __name__ == "__main__":
     # execute only if run as a script
 
-    thread_ctdt.start()
-
-    if config.telegram_disabled == 0:
-        thread_telegram.start()
-
-        # Run the bot until you press Ctrl-C or the process receives SIGINT,
-        # SIGTERM or SIGABRT. This should be used most of the time, since
-        # start_polling() is non-blocking and will stop the bot gracefully.
-        updater.idle()
-
-    thread_ctdt.join()
-    if config.telegram_disabled == 0:
-        thread_telegram.join()
+    telegram_bot()
+    ctdt()
+    # Run the bot until you press Ctrl-C or the process receives SIGINT,
+    # SIGTERM or SIGABRT. This should be used most of the time, since
+    # start_polling() is non-blocking and will stop the bot gracefully.
+    updater.idle()
