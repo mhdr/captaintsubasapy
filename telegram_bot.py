@@ -42,11 +42,11 @@ class TelegramBot:
         # Start the Bot
         updater.start_polling(poll_interval=1, clean=True)
 
-    def idle(self):
         # Run the bot until you press Ctrl-C or the process receives SIGINT,
         # SIGTERM or SIGABRT. This should be used most of the time, since
         # start_polling() is non-blocking and will stop the bot gracefully.
-        self.updater.idle()
+        # self.updater.idle()
+
 
     # Define a few command handlers. These usually take the two arguments update and
     # context. Error handlers also receive the raised TelegramError object in error.
