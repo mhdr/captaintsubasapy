@@ -391,3 +391,12 @@ class CTDT:
                 row_index += 1
 
             wb.save("data.xlsx")
+
+
+
+    @staticmethod
+    def save_screenshot():
+        user32 = ctypes.windll.user32
+        user32.SetProcessDPIAware()
+        image = ImageGrab.grab()
+        image.save("screenshot.jpg")
