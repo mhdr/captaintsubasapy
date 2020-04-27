@@ -752,6 +752,16 @@ class Tsubasa:
                     "Connection Error : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
                 return True
 
+        elif CTDT.template("064").available():
+
+            # retry button
+            if CTDT.template("065").click():
+                # after connection error the game goes to the first page
+                self.send_telegram_message(
+                    "Connection Error 2 : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+                return True
+
+
         return False
 
     ########################################################################################################################
