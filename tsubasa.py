@@ -914,6 +914,12 @@ class Tsubasa:
                                  self.MODE_SOLO}):
             return "010"
 
+        # connection error dialog
+        elif self.run_033(modes={self.MODE_CLUB_SHARED,
+                                 self.MODE_GLOBAL_SHARED,
+                                 self.MODE_GLOBAL_JOIN}):
+            return "033"
+
         # kick off button
         elif self.run_028(modes={self.MODE_STORY_SOLO,
                                  self.MODE_EVENT_SOLO,
@@ -1048,12 +1054,6 @@ class Tsubasa:
                                  self.MODE_GLOBAL_SHARED,
                                  self.MODE_GLOBAL_JOIN}):
             return "018"
-
-        # connection error dialog
-        elif self.run_033(modes={self.MODE_CLUB_SHARED,
-                                 self.MODE_GLOBAL_SHARED,
-                                 self.MODE_GLOBAL_JOIN}):
-            return "033"
 
         # prevent screen off
         elif self.run_030():
