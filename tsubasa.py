@@ -756,11 +756,10 @@ class Tsubasa:
 
             # retry button
             if CTDT.template("065").click():
-                # after connection error the game goes to the first page
+                # retry to connect
                 self.send_telegram_message(
                     "Connection Error 2 : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
                 return True
-
 
         return False
 
