@@ -923,7 +923,7 @@ class Tsubasa:
         if CTDT.template("071").available():
 
             # ad viewing interrupted dialog -> ok button
-            if CTDT.template("072").click(wait=30):
+            if CTDT.template("072").click(wait=self.config.wait_ad_view_interrupted):
                 return True
 
         return False

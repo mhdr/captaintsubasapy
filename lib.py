@@ -92,6 +92,7 @@ class Config:
     play_match_with_skip_ticket_button: int
     global_shared_play_enabled: int
     wait_finish_ad: int
+    wait_ad_view_interrupted: int
 
     telegram_token: str
     telegram_chatid: int
@@ -117,15 +118,16 @@ class Config:
             Config.mode = int(config["Game"]["Mode"])
             Config.difficulty = int(config["Game"]["Difficulty"])
             Config.energy_recovery = int(config["Game"]["EnergyRecovery"])
-            Config.wait_energy_recovery = int(config["Game"]["WaitForEnergyRecovery"])
-            Config.wait_telegram_msg_energy_recovery = int(config["Game"]["WaitTelegramMsgEnergyRecovery"])
+            Config.wait_energy_recovery = int(config["General"]["WaitForEnergyRecovery"])
+            Config.wait_telegram_msg_energy_recovery = int(config["General"]["WaitTelegramMsgEnergyRecovery"])
             Config.play_match_with_skip_ticket_button = int(config["Game"]["PlayMatchWithSkipTicketButton"])
             Config.global_shared_play_enabled = int(config["Game"]["GlobalSharedPlayEnabled"])
-            Config.wait_finish_ad = int(config["Game"]["WaitFinishAd"])
+            Config.wait_finish_ad = int(config["General"]["WaitFinishAd"])
+            Config.wait_ad_view_interrupted = int(config["General"]["WaitAfterAdViewInterrupted"])
 
-            Config.wait_after_member1_join = int(config["Game"]["WaitAfterMember1Joined"])
-            Config.wait_after_member2_join = int(config["Game"]["WaitAfterMember2Joined"])
-            Config.wait_after_member3_join = int(config["Game"]["WaitAfterMember3Joined"])
+            Config.wait_after_member1_join = int(config["General"]["WaitAfterMember1Joined"])
+            Config.wait_after_member2_join = int(config["General"]["WaitAfterMember2Joined"])
+            Config.wait_after_member3_join = int(config["General"]["WaitAfterMember3Joined"])
 
             Config.telegram_token = str(config["Telegram"]["Token"])
             Config.telegram_chatid = int(config["Telegram"]["ChatId"])
