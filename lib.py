@@ -93,6 +93,7 @@ class Config:
     global_shared_play_enabled: int
     wait_finish_ad: int
     wait_ad_view_interrupted: int
+    max_count_now_loading: int
 
     telegram_token: str
     telegram_chatid: int
@@ -124,7 +125,7 @@ class Config:
             Config.global_shared_play_enabled = int(config["Game"]["GlobalSharedPlayEnabled"])
             Config.wait_finish_ad = int(config["General"]["WaitFinishAd"])
             Config.wait_ad_view_interrupted = int(config["General"]["WaitAfterAdViewInterrupted"])
-
+            Config.max_count_now_loading = int(config["General"]["MaxCountNowLoading"])
             Config.wait_after_member1_join = int(config["General"]["WaitAfterMember1Joined"])
             Config.wait_after_member2_join = int(config["General"]["WaitAfterMember2Joined"])
             Config.wait_after_member3_join = int(config["General"]["WaitAfterMember3Joined"])

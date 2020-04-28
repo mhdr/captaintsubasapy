@@ -49,6 +49,9 @@ class Tsubasa:
     # start time of viewing ad
     ad_viewing_time = None
 
+    # it will increase on every cycle that is present and reset 0 otherwise so we can detect app freeze
+    count_now_loading = 0
+
     # telegral bot
     bot: Bot
 
@@ -86,7 +89,7 @@ class Tsubasa:
 
         if self.config.mode not in modes: return False
 
-        if CTDT.template("001").click(wait=4):
+        if CTDT.template("001").click(wait=5):
             self.send_telegram_message("Run App : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
             return True
 
@@ -929,6 +932,31 @@ class Tsubasa:
         return False
 
     ########################################################################################################################
+
+    def run_042(self, modes: set):
+        """
+        detect app freeze
+        :return:
+        """
+
+        if self.config.mode not in modes: return False
+
+        # detect app freeze
+        # it will increase on every cycle that is present and reset 0 otherwise
+        if CTDT.template("073").available():
+            self.count_now_loading += 1
+        else:
+            self.count_now_loading = 0
+
+        # close app and reset
+        if self.count_now_loading > self.config.max_count_now_loading:
+            self.count_now_loading = 0
+            CTDT.point("002").click()
+            return True
+
+        return False
+
+    ########################################################################################################################
     ########################################################################################################################
 
     def run(self):
@@ -1169,6 +1197,12 @@ class Tsubasa:
                                  self.MODE_SOLO,
                                  self.MODE_GLOBAL_JOIN}):
             return "039"
+
+
+        # detect app freeze
+        elif self.run_042(modes={self.MODE_GLOBAL_JOIN,
+                                 self.MODE_CLUB_JOIN}):
+            return "042"
 
         # prevent screen off
         elif self.run_030():
