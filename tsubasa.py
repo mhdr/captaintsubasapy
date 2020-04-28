@@ -392,7 +392,6 @@ class Tsubasa:
             elif self.config.energy_recovery == self.EnergyRecovery_Ad:
 
                 if CTDT.template("066").click():
-
                     # save start time of viewing ad
                     self.ad_viewing_time = datetime.now()
 
@@ -868,6 +867,7 @@ class Tsubasa:
 
                 # close ad after number of seconds we set in config
                 if CTDT.template("067").click():
+                    self.ad_viewing_time = None
                     return True
 
             return True
@@ -984,6 +984,13 @@ class Tsubasa:
         elif self.run_029(modes={self.MODE_CLUB_JOIN,
                                  self.MODE_GLOBAL_JOIN}):
             return "029"
+
+        # after ad - ad viewing interrupted dialog
+        elif self.run_041(modes={self.MODE_STORY_SOLO,
+                                 self.MODE_EVENT_SOLO,
+                                 self.MODE_SOLO,
+                                 self.MODE_GLOBAL_JOIN}):
+            return "041"
 
         # play match button
         elif self.run_008(modes={self.MODE_STORY_SOLO,
@@ -1163,13 +1170,6 @@ class Tsubasa:
                                  self.MODE_SOLO,
                                  self.MODE_GLOBAL_JOIN}):
             return "040"
-
-        # after ad - ad viewing interrupted dialog
-        elif self.run_041(modes={self.MODE_STORY_SOLO,
-                                 self.MODE_EVENT_SOLO,
-                                 self.MODE_SOLO,
-                                 self.MODE_GLOBAL_JOIN}):
-            return "041"
 
         # prevent screen off
         elif self.run_030():
