@@ -47,6 +47,9 @@ class Tsubasa:
     # the time we clicked on 0,0 to prevent screen off
     prevent_screen_datetime = None
 
+    # start time of viewing ad
+    ad_viewing_time = None
+
     # telegral bot
     bot: Bot
 
@@ -373,7 +376,16 @@ class Tsubasa:
 
                 return True
             elif self.config.energy_recovery == self.EnergyRecovery_Ad:
-                pass
+
+                if CTDT.template("066").click():
+                    # inform in telegram that we are out of energy
+                    self.send_telegram_message(
+                        "Out of energy : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+
+                    # save start time of viewing ad
+                    self.ad_viewing_time = datetime.now()
+
+                    return True
 
             # if energy recovery config is using energy balls
             elif self.config.energy_recovery == self.EnergyRecovery_Energyball:
@@ -828,6 +840,8 @@ class Tsubasa:
 
         return False
 
+    ########################################################################################################################
+
     def run_037(self, modes: set):
         """
         after match -> shared play reward
@@ -839,6 +853,86 @@ class Tsubasa:
         # after match -> shared play reward
         if CTDT.template("062").click():
             return True
+
+        return False
+
+    ########################################################################################################################
+
+    def run_038(self, modes: set):
+        """
+        close ad
+        :return:
+        """
+
+        if self.config.mode not in modes: return False
+
+        # close ad button
+        if CTDT.template("067").available():
+            # check the amount of time energy recovery dialog is open
+            diff = datetime.now() - self.ad_viewing_time
+            seconds = diff.total_seconds()
+
+            if seconds > self.config.wait_finish_ad:
+
+                # close ad after number of seconds we set in config
+                if CTDT.template("067").click():
+                    return True
+
+            return True
+
+        return False
+
+    ########################################################################################################################
+
+    def run_039(self, modes: set):
+        """
+        after ad - you win
+        :return:
+        """
+
+        if self.config.mode not in modes: return False
+
+        # you win
+        if CTDT.template("068").click():
+            return True
+
+        return False
+
+    ########################################################################################################################
+
+    def run_040(self, modes: set):
+        """
+        after ad - dreamball lottery dialog
+        :return:
+        """
+
+        if self.config.mode not in modes: return False
+
+        # dreamball lottery dialog -> title
+        if CTDT.template("069").available():
+
+            # dreamball lottery dialog -> next button
+            if CTDT.template("070").click():
+                return True
+
+        return False
+
+    ########################################################################################################################
+
+    def run_041(self, modes: set):
+        """
+        after ad - ad viewing interrupted dialog
+        :return:
+        """
+
+        if self.config.mode not in modes: return False
+
+        # ad viewing interrupted dialog -> title
+        if CTDT.template("071").available():
+
+            # ad viewing interrupted dialog -> ok button
+            if CTDT.template("072").click(wait=30):
+                return True
 
         return False
 
@@ -1054,6 +1148,36 @@ class Tsubasa:
                                  self.MODE_GLOBAL_SHARED,
                                  self.MODE_GLOBAL_JOIN}):
             return "018"
+
+
+        # close ad
+        elif self.run_038(modes={self.MODE_STORY_SOLO,
+                                 self.MODE_EVENT_SOLO,
+                                 self.MODE_SOLO,
+                                 self.MODE_GLOBAL_JOIN}):
+            return "038"
+
+        # after ad - you win
+        elif self.run_039(modes={self.MODE_STORY_SOLO,
+                                 self.MODE_EVENT_SOLO,
+                                 self.MODE_SOLO,
+                                 self.MODE_GLOBAL_JOIN}):
+            return "039"
+
+
+        # after ad - dreamball lottery dialog
+        elif self.run_040(modes={self.MODE_STORY_SOLO,
+                                 self.MODE_EVENT_SOLO,
+                                 self.MODE_SOLO,
+                                 self.MODE_GLOBAL_JOIN}):
+            return "040"
+
+        # after ad - ad viewing interrupted dialog
+        elif self.run_041(modes={self.MODE_STORY_SOLO,
+                                 self.MODE_EVENT_SOLO,
+                                 self.MODE_SOLO,
+                                 self.MODE_GLOBAL_JOIN}):
+            return "041"
 
         # prevent screen off
         elif self.run_030():

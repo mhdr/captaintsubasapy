@@ -91,6 +91,7 @@ class Config:
     wait_telegram_msg_energy_recovery: int
     play_match_with_skip_ticket_button: int
     global_shared_play_enabled: int
+    wait_finish_ad: int
 
     telegram_token: str
     telegram_chatid: int
@@ -120,6 +121,7 @@ class Config:
             Config.wait_telegram_msg_energy_recovery = int(config["Game"]["WaitTelegramMsgEnergyRecovery"])
             Config.play_match_with_skip_ticket_button = int(config["Game"]["PlayMatchWithSkipTicketButton"])
             Config.global_shared_play_enabled = int(config["Game"]["GlobalSharedPlayEnabled"])
+            Config.wait_finish_ad = int(config["Game"]["WaitFinishAd"])
 
             Config.wait_after_member1_join = int(config["Game"]["WaitAfterMember1Joined"])
             Config.wait_after_member2_join = int(config["Game"]["WaitAfterMember2Joined"])
@@ -391,8 +393,6 @@ class CTDT:
                 row_index += 1
 
             wb.save("data.xlsx")
-
-
 
     @staticmethod
     def save_screenshot():
