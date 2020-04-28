@@ -992,6 +992,13 @@ class Tsubasa:
                                  self.MODE_GLOBAL_JOIN}):
             return "041"
 
+        # after ad - dreamball lottery dialog
+        elif self.run_040(modes={self.MODE_STORY_SOLO,
+                                 self.MODE_EVENT_SOLO,
+                                 self.MODE_SOLO,
+                                 self.MODE_GLOBAL_JOIN}):
+            return "040"
+
         # play match button
         elif self.run_008(modes={self.MODE_STORY_SOLO,
                                  self.MODE_EVENT_SOLO,
@@ -1162,14 +1169,6 @@ class Tsubasa:
                                  self.MODE_SOLO,
                                  self.MODE_GLOBAL_JOIN}):
             return "039"
-
-
-        # after ad - dreamball lottery dialog
-        elif self.run_040(modes={self.MODE_STORY_SOLO,
-                                 self.MODE_EVENT_SOLO,
-                                 self.MODE_SOLO,
-                                 self.MODE_GLOBAL_JOIN}):
-            return "040"
 
         # prevent screen off
         elif self.run_030():
