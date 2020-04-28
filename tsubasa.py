@@ -345,9 +345,6 @@ class Tsubasa:
 
         if self.config.mode not in modes: return False
 
-        if self.config.energy_recovery == self.EnergyRecovery_None:
-            return False
-
         # if energy recovery dialog is open
         if CTDT.template("016").available():
 
