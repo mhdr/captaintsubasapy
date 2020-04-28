@@ -16,7 +16,6 @@ class Tsubasa:
     MODE_GLOBAL_SHARED = 6
     MODE_GLOBAL_JOIN = 7
 
-    EnergyRecovery_None = 1
     EnergyRecovery_WaitToRecover = 2
     EnergyRecovery_Ad = 3
     EnergyRecovery_Energyball = 4
@@ -352,6 +351,24 @@ class Tsubasa:
         # if energy recovery dialog is open
         if CTDT.template("016").available():
 
+            if self.energy_recovery_send_telegram_datetime is None:
+                # inform in telegram that we are out of energy
+                self.send_telegram_message(
+                    "Out of energy : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+
+                self.energy_recovery_send_telegram_datetime = datetime.now()
+            else:
+
+                # check previous time we sent the telegram msg
+                diff = datetime.now() - self.energy_recovery_send_telegram_datetime
+                seconds = diff.total_seconds()
+
+                # reset time after timeout
+                # after reaching timeout period which is 1 hour by default we will set datetime to None
+                # so we can send out of energy msg in telegram again
+                if seconds >= self.config.wait_telegram_msg_energy_recovery:
+                    self.energy_recovery_send_telegram_datetime = None
+
             # if energy recovery config is wait to recover energy over time
             if self.config.energy_recovery == self.EnergyRecovery_WaitToRecover:
 
@@ -378,9 +395,6 @@ class Tsubasa:
             elif self.config.energy_recovery == self.EnergyRecovery_Ad:
 
                 if CTDT.template("066").click():
-                    # inform in telegram that we are out of energy
-                    self.send_telegram_message(
-                        "Out of energy : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
 
                     # save start time of viewing ad
                     self.ad_viewing_time = datetime.now()
@@ -399,25 +413,6 @@ class Tsubasa:
 
             # if we just want to inform out of energy in telegram
             elif self.config.energy_recovery == self.EnergyRecovery_None_Telegram:
-
-                if self.energy_recovery_send_telegram_datetime is None:
-                    # inform in telegram that we are out of energy
-                    self.send_telegram_message(
-                        "Out of energy : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
-
-                    self.energy_recovery_send_telegram_datetime = datetime.now()
-                else:
-
-                    # check previous time we sent the telegram msg
-                    diff = datetime.now() - self.energy_recovery_send_telegram_datetime
-                    seconds = diff.total_seconds()
-
-                    # reset time after timeout
-                    # after reaching timeout period which is 1 hour by default we will set datetime to None
-                    # so we can send out of energy msg in telegram again
-                    if seconds >= self.config.wait_telegram_msg_energy_recovery:
-                        self.energy_recovery_send_telegram_datetime = None
-
                 return True
 
         return False
