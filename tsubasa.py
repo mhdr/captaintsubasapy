@@ -448,6 +448,9 @@ class Tsubasa:
         if CTDT.template("021").available():
             # click on restart button
             if CTDT.template("022").click():
+                # inform in telegram that match is restarting
+                self.send_telegram_message(
+                    "Restarting Match : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
                 return True
 
         return False
@@ -950,8 +953,11 @@ class Tsubasa:
 
         # close app and reset
         if self.count_now_loading > self.config.max_count_now_loading:
-            self.count_now_loading = 0
             CTDT.point("002").click()
+            # inform in telegram that app is friezed
+            self.send_telegram_message(
+                "Freeze => Now Loading : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+            self.count_now_loading = 0
             return True
 
         return False
