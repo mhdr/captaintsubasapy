@@ -1207,7 +1207,9 @@ class Tsubasa:
 
         # detect app freeze
         elif self.run_042(modes={self.MODE_GLOBAL_JOIN,
-                                 self.MODE_CLUB_JOIN}):
+                                 self.MODE_CLUB_JOIN,
+                                 self.MODE_GLOBAL_SHARED,
+                                 self.MODE_CLUB_SHARED}):
             return "042"
 
         # prevent screen off
