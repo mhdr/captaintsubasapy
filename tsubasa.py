@@ -402,27 +402,8 @@ class Tsubasa:
                     return True
                 else:
 
-                    # we should close energy recovery dialog and try again later
-
-                    if self.energy_recovery_dialog_datetime is None:
-                        # this is the first time we saw energy recovery dialog
-                        # so we should save the time
-                        self.energy_recovery_dialog_datetime = datetime.now()
-                    else:
-
-                        # check the amount of time energy recovery dialog is open
-                        diff = datetime.now() - self.energy_recovery_dialog_datetime
-                        seconds = diff.total_seconds()
-
-                        # click on  cancel button
-                        # app will trigger another play after this
-                        if seconds > self.config.wait_energy_recovery:
-                            # click on cancel button
-                            CTDT.template("017").click()
-
-                            # reset for next use
-                            self.energy_recovery_dialog_datetime = None
-
+                    # we should close app and try again
+                    CTDT.point("002").click()
                     return True
 
             # if energy recovery config is using energy balls
