@@ -1,1 +1,2 @@
 screenshot - take screenshot from screen
+restart - restart bot

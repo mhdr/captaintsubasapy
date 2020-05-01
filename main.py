@@ -3,6 +3,11 @@ from lib import CTDT, Config, Cache
 import time
 from telegram_bot import TelegramBot
 from tsubasa import Tsubasa
+import sys
+
+# wait before restarting bot
+if "-r" in sys.argv:
+    time.sleep(5)
 
 DEBUG = False
 CTDT.initialize()
@@ -18,7 +23,7 @@ print("Start Processing : {0}".format(datetime.now()))
 if __name__ == "__main__":
     # execute only if run as a script
 
-    telegram:TelegramBot = TelegramBot(config.telegram_token, config.telegram_disabled)
+    telegram: TelegramBot = TelegramBot(config)
     tsubasa: Tsubasa = Tsubasa()
 
     while True:

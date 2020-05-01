@@ -1,7 +1,12 @@
+import os
+import sys
+from datetime import datetime
+
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 from lib import CTDT, Config
 from telegram import Update, Message
 import logging
+from telegram import Bot
 
 
 class TelegramBot:
@@ -9,9 +14,17 @@ class TelegramBot:
     updater: Updater = None
     logger = None
 
-    def __init__(self, token: str, disabled: int = 0):
+    # telegral bot
+    bot: Bot
+
+    def __init__(self, config: Config):
         # do not start bot if it is disabled in config
-        if disabled == 1: return
+        if config.telegram_disabled == 1: return
+
+        # inform boss we are starting
+        self.bot = Bot(token=config.telegram_token)
+        msg1 = "Starting bot: {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+        self.bot.send_message(config.telegram_chatid, msg1)
 
         # Enable logging
         logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -23,13 +36,16 @@ class TelegramBot:
         # Create the Updater and pass it your bot's token.
         # Make sure to set use_context=True to use the new context based callbacks
         # Post version 12 this will no longer be necessary
-        updater = Updater(token, use_context=True)
+        updater = Updater(config.telegram_token, use_context=True)
 
         # Get the dispatcher to register handlers
         dp = updater.dispatcher
 
-        # on different commands - answer in Telegram
+        # on screenshot command
         dp.add_handler(CommandHandler("screenshot", self.screenshot))
+
+        # on restart command
+        dp.add_handler(CommandHandler("restart", self.restart))
 
         # log all errors
         dp.add_error_handler(self.error)
@@ -50,3 +66,10 @@ class TelegramBot:
         CTDT.save_screenshot()
         msg: Message = update.message
         msg.reply_photo(open("screenshot.jpg", "rb"))
+
+    def restart(self, update: Update, context):
+        output: str = "Restarting bot: {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+        msg: Message = update.message
+        msg.reply_text(output)
+        sys.argv.append("-r")
+        os.execl(sys.executable, sys.argv[0], *sys.argv)
