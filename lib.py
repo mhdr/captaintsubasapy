@@ -138,6 +138,62 @@ class Config:
 
         return Config.__instance
 
+    def get_text_mode(self, mode: int = 0):
+        # Story Solo = 1
+        # Event Solo = 2
+        # Solo = 3 ( general use )
+        # Club Shared = 4
+        # Club Join = 5
+        # Global Shared = 6
+        # Global Recruit = 7
+
+        #  if 0 load from instance
+        if mode == 0:
+            mode = self.mode
+
+        msg = ""
+
+        if mode == 1:
+            msg = "Mode 1 : Story Solo"
+        elif mode == 2:
+            msg = "Mode 2 : Event Solo"
+        elif mode == 3:
+            msg = "Mode 3 : Solo"
+        elif mode == 4:
+            msg = "Mode 4 : Club Shared"
+        elif mode == 5:
+            msg = "Mode 5 : Club Join"
+        elif mode == 6:
+            msg = "Mode 6 : Global Shared"
+        elif mode == 7:
+            msg = "Mode 7 : Global Recruit"
+
+        return msg
+
+    def get_text_difficulty(self, difficulty: int = 0):
+
+        # Normal = 1
+        # Hard = 2
+        # Very Hard = 3
+        # Extreme = 4
+
+        #  if 0 load from instance
+        if difficulty == 0:
+            difficulty = self.difficulty
+
+        msg = ""
+
+        if difficulty == 1:
+            msg = "Difficulty 1 : Normal"
+        elif difficulty == 2:
+            msg = "Difficulty 2 : Hard"
+        elif difficulty == 3:
+            msg = "Difficulty 3 : Very Hard"
+        elif difficulty == 4:
+            msg = "Difficulty 4 : Extreme"
+
+        return msg
+
     def __init__(self):
         """
         Virtually private constructor
