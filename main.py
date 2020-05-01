@@ -23,7 +23,7 @@ print("Start Processing : {0}".format(datetime.now()))
 if __name__ == "__main__":
     # execute only if run as a script
 
-    telegram: TelegramBot = TelegramBot(config)
+    telegram: TelegramBot = TelegramBot()
     tsubasa: Tsubasa = Tsubasa()
 
     while True:

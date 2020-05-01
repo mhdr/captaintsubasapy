@@ -1,2 +1,3 @@
 screenshot - take screenshot from screen
 restart - restart bot
+setmode - set mode

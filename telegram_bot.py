@@ -17,14 +17,21 @@ class TelegramBot:
     # telegral bot
     bot: Bot
 
-    def __init__(self, config: Config):
+    config: Config
+
+    def __init__(self):
+        self.config = Config.get_instance()
+
         # do not start bot if it is disabled in config
-        if config.telegram_disabled == 1: return
+        if self.config.telegram_disabled == 1: return
 
         # inform boss we are starting
-        self.bot = Bot(token=config.telegram_token)
+        self.bot = Bot(token=self.config.telegram_token)
         msg1 = "Starting bot: {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-        self.bot.send_message(config.telegram_chatid, msg1)
+        self.bot.send_message(self.config.telegram_chatid, msg1)
+        self.bot.send_message(self.config.telegram_chatid, self.get_mode_text(self.config.mode))
+
+        msg2 = "Mode : "
 
         # Enable logging
         logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -36,7 +43,7 @@ class TelegramBot:
         # Create the Updater and pass it your bot's token.
         # Make sure to set use_context=True to use the new context based callbacks
         # Post version 12 this will no longer be necessary
-        updater = Updater(config.telegram_token, use_context=True)
+        updater = Updater(self.config.telegram_token, use_context=True)
 
         # Get the dispatcher to register handlers
         dp = updater.dispatcher
@@ -46,6 +53,9 @@ class TelegramBot:
 
         # on restart command
         dp.add_handler(CommandHandler("restart", self.restart))
+
+        # on setmode command
+        dp.add_handler(CommandHandler("setmode", self.set_mode))
 
         # log all errors
         dp.add_error_handler(self.error)
@@ -73,3 +83,46 @@ class TelegramBot:
         msg.reply_text(output)
         sys.argv.append("-r")
         os.execl(sys.executable, sys.argv[0], *sys.argv)
+
+    def get_mode_text(self, mode: int):
+        # Story Solo = 1
+        # Event Solo = 2
+        # Solo = 3 ( general use )
+        # Club Shared = 4
+        # Club Join = 5
+        # Global Shared = 6
+        # Global Recruit = 7
+
+        msg2 = ""
+
+        if mode == 1:
+            msg2 = "Mode 1 : Story Solo"
+        elif mode == 2:
+            msg2 = "Mode 2 : Event Solo"
+        elif mode == 3:
+            msg2 = "Mode 3 : Solo"
+        elif mode == 4:
+            msg2 = "Mode 4 : Club Shared"
+        elif mode == 5:
+            msg2 = "Mode 5 : Club Join"
+        elif mode == 6:
+            msg2 = "Mode 6 : Global Shared"
+        elif mode == 7:
+            msg2 = "Mode 7 : Global Recruit"
+
+        return msg2
+
+    def set_mode(self, update: Update, context):
+        msg: Message = update.message
+        text = msg.text
+        mode = int(text)
+        self.config.mode = mode
+
+        # inform boss we are starting
+        self.bot = Bot(token=self.config.telegram_token)
+        msg1 = "Changing mode : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+        self.bot.send_message(self.config.telegram_chatid, msg1)
+
+        msg2 = self.get_mode_text(self.config.mode)
+
+        self.bot.send_message(self.config.telegram_chatid, msg2)
