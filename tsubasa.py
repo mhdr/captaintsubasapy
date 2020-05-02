@@ -55,6 +55,18 @@ class Tsubasa:
     # telegral bot
     bot: Bot
 
+    # flag that indicate we want a graceful exit of app
+    exit_app = False
+
+    # flag that indicate we need and urgent exit of app
+    force_exit_app = False
+
+    # callback function for exit app
+    fn_exit_app = None
+
+    # callback function for force exit app
+    fn_force_exit_app = None
+
     def __init__(self):
         self.config = Config.get_instance()
         if self.config.telegram_disabled == 0:
@@ -140,6 +152,9 @@ class Tsubasa:
 
             # difficulty normal
             if CTDT.template("057").click():
+                # exit app gracefully if required
+                self.run_044()
+
                 return True
 
         # hard
@@ -147,6 +162,9 @@ class Tsubasa:
 
             # difficulty hard
             if CTDT.template("058").click():
+                # exit app gracefully if required
+                self.run_044()
+
                 return True
 
         # very hard
@@ -154,6 +172,9 @@ class Tsubasa:
 
             # difficulty very hard
             if CTDT.template("059").click():
+                # exit app gracefully if required
+                self.run_044()
+
                 return True
 
         # extreme
@@ -161,6 +182,9 @@ class Tsubasa:
 
             # difficulty extreme
             if CTDT.template("060").click():
+                # exit app gracefully if required
+                self.run_044()
+
                 return True
 
         return False
@@ -969,6 +993,66 @@ class Tsubasa:
         return False
 
     ########################################################################################################################
+
+    def run_043(self):
+        """
+        force exit app
+        :return:
+        """
+
+        if self.force_exit_app:
+            # exit and close app
+            CTDT.point("002").click()
+
+            # reset force exit app flag
+            self.force_exit_app = False
+
+            # send callback to caller
+            self.fn_force_exit_app()
+
+        return False
+
+    ########################################################################################################################
+
+    def run_044(self):
+        """
+        exit app
+        :return:
+        """
+
+        if self.exit_app:
+            # exit and close app
+            CTDT.point("002").click()
+
+            # reset exit app flag
+            self.exit_app = False
+
+            # send callback to caller
+            self.fn_exit_app()
+
+        return False
+
+    ########################################################################################################################
+
+    def set_callback_exit_app(self, fn):
+        """
+        callback for exit app
+        :return:
+        """
+
+        self.fn_exit_app = fn
+
+    ########################################################################################################################
+
+    def set_callback_force_exit_app(self, fn):
+        """
+        callback for force exit app
+        :return:
+        """
+
+        self.fn_force_exit_app = fn
+
+    ########################################################################################################################
     ########################################################################################################################
 
     def run(self):
@@ -1217,6 +1301,10 @@ class Tsubasa:
                                  self.MODE_GLOBAL_SHARED,
                                  self.MODE_CLUB_SHARED}):
             return "042"
+
+        # force exit app
+        elif self.run_043():
+            return "043"
 
         # prevent screen off
         elif self.run_030():

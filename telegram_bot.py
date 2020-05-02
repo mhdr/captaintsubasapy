@@ -18,6 +18,13 @@ class TelegramBot:
     bot: Bot
 
     config: Config
+    is_pause = False
+
+    # flag that indicate we want a graceful exit of app
+    exit_app = False
+
+    # flag that indicate we need and urgent exit of app
+    force_exit_app = False
 
     def __init__(self):
         self.config = Config.get_instance()
@@ -57,6 +64,18 @@ class TelegramBot:
 
         # on setmode command
         dp.add_handler(CommandHandler("setmode", self.set_mode))
+
+        # on pause command
+        dp.add_handler(CommandHandler("pause", self.pause))
+
+        # on resume command
+        dp.add_handler(CommandHandler("resume", self.resume))
+
+        # on exit command
+        dp.add_handler(CommandHandler("exit", self.exit))
+
+        # on force exit command
+        dp.add_handler(CommandHandler("forceexit", self.force_exit))
 
         # log all errors
         dp.add_error_handler(self.error)
@@ -98,3 +117,37 @@ class TelegramBot:
         except Exception as ex:
             print(str(ex))
             self.bot.send_message(self.config.telegram_chatid, "SetMode : Error")
+
+    def pause(self, update: Update, context):
+        self.is_pause = True
+        output: str = "Pause: {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+        msg: Message = update.message
+        msg.reply_text(output)
+
+    def resume(self, update: Update, context):
+        self.is_pause = False
+        output: str = "Resume: {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+        msg: Message = update.message
+        msg.reply_text(output)
+
+    def exit(self, update: Update, context):
+        self.exit_app = True
+        output: str = "Star exit: {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+        msg: Message = update.message
+        msg.reply_text(output)
+
+    def force_exit(self, update: Update, context):
+        self.force_exit_app = True
+        output: str = "Start force exit: {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+        msg: Message = update.message
+        msg.reply_text(output)
+
+    def reset_exit_app(self):
+        self.exit_app = False
+        output: str = "End exit: {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+        self.bot.send_message(self.config.telegram_chatid, output)
+
+    def reset_force_exit_app(self):
+        self.force_exit_app = False
+        output: str = "End force exit: {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+        self.bot.send_message(self.config.telegram_chatid, output)

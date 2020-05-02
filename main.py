@@ -16,17 +16,43 @@ caches: Cache = Cache.get_instance()
 CTDT.convert_templates_to_jpeg()
 CTDT.initialize_cache()
 
+telegram: TelegramBot = TelegramBot()
+tsubasa: Tsubasa = Tsubasa()
+
 print("Start Processing : {0}".format(datetime.now()))
+
+
+####################################################################
+
+def callback_exit_app():
+    telegram.reset_exit_app()
+
+
+####################################################################
+
+def callback_force_exit_app():
+    telegram.reset_force_exit_app()
+
 
 ####################################################################
 
 if __name__ == "__main__":
     # execute only if run as a script
 
-    telegram: TelegramBot = TelegramBot()
-    tsubasa: Tsubasa = Tsubasa()
-
     while True:
+
+        # if pause command from bot we should continue loop
+        if telegram.is_pause:
+            time.sleep(config.sleep)
+            continue
+
+        if telegram.exit_app:
+            tsubasa.exit_app = True
+            tsubasa.set_callback_exit_app(callback_exit_app)
+
+        if telegram.force_exit_app:
+            tsubasa.force_exit_app = True
+            tsubasa.set_callback_force_exit_app(callback_force_exit_app)
 
         if DEBUG:
             result = tsubasa.run()
