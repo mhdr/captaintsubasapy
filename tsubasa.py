@@ -1310,6 +1310,10 @@ class Tsubasa:
                                  self.MODE_CLUB_SHARED}):
             return "042"
 
+        # go home
+        elif self.run_046():
+            return "046"
+
         # force exit app
         elif self.run_043():
             return "043"
