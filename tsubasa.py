@@ -1046,13 +1046,16 @@ class Tsubasa:
         :return:
         """
 
-        # if Home available
-        if CTDT.template("074").available():
+        # if go home flag is true
+        if self.telegram.go_home_flag:
 
-            # go to Home
-            if CTDT.template("074").click():
-                self.telegram.reset_go_home_flag()
-                return True
+            # if Home available
+            if CTDT.template("074").available():
+
+                # go to Home
+                if CTDT.template("074").click():
+                    self.telegram.reset_go_home_flag()
+                    return True
 
         return False
 
