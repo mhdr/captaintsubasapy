@@ -16,8 +16,8 @@ caches: Cache = Cache.get_instance()
 CTDT.convert_templates_to_jpeg()
 CTDT.initialize_cache()
 
-telegram: TelegramBot = TelegramBot.get_instance()
-tsubasa: Tsubasa = Tsubasa()
+telegram: TelegramBot = TelegramBot()
+tsubasa: Tsubasa = Tsubasa(telegram)
 
 print("Start Processing : {0}".format(datetime.now()))
 

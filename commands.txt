@@ -5,3 +5,4 @@ pause - pause bot playing
 resume - resume bot playing
 exit - exit app
 forceexit - force exit app
+home - go to home

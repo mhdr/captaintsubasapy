@@ -59,11 +59,11 @@ class Tsubasa:
 
     telegram: TelegramBot = None
 
-    def __init__(self):
+    def __init__(self, telegram: TelegramBot):
         self.config = Config.get_instance()
         if self.config.telegram_disabled == 0:
             self.bot = Bot(token=self.config.telegram_token)
-            self.telegram = TelegramBot.get_instance()
+            self.telegram = telegram
 
     def increase_count_played_match(self):
         self.count_played_match += 1
@@ -993,6 +993,8 @@ class Tsubasa:
         :return:
         """
 
+        if self.telegram is None: return False
+
         if self.telegram.force_exit_app_flag:
             # exit and close app
             CTDT.point("002").click()
@@ -1010,6 +1012,8 @@ class Tsubasa:
         :return:
         """
 
+        if self.telegram is None: return False
+
         if self.telegram.exit_app_flag:
             # exit and close app
             CTDT.point("002").click()
@@ -1026,6 +1030,8 @@ class Tsubasa:
         pause app
         :return:
         """
+
+        if self.telegram is None: return False
 
         if self.telegram.pause_flag:
             return True

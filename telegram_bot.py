@@ -10,8 +10,6 @@ from telegram import Bot
 
 
 class TelegramBot:
-    __instance = None
-
     # telegram bot updater
     updater: Updater = None
     logger = None
@@ -33,74 +31,67 @@ class TelegramBot:
     # go home flag
     go_home_flag = False
 
-    @staticmethod
-    def get_instance():
-        if TelegramBot.__instance is None:
+    def __init__(self):
+        self.config = Config.get_instance()
 
-            TelegramBot.config = Config.get_instance()
+        # do not start bot if it is disabled in config
+        if self.config.telegram_disabled == 1: return
 
-            # do not start bot if it is disabled in config
-            if TelegramBot.config.telegram_disabled == 1: return
+        # inform boss we are starting
+        self.bot = Bot(token=self.config.telegram_token)
+        msg1 = "Starting bot: {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+        self.bot.send_message(self.config.telegram_chatid, msg1)
+        self.bot.send_message(self.config.telegram_chatid, self.config.get_text_mode())
+        self.bot.send_message(self.config.telegram_chatid, self.config.get_text_difficulty())
 
-            # inform boss we are starting
-            TelegramBot.bot = Bot(token=TelegramBot.config.telegram_token)
-            msg1 = "Starting bot: {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-            TelegramBot.bot.send_message(TelegramBot.config.telegram_chatid, msg1)
-            TelegramBot.bot.send_message(TelegramBot.config.telegram_chatid, TelegramBot.config.get_text_mode())
-            TelegramBot.bot.send_message(TelegramBot.config.telegram_chatid, TelegramBot.config.get_text_difficulty())
+        msg2 = "Mode : "
 
-            msg2 = "Mode : "
+        # Enable logging
+        logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                            level=logging.INFO)
 
-            # Enable logging
-            logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                                level=logging.INFO)
+        self.logger = logging.getLogger(__name__)
 
-            TelegramBot.logger = logging.getLogger(__name__)
+        """Start the bot."""
+        # Create the Updater and pass it your bot's token.
+        # Make sure to set use_context=True to use the new context based callbacks
+        # Post version 12 this will no longer be necessary
+        updater = Updater(self.config.telegram_token, use_context=True)
 
-            """Start the bot."""
-            # Create the Updater and pass it your bot's token.
-            # Make sure to set use_context=True to use the new context based callbacks
-            # Post version 12 this will no longer be necessary
-            updater = Updater(TelegramBot.config.telegram_token, use_context=True)
+        # Get the dispatcher to register handlers
+        dp = updater.dispatcher
 
-            # Get the dispatcher to register handlers
-            dp = updater.dispatcher
+        # on screenshot command
+        dp.add_handler(CommandHandler("screenshot", self.screenshot))
 
-            # on screenshot command
-            dp.add_handler(CommandHandler("screenshot", TelegramBot.screenshot))
+        # on restart command
+        dp.add_handler(CommandHandler("restart", self.restart))
 
-            # on restart command
-            dp.add_handler(CommandHandler("restart", TelegramBot.restart))
+        # on setmode command
+        dp.add_handler(CommandHandler("setmode", self.set_mode))
 
-            # on setmode command
-            dp.add_handler(CommandHandler("setmode", TelegramBot.set_mode))
+        # on pause command
+        dp.add_handler(CommandHandler("pause", self.pause))
 
-            # on pause command
-            dp.add_handler(CommandHandler("pause", TelegramBot.pause))
+        # on resume command
+        dp.add_handler(CommandHandler("resume", self.resume))
 
-            # on resume command
-            dp.add_handler(CommandHandler("resume", TelegramBot.resume))
+        # on exit command
+        dp.add_handler(CommandHandler("exit", self.exit))
 
-            # on exit command
-            dp.add_handler(CommandHandler("exit", TelegramBot.exit))
+        # on force exit command
+        dp.add_handler(CommandHandler("forceexit", self.force_exit))
 
-            # on force exit command
-            dp.add_handler(CommandHandler("forceexit", TelegramBot.force_exit))
+        # log all errors
+        dp.add_error_handler(self.error)
 
-            # log all errors
-            dp.add_error_handler(TelegramBot.error)
+        # Start the Bot
+        updater.start_polling(poll_interval=1, clean=True)
 
-            # Start the Bot
-            updater.start_polling(poll_interval=1, clean=True)
-
-            # Run the bot until you press Ctrl-C or the process receives SIGINT,
-            # SIGTERM or SIGABRT. This should be used most of the time, since
-            # start_polling() is non-blocking and will stop the bot gracefully.
-            # self.updater.idle()
-
-            TelegramBot()
-
-        return TelegramBot.__instance
+        # Run the bot until you press Ctrl-C or the process receives SIGINT,
+        # SIGTERM or SIGABRT. This should be used most of the time, since
+        # start_polling() is non-blocking and will stop the bot gracefully.
+        # self.updater.idle()
 
     def error(self, update, context):
         """Log Errors caused by Updates."""
