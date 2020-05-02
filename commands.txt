@@ -1,8 +1,8 @@
 screenshot - take screenshot from screen
-restart - restart bot
 setmode - set mode
+home - go to home
 pause - pause bot playing
 resume - resume bot playing
 exit - exit app
 forceexit - force exit app
-home - go to home
+restart - restart bot

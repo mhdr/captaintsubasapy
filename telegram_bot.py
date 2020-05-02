@@ -82,6 +82,9 @@ class TelegramBot:
         # on force exit command
         dp.add_handler(CommandHandler("forceexit", self.force_exit))
 
+        # on home command
+        dp.add_handler(CommandHandler("home", self.home))
+
         # log all errors
         dp.add_error_handler(self.error)
 
