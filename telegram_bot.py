@@ -144,10 +144,18 @@ class TelegramBot:
 
     def reset_exit_app(self):
         self.exit_app = False
+        self.is_pause = True
         output: str = "End exit: {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
         self.bot.send_message(self.config.telegram_chatid, output)
 
+        output2: str = "Pause: {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+        self.bot.send_message(self.config.telegram_chatid, output2)
+
     def reset_force_exit_app(self):
         self.force_exit_app = False
+        self.is_pause = True
         output: str = "End force exit: {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
         self.bot.send_message(self.config.telegram_chatid, output)
+
+        output2: str = "Pause: {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+        self.bot.send_message(self.config.telegram_chatid, output2)
