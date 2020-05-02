@@ -4,6 +4,8 @@ from telegram import Bot
 from lib import CTDT, Config
 from datetime import datetime
 
+from telegram_bot import TelegramBot
+
 
 class Tsubasa:
     config: Config = None
@@ -55,22 +57,13 @@ class Tsubasa:
     # telegral bot
     bot: Bot
 
-    # flag that indicate we want a graceful exit of app
-    exit_app = False
-
-    # flag that indicate we need and urgent exit of app
-    force_exit_app = False
-
-    # callback function for exit app
-    fn_exit_app = None
-
-    # callback function for force exit app
-    fn_force_exit_app = None
+    telegram: TelegramBot = None
 
     def __init__(self):
         self.config = Config.get_instance()
         if self.config.telegram_disabled == 0:
             self.bot = Bot(token=self.config.telegram_token)
+            self.telegram = TelegramBot.get_instance()
 
     def increase_count_played_match(self):
         self.count_played_match += 1
@@ -1000,15 +993,12 @@ class Tsubasa:
         :return:
         """
 
-        if self.force_exit_app:
+        if self.telegram.force_exit_app_flag:
             # exit and close app
             CTDT.point("002").click()
 
-            # reset force exit app flag
-            self.force_exit_app = False
-
-            # send callback to caller
-            self.fn_force_exit_app()
+            # reset flag
+            self.telegram.reset_force_exit_app()
 
         return False
 
@@ -1020,45 +1010,57 @@ class Tsubasa:
         :return:
         """
 
-        if self.exit_app:
+        if self.telegram.exit_app_flag:
             # exit and close app
             CTDT.point("002").click()
 
             # reset exit app flag
-            self.exit_app = False
-
-            # send callback to caller
-            self.fn_exit_app()
+            self.telegram.reset_exit_app()
 
         return False
 
     ########################################################################################################################
 
-    def set_callback_exit_app(self, fn):
+    def run_045(self):
         """
-        callback for exit app
+        pause app
         :return:
         """
 
-        self.fn_exit_app = fn
+        if self.telegram.pause_flag:
+            return True
+
+        return False
 
     ########################################################################################################################
 
-    def set_callback_force_exit_app(self, fn):
+    def run_046(self):
         """
-        callback for force exit app
+        go Home
         :return:
         """
 
-        self.fn_force_exit_app = fn
+        # if Home available
+        if CTDT.template("074").available():
+
+            # go to Home
+            if CTDT.template("074").click():
+                self.telegram.reset_go_home_flag()
+                return True
+
+        return False
 
     ########################################################################################################################
     ########################################################################################################################
 
     def run(self):
 
+        # pause app
+        if self.run_045():
+            return "045"
+
         # shared play - search again -> members
-        if self.run_025(modes={self.MODE_CLUB_SHARED}):
+        elif self.run_025(modes={self.MODE_CLUB_SHARED}):
             return "025"
 
         # shared play button
