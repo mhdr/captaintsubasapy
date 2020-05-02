@@ -59,6 +59,10 @@ class Tsubasa:
 
     telegram: TelegramBot = None
 
+    # the time that we exited the app for resseting ad
+    # because we do not want repeated exit of app
+    exit_app_for_ad_time = None
+
     def __init__(self, telegram: TelegramBot):
         self.config = Config.get_instance()
         if self.config.telegram_disabled == 0:
@@ -419,9 +423,19 @@ class Tsubasa:
                     return True
                 else:
 
-                    # we should close app and try again
-                    CTDT.point("002").click()
+                    if self.exit_app_for_ad_time is None:
+                        self.exit_app_for_ad_time = datetime.now()
+
+                    # check previous time we exited from app for resetting ad
+                    diff = datetime.now() - self.exit_app_for_ad_time
+                    seconds = diff.total_seconds()
+
+                    if seconds > self.config.wait_exit_app_ad:
+                        # we should close app and try again
+                        CTDT.point("002").click()
+
                     return True
+
 
             # if energy recovery config is using energy balls
             elif self.config.energy_recovery == self.EnergyRecovery_Energyball:
