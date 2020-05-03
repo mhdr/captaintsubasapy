@@ -140,7 +140,7 @@ class TelegramBot:
 
     def exit(self, update: Update, context):
         self.exit_app_flag = True
-        output: str = "Star exiting : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+        output: str = "Start exiting : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
         msg: Message = update.message
         msg.reply_text(output)
 
