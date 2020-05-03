@@ -95,6 +95,7 @@ class Config:
     wait_ad_view_interrupted: int
     max_count_now_loading: int
     wait_exit_app_ad: int
+    max_count_preparing: int
 
     telegram_token: str
     telegram_chatid: int
@@ -128,7 +129,7 @@ class Config:
             Config.wait_ad_view_interrupted = int(config["General"]["WaitAfterAdViewInterrupted"])
             Config.max_count_now_loading = int(config["General"]["MaxCountNowLoading"])
             Config.wait_exit_app_ad = int(config["General"]["WaitExitAppForAd"])
-
+            Config.max_count_preparing = int(config["General"]["MaxCountPreparing"])
             Config.wait_after_member1_join = int(config["General"]["WaitAfterMember1Joined"])
             Config.wait_after_member2_join = int(config["General"]["WaitAfterMember2Joined"])
             Config.wait_after_member3_join = int(config["General"]["WaitAfterMember3Joined"])

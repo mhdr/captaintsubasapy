@@ -63,6 +63,10 @@ class Tsubasa:
     # because we do not want repeated exit of app
     exit_app_for_ad_time = None
 
+    # detect inactive user in shared play
+    # if we reaches to max number in config it means user is inactive and we should go home and try again
+    count_preparing: int = 0
+
     def __init__(self, telegram: TelegramBot):
         self.config = Config.get_instance()
         if self.config.telegram_disabled == 0:
@@ -1078,6 +1082,48 @@ class Tsubasa:
         return False
 
     ########################################################################################################################
+
+    def run_047(self, modes: set):
+        """
+        shared play - count preparing - detect inactive user
+        :return:
+        """
+
+        if self.config.mode not in modes: return False
+
+        # if preparing available
+        if CTDT.template("075").available():
+            self.count_preparing = +1
+        else:
+            self.count_preparing = 0
+
+        if self.count_preparing > self.config.max_count_preparing:
+
+            if CTDT.template("074").click():
+                self.count_preparing = 0
+                return True
+
+        return False
+
+    ########################################################################################################################
+
+    def run_048(self, modes: set):
+        """
+        shared play - confirm cancel dialog
+        :return:
+        """
+
+        if self.config.mode not in modes: return False
+
+        # confirm cancel dialog
+        if CTDT.template("076").available():
+            # ok button on confirm cancel dialog
+            if CTDT.template("077").click():
+                return True
+
+        return False
+
+    ########################################################################################################################
     ########################################################################################################################
 
     def run(self):
@@ -1338,6 +1384,16 @@ class Tsubasa:
                                  self.MODE_GLOBAL_SHARED,
                                  self.MODE_CLUB_SHARED}):
             return "042"
+
+        # shared play - count preparing - detect inactive user
+        elif self.run_047(modes={self.MODE_GLOBAL_SHARED,
+                                 self.MODE_CLUB_SHARED}):
+            return "047"
+
+        # shared play - confirm cancel dialog
+        elif self.run_048(modes={self.MODE_GLOBAL_SHARED,
+                                 self.MODE_CLUB_SHARED}):
+            return "048"
 
         # prevent screen off
         elif self.run_030():
