@@ -1100,6 +1100,10 @@ class Tsubasa:
         if self.count_preparing > self.config.max_count_preparing:
 
             if CTDT.template("074").click():
+                # inform in telegram that app is friezed
+                self.send_telegram_message(
+                    "Inactive user : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+
                 self.count_preparing = 0
                 return True
 
