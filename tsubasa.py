@@ -1016,6 +1016,8 @@ class Tsubasa:
             # reset flag
             self.telegram.reset_force_exit_app()
 
+            return True
+
         return False
 
     ########################################################################################################################
@@ -1034,6 +1036,8 @@ class Tsubasa:
 
             # reset exit app flag
             self.telegram.reset_exit_app()
+
+            return True
 
         return False
 
