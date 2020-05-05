@@ -9,7 +9,7 @@ import sys
 if "-r" in sys.argv:
     time.sleep(5)
 
-DEBUG = False
+DEBUG = True
 CTDT.initialize()
 config: Config = Config.get_instance()
 caches: Cache = Cache.get_instance()
@@ -28,7 +28,7 @@ if __name__ == "__main__":
 
         if DEBUG:
             result = tsubasa.run()
-            print(result)
+            print("Result code : {0}".format(result))
             time.sleep(config.sleep)
         else:
             try:
