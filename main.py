@@ -29,7 +29,7 @@ if __name__ == "__main__":
         if DEBUG:
             result = tsubasa.run()
             if result is not None:
-                print("Run : {0}".format(result))
+                print("Run => {0} : {1}, ".format(result,datetime.now()))
             time.sleep(config.sleep)
         else:
             try:
