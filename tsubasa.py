@@ -1128,6 +1128,24 @@ class Tsubasa:
         return False
 
     ########################################################################################################################
+
+    def run_049(self, modes: set):
+        """
+        after match - shared play - confirm change screen dialog
+        :return:
+        """
+
+        if self.config.mode not in modes: return False
+
+        # confirm change screen dialog
+        if CTDT.template("078").available():
+            # cancel button on change screen dialog
+            if CTDT.template("079").click():
+                return True
+
+        return False
+
+    ########################################################################################################################
     ########################################################################################################################
 
     def run(self):
@@ -1277,6 +1295,11 @@ class Tsubasa:
                                  self.MODE_CLUB_JOIN,
                                  self.MODE_GLOBAL_JOIN}):
             return "015"
+
+
+        # after match - shared play - confirm change screen dialog
+        elif self.run_049(modes={self.MODE_GLOBAL_SHARED}):
+            return "049"
 
         # after match -> special bonus
         elif self.run_021(modes={self.MODE_EVENT_SOLO,
