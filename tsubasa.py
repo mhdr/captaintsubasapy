@@ -839,21 +839,20 @@ class Tsubasa:
         # go to story mode - second page
         # use to play story mode only
         if CTDT.template("004").click():
-             return True
+            return True
 
         # begin scroll
         # if in story mode and if we are at the beginning of the scroll ( scrollbar is on left )
         # we should scroll to right
         elif CTDT.template("005").available():
-             CTDT.point("001").click(clicks=5, interval=0.1)
-             return True
+            CTDT.point("001").click(clicks=5, interval=0.1)
+            return True
 
         # end scroll
         # exact game picture ( it should change always to match)
         # for now -> story mode - evolve -> get drills all types
         elif CTDT.template("006").click():
-             return True
-
+            return True
 
         ##########################################################
         # go to evolve player
@@ -1247,7 +1246,8 @@ class Tsubasa:
             return "010"
 
         # connection error dialog
-        elif self.run_033(modes={self.MODE_CLUB_SHARED,
+        elif self.run_033(modes={self.MODE_STORY_SOLO,
+                                 self.MODE_CLUB_SHARED,
                                  self.MODE_GLOBAL_SHARED,
                                  self.MODE_GLOBAL_JOIN}):
             return "033"
