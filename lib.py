@@ -100,6 +100,8 @@ class Config:
     telegram_token: str
     telegram_chatid: int
     telegram_disabled: int
+    telegram_token2: str
+    telegram_chatid2: int
 
     wait_after_member1_join: int
     wait_after_member2_join: int
@@ -137,6 +139,8 @@ class Config:
             Config.telegram_token = str(config["Telegram"]["Token"])
             Config.telegram_chatid = int(config["Telegram"]["ChatId"])
             Config.telegram_disabled = int(config["Telegram"]["Disabled"])
+            Config.telegram_token2 = str(config["Telegram"]["Token2"])
+            Config.telegram_chatid2 = int(config["Telegram"]["ChatId2"])
 
             Config()
 

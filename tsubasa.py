@@ -57,6 +57,9 @@ class Tsubasa:
     # telegral bot
     bot: Bot
 
+    # telegral notify bot
+    bot_notify: Bot
+
     telegram: TelegramBot = None
 
     # the time that we exited the app for resseting ad
@@ -71,6 +74,7 @@ class Tsubasa:
         self.config = Config.get_instance()
         if self.config.telegram_disabled == 0:
             self.bot = Bot(token=self.config.telegram_token)
+            self.bot_notify = Bot(token=self.config.telegram_token2)
             self.telegram = telegram
 
     def increase_count_played_match(self):
@@ -85,10 +89,15 @@ class Tsubasa:
         except Exception as ex:
             print(str(ex))
 
-    def send_telegram_message(self, msg: str):
+    def send_telegram_message(self, msg: str, notify=False):
         try:
             if self.config.telegram_disabled == 0:
-                self.bot.send_message(self.config.telegram_chatid, msg)
+
+                if notify == False:
+                    self.bot.send_message(self.config.telegram_chatid, msg)
+                else:
+                    self.bot_notify.send_message(self.config.telegram_chatid2, msg)
+
         except Exception as ex:
             print(str(ex))
 
@@ -381,6 +390,9 @@ class Tsubasa:
                 # inform in telegram that we are out of energy
                 self.send_telegram_message(
                     "Out of energy : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+
+                self.send_telegram_message(
+                    "Out of energy : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")), notify=True)
 
                 self.energy_recovery_send_telegram_datetime = datetime.now()
             else:
