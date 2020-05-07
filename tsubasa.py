@@ -1067,20 +1067,17 @@ class Tsubasa:
 
     def run_046(self):
         """
-        go Home
+        go Home telegram command
         :return:
         """
 
         # if go home flag is true
         if self.telegram.go_home_flag:
 
-            # if Home available
-            if CTDT.template("074").available():
-
-                # go to Home
-                if CTDT.template("074").click():
-                    self.telegram.reset_go_home_flag()
-                    return True
+            # go to Home
+            if CTDT.template("074", fullscreen=True).click():
+                self.telegram.reset_go_home_flag()
+                return True
 
         return False
 
@@ -1152,13 +1149,13 @@ class Tsubasa:
 
     def run_050(self):
         """
-        restore energy command from telegram
+        restore energy telegram command
         :return:
         """
 
         if self.telegram.restore_energy_flag:
 
-            if CTDT.template("018").click():
+            if CTDT.template("018", fullscreen=True).click():
                 self.telegram.reset_restore_energy_flag()
                 return True
 
@@ -1177,7 +1174,7 @@ class Tsubasa:
         elif self.run_043():
             return "043"
 
-        # go home
+        # go Home telegram command
         elif self.run_046():
             return "046"
 
@@ -1443,7 +1440,7 @@ class Tsubasa:
                                  self.MODE_CLUB_SHARED}):
             return "048"
 
-        # restore energy command from telegram
+        # restore energy telegram command
         elif self.run_050():
             return "050"
 
