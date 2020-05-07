@@ -1148,6 +1148,22 @@ class Tsubasa:
         return False
 
     ########################################################################################################################
+
+    def run_050(self):
+        """
+        restore energy command from telegram
+        :return:
+        """
+
+        if self.telegram.restore_energy_flag:
+
+            if CTDT.template("018").click():
+                self.telegram.reset_restore_energy_flag()
+                return True
+
+        return False
+
+    ########################################################################################################################
     ########################################################################################################################
 
     def run(self):
@@ -1425,6 +1441,11 @@ class Tsubasa:
         elif self.run_048(modes={self.MODE_GLOBAL_SHARED,
                                  self.MODE_CLUB_SHARED}):
             return "048"
+
+        # restore energy command from telegram
+        elif self.run_050():
+            return "050"
+
 
         # prevent screen off
         elif self.run_030():

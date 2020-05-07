@@ -6,3 +6,4 @@ resume - resume bot playing
 exit - exit app
 forceexit - force exit app
 restart - restart bot
+restoreenergy - restore with recovery ball
