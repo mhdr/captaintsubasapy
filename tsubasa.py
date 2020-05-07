@@ -359,6 +359,7 @@ class Tsubasa:
         if self.config.mode not in modes: return False
 
         if CTDT.template("015").click():
+            self.send_telegram_message("Rank Up : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
             return True
 
         return False
