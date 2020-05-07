@@ -1087,7 +1087,7 @@ class Tsubasa:
         if self.telegram.go_home_flag:
 
             # go to Home
-            if CTDT.template("074").click():
+            if CTDT.template("074", fullscreen=True).click():
                 self.telegram.reset_go_home_flag()
                 return True
 
@@ -1167,7 +1167,7 @@ class Tsubasa:
 
         if self.telegram.restore_energy_flag:
 
-            if CTDT.template("018").click():
+            if CTDT.template("018", fullscreen=True).click():
                 self.telegram.reset_restore_energy_flag()
                 return True
 
