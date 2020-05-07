@@ -1186,6 +1186,8 @@ class Tsubasa:
         elif self.run_043():
             return "043"
 
+        ################## Telegram #############################
+
         # go Home telegram command
         elif self.run_046():
             return "046"
@@ -1193,6 +1195,8 @@ class Tsubasa:
         # restore energy telegram command
         elif self.run_050():
             return "050"
+
+        ################## End Telegram #########################
 
         # shared play - search again -> members
         elif self.run_025(modes={self.MODE_CLUB_SHARED}):
