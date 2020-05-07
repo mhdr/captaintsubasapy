@@ -1190,6 +1190,10 @@ class Tsubasa:
         elif self.run_046():
             return "046"
 
+        # restore energy telegram command
+        elif self.run_050():
+            return "050"
+
         # shared play - search again -> members
         elif self.run_025(modes={self.MODE_CLUB_SHARED}):
             return "025"
@@ -1451,10 +1455,6 @@ class Tsubasa:
         elif self.run_048(modes={self.MODE_GLOBAL_SHARED,
                                  self.MODE_CLUB_SHARED}):
             return "048"
-
-        # restore energy telegram command
-        elif self.run_050():
-            return "050"
 
         # prevent screen off
         elif self.run_030():
