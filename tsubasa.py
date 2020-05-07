@@ -1446,7 +1446,6 @@ class Tsubasa:
         elif self.run_050():
             return "050"
 
-
         # prevent screen off
         elif self.run_030():
             return "030"
