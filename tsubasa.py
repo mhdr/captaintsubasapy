@@ -455,6 +455,8 @@ class Tsubasa:
                     if seconds > self.config.wait_exit_app_ad:
                         # we should close app and try again
                         CTDT.point("002").click()
+                        self.send_telegram_message(
+                            "Close App : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
 
                     return True
 
@@ -462,9 +464,12 @@ class Tsubasa:
             # if energy recovery config is using energy balls
             elif self.config.energy_recovery == self.EnergyRecovery_Energyball:
 
-                # click on restore button to recover energy
-                if CTDT.template("018").click():
-                    return True
+                # if owned recovery ball is bigger than minimum restore energy
+                if CTDT.ocr_number("081") > self.config.min_recovery_ball:
+
+                    # click on restore button to recover energy
+                    if CTDT.template("018").click():
+                        return True
 
             elif self.config.energy_recovery == self.EnergyRecovery_Dreamball:
                 pass
@@ -1022,6 +1027,9 @@ class Tsubasa:
             # inform in telegram that app is friezed
             self.send_telegram_message(
                 "Freeze => Now Loading : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+
+            self.send_telegram_message(
+                "Close App : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
             self.count_now_loading = 0
             return True
 
@@ -1040,6 +1048,8 @@ class Tsubasa:
         if self.telegram.force_exit_app_flag:
             # exit and close app
             CTDT.point("002").click()
+            self.send_telegram_message(
+                "Close App : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
 
             # reset flag
             self.telegram.reset_force_exit_app()
@@ -1061,6 +1071,8 @@ class Tsubasa:
         if self.telegram.exit_app_flag:
             # exit and close app
             CTDT.point("002").click()
+            self.send_telegram_message(
+                "Close App : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
 
             # reset exit app flag
             self.telegram.reset_exit_app()

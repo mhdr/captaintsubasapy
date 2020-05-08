@@ -98,6 +98,7 @@ class Config:
     wait_exit_app_ad: int
     max_count_preparing: int
     max_count_sharing: int
+    min_recovery_ball: int
 
     telegram_token: str
     telegram_chatid: int
@@ -135,6 +136,7 @@ class Config:
             Config.wait_exit_app_ad = int(config["General"]["WaitExitAppForAd"])
             Config.max_count_preparing = int(config["General"]["MaxCountPreparing"])
             Config.max_count_sharing = int(config["General"]["MaxCountSearching"])
+            Config.min_recovery_ball = int(config["General"]["MinRecoveryBall"])
             Config.wait_after_member1_join = int(config["General"]["WaitAfterMember1Joined"])
             Config.wait_after_member2_join = int(config["General"]["WaitAfterMember2Joined"])
             Config.wait_after_member3_join = int(config["General"]["WaitAfterMember3Joined"])
