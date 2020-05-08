@@ -17,6 +17,7 @@ import configparser
 import ctypes
 import shutil
 from openpyxl.worksheet.worksheet import Worksheet
+import pytesseract
 
 
 #######################################################################################################################
@@ -96,6 +97,7 @@ class Config:
     max_count_now_loading: int
     wait_exit_app_ad: int
     max_count_preparing: int
+    max_count_sharing: int
 
     telegram_token: str
     telegram_chatid: int
@@ -132,6 +134,7 @@ class Config:
             Config.max_count_now_loading = int(config["General"]["MaxCountNowLoading"])
             Config.wait_exit_app_ad = int(config["General"]["WaitExitAppForAd"])
             Config.max_count_preparing = int(config["General"]["MaxCountPreparing"])
+            Config.max_count_sharing = int(config["General"]["MaxCountSearching"])
             Config.wait_after_member1_join = int(config["General"]["WaitAfterMember1Joined"])
             Config.wait_after_member2_join = int(config["General"]["WaitAfterMember2Joined"])
             Config.wait_after_member3_join = int(config["General"]["WaitAfterMember3Joined"])
@@ -272,6 +275,7 @@ class PointResult:
 #######################################################################################################################
 
 class CTDT:
+    tesseract_cmd = 'C:\\Program Files (x86)\\Tesseract-OCR\\tesseract.exe'
 
     @staticmethod
     def initialize():
@@ -406,64 +410,66 @@ class CTDT:
         return result
 
     @staticmethod
-    def data(index_fimage: int, index_template: int, threshold=0.97, match=0):
-
-        # file name like : 031f.jpg
-        # Column A in excel
-        # index_fimage = 57
-
-        # template number like : 007.jpg
-        # Column F in excel
-        # index_template = 57
-
-        # first match = 0
-        # match = 0
-
-        template_number = "{0}".format(str(index_template).zfill(3))
-        f_image_number = "{0}".format(str(index_fimage).zfill(3))
-
-        image_screen = cv2.imread(os.path.join("templates_original", f_image_number + "f.png"))
-        image_template = cv2.imread(os.path.join("templates_original", template_number + ".png"), 0)
-        width, height = image_template.shape[::-1]
-
-        image_rgb = np.array(image_screen)
-        image_gray = cv2.cvtColor(image_rgb, cv2.COLOR_BGR2GRAY)
-        res = cv2.matchTemplate(image_gray, image_template, cv2.TM_CCOEFF_NORMED)
-
-        loc = np.where(res >= threshold)
-
-        if len(loc[0]) == 0 & len(loc[1]) == 0:
-            print("Image not found")
-        else:
-
-            start_x = loc[1][match]
-            start_y = loc[0][match]
-
-            end_x = start_x + width
-            end_y = start_y + height
-
-            # save to data file
-            wb: Workbook = load_workbook(filename="data.xlsx")
-            ws: Worksheet = wb["Templates"]
-            end_row = ws.max_row
-            # start after header
-            start_row = 2
-            row_index = start_row
-            while row_index <= end_row:
-
-                if ws["A" + str(row_index)].value == template_number:
-                    ws.cell(row_index, 2, start_x - 5)
-                    ws.cell(row_index, 3, start_y - 5)
-                    ws.cell(row_index, 4, end_x + 5)
-                    ws.cell(row_index, 5, end_y + 5)
-                    break
-                row_index += 1
-
-            wb.save("data.xlsx")
-
-    @staticmethod
     def save_screenshot():
         user32 = ctypes.windll.user32
         user32.SetProcessDPIAware()
         image = ImageGrab.grab()
         image.save("screenshot.jpg")
+
+    @staticmethod
+    def ocr_text(template_number: str, gray_scale=True) -> str:
+
+        pytesseract.pytesseract.tesseract_cmd = CTDT.tesseract_cmd
+
+        caches: Cache = Cache.get_instance()
+        region_start_x = caches.templates[template_number].region_start_x
+        region_start_y = caches.templates[template_number].region_start_y
+        region_end_x = caches.templates[template_number].region_end_x
+        region_end_y = caches.templates[template_number].region_end_y
+
+        image_region = ImageGrab.grab(bbox=(region_start_x, region_start_y, region_end_x, region_end_y))
+        image_rgb = np.array(image_region)
+
+        image_gray = cv2.cvtColor(image_rgb, cv2.COLOR_BGR2GRAY)
+        final_image = None
+
+        if gray_scale == False:
+            final_image = cv2.bitwise_not(image_gray)  # color of text is white so we should invert colors
+        else:
+            final_image = image_gray
+
+        data = pytesseract.image_to_string(final_image)
+
+        return data
+
+    @staticmethod
+    def ocr_number(template_number: str, gray_scale=True) -> int:
+
+        pytesseract.pytesseract.tesseract_cmd = CTDT.tesseract_cmd
+
+        caches: Cache = Cache.get_instance()
+        region_start_x = caches.templates[template_number].region_start_x
+        region_start_y = caches.templates[template_number].region_start_y
+        region_end_x = caches.templates[template_number].region_end_x
+        region_end_y = caches.templates[template_number].region_end_y
+
+        image_region = ImageGrab.grab(bbox=(region_start_x, region_start_y, region_end_x, region_end_y))
+        image_rgb = np.array(image_region)
+
+        image_gray = cv2.cvtColor(image_rgb, cv2.COLOR_BGR2GRAY)
+        final_image = None
+
+        if gray_scale == False:
+            final_image = cv2.bitwise_not(image_gray)  # color of text is white so we should invert colors
+        else:
+            final_image = image_gray
+
+        data = pytesseract.image_to_string(final_image)
+
+        new_data = ""
+
+        for d in data:
+            if d.isnumeric():
+                new_data += d
+
+        return new_data

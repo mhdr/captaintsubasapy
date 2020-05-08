@@ -70,6 +70,10 @@ class Tsubasa:
     # if we reaches to max number in config it means user is inactive and we should go home and try again
     count_preparing: int = 0
 
+    # maximum number of searching in shared play
+    # if we reaches to this number it means users are not sharing and we should retry
+    count_sharing: int = 0
+
     def __init__(self, telegram: TelegramBot):
         self.config = Config.get_instance()
         if self.config.telegram_disabled == 0:
@@ -389,10 +393,10 @@ class Tsubasa:
             if self.energy_recovery_send_telegram_datetime is None:
                 # inform in telegram that we are out of energy
                 self.send_telegram_message(
-                    "Out of energy : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+                    "Out of Energy : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
 
                 self.send_telegram_message(
-                    "Out of energy : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")), notify=True)
+                    "Out of Energy : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")), notify=True)
 
                 self.energy_recovery_send_telegram_datetime = datetime.now()
             else:
@@ -436,7 +440,8 @@ class Tsubasa:
                 if CTDT.template("066").click():
                     # save start time of viewing ad
                     self.ad_viewing_time = datetime.now()
-
+                    self.send_telegram_message(
+                        "Start Watching AD : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
                     return True
                 else:
 
@@ -570,8 +575,10 @@ class Tsubasa:
         # if energy recovered dialog
         if CTDT.template("029").available():
             #  click ok button
-            CTDT.template("030").click()
-            return True
+            if CTDT.template("030").click():
+                self.send_telegram_message(
+                    "Energy Recovered : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+                return True
 
         return False
 
@@ -930,6 +937,8 @@ class Tsubasa:
                 # close ad after number of seconds we set in config
                 if CTDT.template("067").click():
                     self.ad_viewing_time = None
+                    self.send_telegram_message(
+                        "End Watching AD : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
                     return True
 
             return True
@@ -1111,10 +1120,11 @@ class Tsubasa:
 
         if self.count_preparing > self.config.max_count_preparing:
 
+            # Home button
             if CTDT.template("074").click():
-                # inform in telegram that app is friezed
+                # inform in telegram that user is not starting match
                 self.send_telegram_message(
-                    "Inactive user : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+                    "Inactive User : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
 
                 self.count_preparing = 0
                 return True
@@ -1169,6 +1179,35 @@ class Tsubasa:
 
             if CTDT.template("018").click():
                 self.telegram.reset_restore_energy_flag()
+                return True
+
+        return False
+
+    ########################################################################################################################
+
+    def run_051(self, modes: set):
+        """
+        shared play - count searching - users are not sharing
+        :return:
+        """
+
+        if self.config.mode not in modes: return False
+
+        # if preparing available
+        if CTDT.template("080").available():
+            self.count_sharing = +1
+        else:
+            self.count_sharing = 0
+
+        if self.count_sharing > self.config.max_count_sharing:
+
+            # Home button
+            if CTDT.template("074").click():
+                # inform in telegram users are not sharing
+                self.send_telegram_message(
+                    "Failed Searching : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+
+                self.count_sharing = 0
                 return True
 
         return False
@@ -1454,6 +1493,12 @@ class Tsubasa:
         elif self.run_047(modes={self.MODE_GLOBAL_SHARED,
                                  self.MODE_CLUB_SHARED}):
             return "047"
+
+
+        # shared play - count searching - users are not sharing
+        elif self.run_051(modes={self.MODE_GLOBAL_SHARED,
+                                 self.MODE_CLUB_SHARED}):
+            return "051"
 
         # shared play - confirm cancel dialog
         elif self.run_048(modes={self.MODE_GLOBAL_SHARED,
