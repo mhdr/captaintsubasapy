@@ -455,6 +455,8 @@ class Tsubasa:
                     if seconds > self.config.wait_exit_app_ad:
                         # we should close app and try again
                         CTDT.point("002").click()
+                        # reset flag
+                        self.exit_app_for_ad_time = None
                         self.send_telegram_message(
                             "Close App : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
 
