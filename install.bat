@@ -12,5 +12,4 @@ python -m pip install --upgrade xlrd
 python -m pip install --upgrade xlwt
 python -m pip install --upgrade PyQt5
 python -m pip install --upgrade PyQt5-stubs
-
-python -m pip install --upgrade tesserocr
+python -m pip install --upgrade pytesseract

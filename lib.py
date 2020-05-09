@@ -277,7 +277,6 @@ class PointResult:
 #######################################################################################################################
 
 class CTDT:
-    tesseract_cmd = 'C:\\Program Files (x86)\\Tesseract-OCR\\tesseract.exe'
 
     @staticmethod
     def initialize():
@@ -290,6 +289,8 @@ class CTDT:
         # make current process dpi aware
         user32 = ctypes.windll.user32
         user32.SetProcessDPIAware()
+        pyautogui.FAILSAFE = False
+        pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files (x86)\\Tesseract-OCR\\tesseract.exe'
 
     @staticmethod
     def initialize_cache():
@@ -421,8 +422,6 @@ class CTDT:
     @staticmethod
     def ocr_text(template_number: str, gray_scale=True) -> str:
 
-        pytesseract.pytesseract.tesseract_cmd = CTDT.tesseract_cmd
-
         caches: Cache = Cache.get_instance()
         region_start_x = caches.templates[template_number].region_start_x
         region_start_y = caches.templates[template_number].region_start_y
@@ -446,8 +445,6 @@ class CTDT:
 
     @staticmethod
     def ocr_number(template_number: str, gray_scale=True) -> int:
-
-        pytesseract.pytesseract.tesseract_cmd = CTDT.tesseract_cmd
 
         caches: Cache = Cache.get_instance()
         region_start_x = caches.templates[template_number].region_start_x
@@ -474,4 +471,4 @@ class CTDT:
             if d.isnumeric():
                 new_data += d
 
-        return new_data
+        return int(new_data)
