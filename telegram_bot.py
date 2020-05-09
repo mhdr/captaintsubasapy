@@ -146,38 +146,38 @@ class TelegramBot:
 
     def exit(self, update: Update, context):
         self.exit_app_flag = True
-        output: str = "Start exiting : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+        output: str = "Start Exit : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
         msg: Message = update.message
         msg.reply_text(output)
 
     def force_exit(self, update: Update, context):
         self.force_exit_app_flag = True
-        output: str = "Start forcing exit : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+        output: str = "Start Force Exit : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
         msg: Message = update.message
         msg.reply_text(output)
 
     def home(self, update: Update, context):
         self.go_home_flag = True
-        output: str = "Start going home : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+        output: str = "Start Go home : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
         msg: Message = update.message
         msg.reply_text(output)
 
     def restore_energy(self,update: Update, context):
         self.restore_energy_flag = True
-        output: str = "Start restoring energy : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+        output: str = "Start Restore Energy : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
         msg: Message = update.message
         msg.reply_text(output)
 
 
     def reset_restore_energy_flag(self):
         self.restore_energy_flag = False
-        output: str = "End restoring energy : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+        output: str = "End Restore Energey : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
         self.bot.send_message(self.config.telegram_chatid, output)
 
     def reset_go_home_flag(self):
         self.go_home_flag = False
         self.pause_flag = True
-        output: str = "End going home : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+        output: str = "End Go home : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
         self.bot.send_message(self.config.telegram_chatid, output)
 
         output2: str = "Pause : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
@@ -186,7 +186,7 @@ class TelegramBot:
     def reset_exit_app(self):
         self.exit_app_flag = False
         self.pause_flag = True
-        output: str = "End exit : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+        output: str = "End Exit : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
         self.bot.send_message(self.config.telegram_chatid, output)
 
         output2: str = "Pause : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
@@ -195,7 +195,7 @@ class TelegramBot:
     def reset_force_exit_app(self):
         self.force_exit_app_flag = False
         self.pause_flag = True
-        output: str = "End force exit : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+        output: str = "End Force Exit : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
         self.bot.send_message(self.config.telegram_chatid, output)
 
         output2: str = "Pause : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
