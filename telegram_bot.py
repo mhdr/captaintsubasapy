@@ -42,7 +42,7 @@ class TelegramBot:
 
         # inform boss we are starting
         self.bot = Bot(token=self.config.telegram_token)
-        msg1 = "Starting bot: {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+        msg1 = "Starting Bot: {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
         self.bot.send_message(self.config.telegram_chatid, msg1)
         self.bot.send_message(self.config.telegram_chatid, self.config.get_text_mode())
         self.bot.send_message(self.config.telegram_chatid, self.config.get_text_difficulty())
