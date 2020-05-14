@@ -984,6 +984,12 @@ class Tsubasa:
             # dreamball lottery dialog -> next button
             if CTDT.template("070").click():
                 return True
+            # dreamball lottery dialog -> ok button
+            elif CTDT.template("082").click():
+                return True
+            # dreamball lottery dialog ->  ok button ( ok / cancel )
+            elif CTDT.template("083").click():
+                return True
 
         return False
 
