@@ -858,7 +858,7 @@ class Tsubasa:
         #  we can detect it by checking if to event exchange shop is not available
         elif not CTDT.template("061").available():
 
-            # ramadan event
+            # 3rd anni pre event
             if CTDT.template("024").click():
                 return True
 
