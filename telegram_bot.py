@@ -31,9 +31,6 @@ class TelegramBot:
     # go home flag
     go_home_flag = False
 
-    # recovery energy with recovery ball
-    restore_energy_flag = False
-
     def __init__(self):
         self.config = Config.get_instance()
 
@@ -90,9 +87,6 @@ class TelegramBot:
 
         # on home command
         dp.add_handler(CommandHandler("home", self.home))
-
-        # on restore enerrgy command
-        # dp.add_handler(CommandHandler("restoreenergy", self.restore_energy))
 
         # log all errors
         dp.add_error_handler(self.error)
@@ -170,18 +164,6 @@ class TelegramBot:
         output: str = "Start Go home : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
         msg: Message = update.message
         msg.reply_text(output)
-
-    def restore_energy(self,update: Update, context):
-        self.restore_energy_flag = True
-        output: str = "Start Restore Energy : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-        msg: Message = update.message
-        msg.reply_text(output)
-
-
-    def reset_restore_energy_flag(self):
-        self.restore_energy_flag = False
-        output: str = "End Restore Energey : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-        self.bot.send_message(self.config.telegram_chatid, output)
 
     def reset_go_home_flag(self):
         self.go_home_flag = False

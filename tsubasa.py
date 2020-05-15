@@ -1189,22 +1189,6 @@ class Tsubasa:
 
     ########################################################################################################################
 
-    def run_050(self):
-        """
-        restore energy telegram command
-        :return:
-        """
-
-        if self.telegram.restore_energy_flag:
-
-            if CTDT.template("018").click():
-                self.telegram.reset_restore_energy_flag()
-                return True
-
-        return False
-
-    ########################################################################################################################
-
     def run_051(self, modes: set):
         """
         shared play - count searching - users are not sharing
@@ -1250,10 +1234,6 @@ class Tsubasa:
         # go Home telegram command
         elif self.run_046():
             return "046"
-
-        # restore energy telegram command
-        elif self.run_050():
-            return "050"
 
         ################## End Telegram #########################
 
