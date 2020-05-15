@@ -10,6 +10,4 @@ python -m pip install --upgrade python-dateutil
 python -m pip install --upgrade openpyxl
 python -m pip install --upgrade xlrd
 python -m pip install --upgrade xlwt
-python -m pip install --upgrade PyQt5
-python -m pip install --upgrade PyQt5-stubs
 python -m pip install --upgrade pytesseract
