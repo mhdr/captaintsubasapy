@@ -1,9 +1,9 @@
 screenshot - take screenshot from screen
-screenshot2 - take screenshot and send as file
 setmode - set mode
-home - go to home
-pause - pause bot playing
 resume - resume bot playing
 exit - exit app
+home - go to home
+screenshot2 - take screenshot and send as file
+pause - pause bot playing
 forceexit - force exit app
 restart - restart bot
