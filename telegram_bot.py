@@ -67,6 +67,9 @@ class TelegramBot:
         # on screenshot command
         dp.add_handler(CommandHandler("screenshot", self.screenshot))
 
+        # on screenshot2 command
+        dp.add_handler(CommandHandler("screenshot2", self.screenshot2))
+
         # on restart command
         dp.add_handler(CommandHandler("restart", self.restart))
 
@@ -89,7 +92,7 @@ class TelegramBot:
         dp.add_handler(CommandHandler("home", self.home))
 
         # on restore enerrgy command
-        dp.add_handler(CommandHandler("restoreenergy", self.restore_energy))
+        # dp.add_handler(CommandHandler("restoreenergy", self.restore_energy))
 
         # log all errors
         dp.add_error_handler(self.error)
@@ -110,6 +113,12 @@ class TelegramBot:
         CTDT.save_screenshot()
         msg: Message = update.message
         msg.reply_photo(open("screenshot.jpg", "rb"))
+
+    # take screenshot and send as file
+    def screenshot2(self,update: Update, context):
+        CTDT.save_screenshot()
+        msg: Message = update.message
+        msg.reply_document(open("screenshot.jpg", "rb"))
 
     def restart(self, update: Update, context):
         output: str = "Restarting bot : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))

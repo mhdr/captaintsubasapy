@@ -1,4 +1,5 @@
 screenshot - take screenshot from screen
+screenshot2 - take screenshot and send as file
 setmode - set mode
 home - go to home
 pause - pause bot playing
@@ -6,4 +7,3 @@ resume - resume bot playing
 exit - exit app
 forceexit - force exit app
 restart - restart bot
-restoreenergy - restore with recovery ball
