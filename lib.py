@@ -414,61 +414,73 @@ class CTDT:
 
     @staticmethod
     def save_screenshot():
-        user32 = ctypes.windll.user32
-        user32.SetProcessDPIAware()
-        image = ImageGrab.grab()
-        image.save("screenshot.jpg")
+        try:
+            user32 = ctypes.windll.user32
+            user32.SetProcessDPIAware()
+            image = ImageGrab.grab()
+            image.save("screenshot.jpg")
+        except Exception as ex:
+            print(str(ex))
 
     @staticmethod
     def ocr_text(template_number: str, gray_scale=True) -> str:
 
-        caches: Cache = Cache.get_instance()
-        region_start_x = caches.templates[template_number].region_start_x
-        region_start_y = caches.templates[template_number].region_start_y
-        region_end_x = caches.templates[template_number].region_end_x
-        region_end_y = caches.templates[template_number].region_end_y
+        try:
+            caches: Cache = Cache.get_instance()
+            region_start_x = caches.templates[template_number].region_start_x
+            region_start_y = caches.templates[template_number].region_start_y
+            region_end_x = caches.templates[template_number].region_end_x
+            region_end_y = caches.templates[template_number].region_end_y
 
-        image_region = ImageGrab.grab(bbox=(region_start_x, region_start_y, region_end_x, region_end_y))
-        image_rgb = np.array(image_region)
+            image_region = ImageGrab.grab(bbox=(region_start_x, region_start_y, region_end_x, region_end_y))
+            image_rgb = np.array(image_region)
 
-        image_gray = cv2.cvtColor(image_rgb, cv2.COLOR_BGR2GRAY)
-        final_image = None
+            image_gray = cv2.cvtColor(image_rgb, cv2.COLOR_BGR2GRAY)
+            final_image = None
 
-        if gray_scale == False:
-            final_image = cv2.bitwise_not(image_gray)  # color of text is white so we should invert colors
-        else:
-            final_image = image_gray
+            if gray_scale == False:
+                final_image = cv2.bitwise_not(image_gray)  # color of text is white so we should invert colors
+            else:
+                final_image = image_gray
 
-        data = pytesseract.image_to_string(final_image)
+            data = pytesseract.image_to_string(final_image)
 
-        return data
+            return data
+        except:
+            return ""
 
     @staticmethod
     def ocr_number(template_number: str, gray_scale=True) -> int:
 
-        caches: Cache = Cache.get_instance()
-        region_start_x = caches.templates[template_number].region_start_x
-        region_start_y = caches.templates[template_number].region_start_y
-        region_end_x = caches.templates[template_number].region_end_x
-        region_end_y = caches.templates[template_number].region_end_y
+        try:
+            caches: Cache = Cache.get_instance()
+            region_start_x = caches.templates[template_number].region_start_x
+            region_start_y = caches.templates[template_number].region_start_y
+            region_end_x = caches.templates[template_number].region_end_x
+            region_end_y = caches.templates[template_number].region_end_y
 
-        image_region = ImageGrab.grab(bbox=(region_start_x, region_start_y, region_end_x, region_end_y))
-        image_rgb = np.array(image_region)
+            image_region = ImageGrab.grab(bbox=(region_start_x, region_start_y, region_end_x, region_end_y))
+            image_rgb = np.array(image_region)
 
-        image_gray = cv2.cvtColor(image_rgb, cv2.COLOR_BGR2GRAY)
-        final_image = None
+            image_gray = cv2.cvtColor(image_rgb, cv2.COLOR_BGR2GRAY)
+            final_image = None
 
-        if gray_scale == False:
-            final_image = cv2.bitwise_not(image_gray)  # color of text is white so we should invert colors
-        else:
-            final_image = image_gray
+            if gray_scale == False:
+                final_image = cv2.bitwise_not(image_gray)  # color of text is white so we should invert colors
+            else:
+                final_image = image_gray
 
-        data = pytesseract.image_to_string(final_image)
+            data = pytesseract.image_to_string(final_image)
 
-        new_data = ""
+            new_data = ""
 
-        for d in data:
-            if d.isnumeric():
-                new_data += d
+            for d in data:
+                if d.isnumeric():
+                    new_data += d
 
-        return int(new_data)
+            if new_data == "":
+                new_data = "0"
+
+            return int(new_data)
+        except:
+            return 0
