@@ -859,32 +859,35 @@ class Tsubasa:
         if CTDT.template("023").click():
             return True
 
-        # go to event match if we are in event match page(2) not on event page(1)
-        #  we can detect it by checking if to event exchange shop is not available
-        elif not CTDT.template("061").available():
-
-            # 3rd anni pre event
-            if CTDT.template("024").click():
-                return True
 
         ##########################################################
-        # # go to story mode - second page
-        # # use to play story mode only
-        # if CTDT.template("004").click():
-        #     return True
+
+        # # go to event match if we are in event match page(2) not on event page(1)
+        # #  we can detect it by checking if to event exchange shop is not available
+        # elif not CTDT.template("061").available():
         #
-        # # begin scroll
-        # # if in story mode and if we are at the beginning of the scroll ( scrollbar is on left )
-        # # we should scroll to right
-        # elif CTDT.template("005").available():
-        #     CTDT.point("001").click(clicks=5, interval=0.1)
-        #     return True
-        #
-        # # end scroll
-        # # exact game picture ( it should change always to match)
-        # # for now -> story mode - evolve -> get drills all types
-        # elif CTDT.template("006").click():
-        #     return True
+        #     # 3rd anni pre event
+        #     if CTDT.template("024").click():
+        #         return True
+
+        ##########################################################
+        # go to story mode - second page
+        # use to play story mode only
+        if CTDT.template("004").click():
+            return True
+
+        # begin scroll
+        # if in story mode and if we are at the beginning of the scroll ( scrollbar is on left )
+        # we should scroll to right
+        elif CTDT.template("005").available():
+            CTDT.point("001").click(clicks=5, interval=0.1)
+            return True
+
+        # end scroll
+        # exact game picture ( it should change always to match)
+        # for now -> story mode - evolve -> get drills all types
+        elif CTDT.template("006").click():
+            return True
 
         ##########################################################
         # go to evolve player
