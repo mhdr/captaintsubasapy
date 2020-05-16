@@ -423,7 +423,7 @@ class CTDT:
             print(str(ex))
 
     @staticmethod
-    def ocr_text(template_number: str, gray_scale=True) -> str:
+    def ocr_text(template_number: str, invert_colors=True) -> str:
 
         try:
             caches: Cache = Cache.get_instance()
@@ -438,7 +438,7 @@ class CTDT:
             image_gray = cv2.cvtColor(image_rgb, cv2.COLOR_BGR2GRAY)
             final_image = None
 
-            if gray_scale == False:
+            if invert_colors == True:
                 final_image = cv2.bitwise_not(image_gray)  # color of text is white so we should invert colors
             else:
                 final_image = image_gray
@@ -450,7 +450,7 @@ class CTDT:
             return ""
 
     @staticmethod
-    def ocr_number(template_number: str, gray_scale=True) -> int:
+    def ocr_number(template_number: str, invert_colors=True) -> int:
 
         try:
             caches: Cache = Cache.get_instance()
@@ -465,7 +465,7 @@ class CTDT:
             image_gray = cv2.cvtColor(image_rgb, cv2.COLOR_BGR2GRAY)
             final_image = None
 
-            if gray_scale == False:
+            if invert_colors == True:
                 final_image = cv2.bitwise_not(image_gray)  # color of text is white so we should invert colors
             else:
                 final_image = image_gray
