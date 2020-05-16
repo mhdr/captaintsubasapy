@@ -471,6 +471,7 @@ class CTDT:
                 final_image = image_gray
 
             data = pytesseract.image_to_string(final_image)
+            print(pytesseract.pytesseract.tesseract_cmd)
             print(data)
 
             new_data = ""
