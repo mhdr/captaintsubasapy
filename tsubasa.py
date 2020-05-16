@@ -855,13 +855,12 @@ class Tsubasa:
 
         if self.config.mode not in modes: return False
 
-        # go to event
-        if CTDT.template("023").click():
-            return True
-
-
         ##########################################################
 
+        # # go to event
+        # if CTDT.template("023").click():
+        #     return True
+        #
         # # go to event match if we are in event match page(2) not on event page(1)
         # #  we can detect it by checking if to event exchange shop is not available
         # elif not CTDT.template("061").available():
