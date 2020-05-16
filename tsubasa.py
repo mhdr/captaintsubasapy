@@ -1224,6 +1224,24 @@ class Tsubasa:
         return False
 
     ########################################################################################################################
+
+    def run_052(self, modes: set):
+        """
+        after match - add friend dialog
+        :return:
+        """
+
+        if self.config.mode not in modes: return False
+
+        # add friend dialog - title
+        if CTDT.template("084").available():
+            # cancel button on add friend dialog
+            if CTDT.template("079").click():
+                return True
+
+        return False
+
+    ########################################################################################################################
     ########################################################################################################################
 
     def run(self):
@@ -1339,6 +1357,14 @@ class Tsubasa:
                                  self.MODE_CLUB_JOIN,
                                  self.MODE_GLOBAL_JOIN}):
             return "028"
+
+        # after match - add friend dialog
+        elif self.run_052(modes={self.MODE_STORY_SOLO,
+                                 self.MODE_EVENT_SOLO,
+                                 self.MODE_SOLO,
+                                 self.MODE_CLUB_JOIN,
+                                 self.MODE_GLOBAL_JOIN}):
+            return "052"
 
         # go to scenario list
         # it should run before owned FP (run_014)
