@@ -471,6 +471,7 @@ class CTDT:
                 final_image = image_gray
 
             data = pytesseract.image_to_string(final_image)
+            print(data)
 
             new_data = ""
 
@@ -481,6 +482,7 @@ class CTDT:
             if new_data == "":
                 new_data = "0"
 
+            print(new_data)
             return int(new_data)
         except:
             return 0
