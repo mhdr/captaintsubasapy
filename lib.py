@@ -443,7 +443,7 @@ class CTDT:
             else:
                 final_image = image_gray
 
-            data = pytesseract.image_to_string(final_image)
+            data = pytesseract.image_to_string(final_image, config='--psm 6')
 
             return data
         except:
@@ -470,9 +470,7 @@ class CTDT:
             else:
                 final_image = image_gray
 
-            data = pytesseract.image_to_string(final_image)
-            print(pytesseract.pytesseract.tesseract_cmd)
-            print(data)
+            data = pytesseract.image_to_string(final_image, config='--psm 6')
 
             new_data = ""
 
@@ -483,7 +481,6 @@ class CTDT:
             if new_data == "":
                 new_data = "0"
 
-            print(new_data)
             return int(new_data)
         except:
             return 0
