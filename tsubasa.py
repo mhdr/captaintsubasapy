@@ -1236,7 +1236,7 @@ class Tsubasa:
         # add friend dialog - title
         if CTDT.template("084").available():
             # cancel button on add friend dialog
-            if CTDT.template("079").click():
+            if CTDT.template("085").click():
                 return True
 
         return False
