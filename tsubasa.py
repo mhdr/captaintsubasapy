@@ -1,3 +1,5 @@
+import time
+
 import pyautogui
 from telegram import Bot
 
@@ -394,6 +396,9 @@ class Tsubasa:
                 # inform in telegram that we are out of energy
                 self.send_telegram_message(
                     "Out of Energy : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+
+                # sleep to avoid problem in telegram bot
+                time.sleep(1)
 
                 self.send_telegram_message(
                     "Out of Energy : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")), notify=True)
