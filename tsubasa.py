@@ -398,7 +398,7 @@ class Tsubasa:
                     "Out of Energy : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
 
                 # sleep to avoid problem in telegram bot
-                time.sleep(1)
+                time.sleep(0.2)
 
                 self.send_telegram_message(
                     "Out of Energy : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")), notify=True)
