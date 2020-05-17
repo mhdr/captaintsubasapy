@@ -19,6 +19,7 @@ class Tsubasa:
     MODE_CLUB_JOIN = 5
     MODE_GLOBAL_SHARED = 6
     MODE_GLOBAL_JOIN = 7
+    MODE_EVOLE_PLAYER = 8
 
     EnergyRecovery_WaitToRecover = 2
     EnergyRecovery_Ad = 3
@@ -855,43 +856,45 @@ class Tsubasa:
 
         if self.config.mode not in modes: return False
 
-        ##########################################################
+        if self.config.mode in {self.MODE_GLOBAL_SHARED, self.MODE_GLOBAL_JOIN}:
 
-        # # go to event
-        # if CTDT.template("023").click():
-        #     return True
-        #
-        # # go to event match if we are in event match page(2) not on event page(1)
-        # #  we can detect it by checking if to event exchange shop is not available
-        # elif not CTDT.template("061").available():
-        #
-        #     # 3rd anni pre event
-        #     if CTDT.template("024").click():
-        #         return True
+            # go to event
+            if CTDT.template("023").click():
+                return True
 
-        ##########################################################
-        # go to story mode - second page
-        # use to play story mode only
-        if CTDT.template("004").click():
-            return True
+            # go to event match if we are in event match page(2) not on event page(1)
+            #  we can detect it by checking if to event exchange shop is not available
+            elif not CTDT.template("061").available():
 
-        # begin scroll
-        # if in story mode and if we are at the beginning of the scroll ( scrollbar is on left )
-        # we should scroll to right
-        elif CTDT.template("005").available():
-            CTDT.point("001").click(clicks=5, interval=0.1)
-            return True
+                # 3rd anni pre event
+                if CTDT.template("024").click():
+                    return True
 
-        # end scroll
-        # exact game picture ( it should change always to match)
-        # for now -> story mode - evolve -> get drills all types
-        elif CTDT.template("006").click():
-            return True
+        elif self.config.mode in {self.MODE_STORY_SOLO}:
 
-        ##########################################################
-        # go to evolve player
-        # if CTDT.template("054").click():
-        #     return True
+            # go to story mode - second page
+            # use to play story mode only
+            if CTDT.template("004").click():
+                return True
+
+            # begin scroll
+            # if in story mode and if we are at the beginning of the scroll ( scrollbar is on left )
+            # we should scroll to right
+            elif CTDT.template("005").available():
+                CTDT.point("001").click(clicks=5, interval=0.1)
+                return True
+
+            # end scroll
+            # exact game picture ( it should change always to match)
+            # for now -> story mode - evolve -> get drills all types
+            elif CTDT.template("006").click():
+                return True
+
+        elif self.config.mode in {self.MODE_EVOLE_PLAYER}:
+            
+            # go to evolve player
+            if CTDT.template("054").click():
+                return True
 
         return False
 
