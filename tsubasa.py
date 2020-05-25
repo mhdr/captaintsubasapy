@@ -1296,7 +1296,6 @@ class Tsubasa:
                                  self.MODE_GLOBAL_SHARED}):
             return "026"
 
-        # *** difficulty
         if self.run_007(modes={self.MODE_STORY_SOLO,
                                self.MODE_EVENT_SOLO,
                                self.MODE_SOLO,
