@@ -891,7 +891,7 @@ class Tsubasa:
                 return True
 
         elif self.config.mode in {self.MODE_EVOLE_PLAYER}:
-            
+
             # go to evolve player
             if CTDT.template("054").click():
                 return True
@@ -1245,6 +1245,24 @@ class Tsubasa:
         return False
 
     ########################################################################################################################
+
+    def run_053(self, modes: set):
+        """
+        new update data is available diaolg
+        :return:
+        """
+
+        if self.config.mode not in modes: return False
+
+        # new update data is available diaolg - title
+        if CTDT.template("086").available():
+            # new update data is available diaolg - ok button
+            if CTDT.template("087").click():
+                return True
+
+        return False
+
+    ########################################################################################################################
     ########################################################################################################################
 
     def run(self):
@@ -1540,6 +1558,15 @@ class Tsubasa:
         elif self.run_048(modes={self.MODE_GLOBAL_SHARED,
                                  self.MODE_CLUB_SHARED}):
             return "048"
+
+        # new update data is available diaolg
+        elif self.run_053(modes={self.MODE_EVENT_SOLO,
+                                 self.MODE_SOLO,
+                                 self.MODE_CLUB_SHARED,
+                                 self.MODE_CLUB_JOIN,
+                                 self.MODE_GLOBAL_SHARED,
+                                 self.MODE_GLOBAL_JOIN}):
+            return "053"
 
         # prevent screen off
         elif self.run_030():
