@@ -1036,6 +1036,8 @@ class Tsubasa:
         # it will increase on every cycle that is present and reset 0 otherwise
         if CTDT.template("073").available():
             self.count_now_loading += 1
+        elif CTDT.template("088").available():
+            self.count_now_loading += 1
         else:
             self.count_now_loading = 0
 
