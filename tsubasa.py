@@ -1538,7 +1538,10 @@ class Tsubasa:
 
 
         # detect app freeze
-        elif self.run_042(modes={self.MODE_GLOBAL_JOIN,
+        elif self.run_042(modes={self.MODE_STORY_SOLO,
+                                 self.MODE_EVENT_SOLO,
+                                 self.MODE_SOLO,
+                                 self.MODE_GLOBAL_JOIN,
                                  self.MODE_CLUB_JOIN,
                                  self.MODE_GLOBAL_SHARED,
                                  self.MODE_CLUB_SHARED}):
