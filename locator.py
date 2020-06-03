@@ -16,11 +16,11 @@ threshold = 0.97
 
 # file name like : 031f.jpg
 # Column A in excel
-index_fimage = 23
+index_fimage = 60
 
 # template number like : 007.jpg
 # Column F in excel
-index_template = 23
+index_template = 60
 
 # first match = 0
 match = 0
