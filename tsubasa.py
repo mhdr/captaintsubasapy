@@ -943,6 +943,9 @@ class Tsubasa:
 
         if self.config.mode not in modes: return False
 
+        if self.config.energy_recovery != self.EnergyRecovery_Ad:
+            return False
+
         # close ad button
         if CTDT.template("067").available():
             # check the amount of time energy recovery dialog is open
