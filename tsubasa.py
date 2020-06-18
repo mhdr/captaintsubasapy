@@ -1403,6 +1403,13 @@ class Tsubasa:
                                  self.MODE_GLOBAL_JOIN}):
             return "040"
 
+        # after ad - ad viewing interrupted dialog
+        elif self.run_041(modes={self.MODE_STORY_SOLO,
+                                 self.MODE_EVENT_SOLO,
+                                 self.MODE_SOLO,
+                                 self.MODE_GLOBAL_JOIN}):
+            return "041"
+
         # play type : solo, shared play, join
         elif self.run_009(modes={self.MODE_STORY_SOLO,
                                  self.MODE_EVENT_SOLO,
@@ -1416,13 +1423,6 @@ class Tsubasa:
         elif self.run_029(modes={self.MODE_CLUB_JOIN,
                                  self.MODE_GLOBAL_JOIN}):
             return "029"
-
-        # after ad - ad viewing interrupted dialog
-        elif self.run_041(modes={self.MODE_STORY_SOLO,
-                                 self.MODE_EVENT_SOLO,
-                                 self.MODE_SOLO,
-                                 self.MODE_GLOBAL_JOIN}):
-            return "041"
 
         # play match button
         elif self.run_008(modes={self.MODE_STORY_SOLO,
