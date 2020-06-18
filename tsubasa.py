@@ -77,6 +77,10 @@ class Tsubasa:
     # if we reaches to this number it means users are not sharing and we should retry
     count_sharing: int = 0
 
+    # if true we should find a way to go home
+    # usage is for when we want to see ad but it's not coming up
+    go_to_home = False
+
     def __init__(self, telegram: TelegramBot):
         self.config = Config.get_instance()
         if self.config.telegram_disabled == 0:
@@ -242,6 +246,22 @@ class Tsubasa:
 
         if self.config.mode not in modes: return False
 
+        # if go to home is enabled we should cancel and go to home
+        if self.go_to_home:
+            if self.config.global_shared_play_enabled == 1:
+
+                if CTDT.template("050").available():
+
+                    if CTDT.template("089").click():
+                        return True
+            else:
+
+                if CTDT.template("009").available():
+
+                    if CTDT.template("089").click():
+                        return True
+
+        # otherwise go to play
         if self.config.mode == self.MODE_STORY_SOLO:
 
             if self.config.global_shared_play_enabled == 1:
@@ -451,20 +471,26 @@ class Tsubasa:
                     return True
                 else:
 
-                    if self.exit_app_for_ad_time is None:
-                        self.exit_app_for_ad_time = datetime.now()
+                    # if self.exit_app_for_ad_time is None:
+                    #     self.exit_app_for_ad_time = datetime.now()
+                    #
+                    # # check previous time we exited from app for resetting ad
+                    # diff = datetime.now() - self.exit_app_for_ad_time
+                    # seconds = diff.total_seconds()
+                    #
+                    # if seconds > self.config.wait_exit_app_ad:
+                    #     # we should close app and try again
+                    #     CTDT.point("002").click()
+                    #     # reset flag
+                    #     self.exit_app_for_ad_time = None
+                    #     self.send_telegram_message(
+                    #         "Close App : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
 
-                    # check previous time we exited from app for resetting ad
-                    diff = datetime.now() - self.exit_app_for_ad_time
-                    seconds = diff.total_seconds()
+                    # we want to go home
+                    self.go_to_home = True
 
-                    if seconds > self.config.wait_exit_app_ad:
-                        # we should close app and try again
-                        CTDT.point("002").click()
-                        # reset flag
-                        self.exit_app_for_ad_time = None
-                        self.send_telegram_message(
-                            "Close App : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+                    # click on cancel button
+                    CTDT.template("017").click()
 
                     return True
 
@@ -1123,7 +1149,7 @@ class Tsubasa:
 
     def run_046(self):
         """
-        go Home telegram command
+        go Home telegram command & go home mode
         :return:
         """
 
@@ -1133,6 +1159,13 @@ class Tsubasa:
             # go to Home
             if CTDT.template("074").click():
                 self.telegram.reset_go_home_flag()
+                return True
+
+        if self.go_to_home:
+            # go to Home
+            if CTDT.template("074").click():
+                # reset go home flag
+                self.go_to_home = False
                 return True
 
         return False
@@ -1282,7 +1315,7 @@ class Tsubasa:
 
         ################## Telegram #############################
 
-        # go Home telegram command
+        # go Home telegram command & go home mode
         elif self.run_046():
             return "046"
 
