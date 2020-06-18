@@ -81,6 +81,12 @@ class Tsubasa:
     # usage is for when we want to see ad but it's not coming up
     go_to_home = False
 
+    # number of ad we saw
+    ad_saw = 0
+
+    #  send msg to telegram that we used all of ads for recovery energy
+    out_of_ad_energy_send_telegram_datetime = None
+
     def __init__(self, telegram: TelegramBot):
         self.config = Config.get_instance()
         if self.config.telegram_disabled == 0:
@@ -486,11 +492,38 @@ class Tsubasa:
                     #     self.send_telegram_message(
                     #         "Close App : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
 
-                    # we want to go home
-                    self.go_to_home = True
+                    if self.ad_saw <= self.config.energy_ad_left:
 
-                    # click on cancel button
-                    CTDT.template("017").click()
+                        # we want to go home
+                        self.go_to_home = True
+
+                        # click on cancel button
+                        CTDT.template("017").click()
+                    else:
+
+                        if self.out_of_ad_energy_send_telegram_datetime is None:
+                            # inform in telegram that we are out of ads
+                            self.send_telegram_message(
+                                "Out of Ads : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+
+                            # sleep to avoid problem in telegram bot
+                            time.sleep(0.2)
+
+                            self.send_telegram_message(
+                                "Out of Ads : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")), notify=True)
+
+                            self.out_of_ad_energy_send_telegram_datetime = datetime.now()
+                        else:
+
+                            # check previous time we sent the telegram msg
+                            diff = datetime.now() - self.out_of_ad_energy_send_telegram_datetime
+                            seconds = diff.total_seconds()
+
+                            # reset time after timeout
+                            # after reaching timeout period which is 1 hour by default we will set datetime to None
+                            # so we can send out of ads msg in telegram again
+                            if seconds >= self.config.wait_telegram_msg_energy_recovery:
+                                self.out_of_ad_energy_send_telegram_datetime = None
 
                     return True
 
@@ -615,6 +648,11 @@ class Tsubasa:
         if CTDT.template("029").available():
             #  click ok button
             if CTDT.template("030").click():
+
+                # increase the number of ads we saw if we are using ad to recover energy
+                if self.config.energy_recovery == self.EnergyRecovery_Ad:
+                    self.ad_saw += 1
+
                 self.send_telegram_message(
                     "Energy Recovered : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
                 return True

@@ -110,6 +110,9 @@ class Config:
     wait_after_member2_join: int
     wait_after_member3_join: int
 
+    # number of energy left for energy recovery
+    energy_ad_left: int
+
     @staticmethod
     def get_instance():
         """
@@ -140,6 +143,7 @@ class Config:
             Config.wait_after_member1_join = int(config["General"]["WaitAfterMember1Joined"])
             Config.wait_after_member2_join = int(config["General"]["WaitAfterMember2Joined"])
             Config.wait_after_member3_join = int(config["General"]["WaitAfterMember3Joined"])
+            Config.energy_ad_left = int(config["Game"]["EnergyAdLeft"])
 
             Config.telegram_token = str(config["Telegram"]["Token"])
             Config.telegram_chatid = int(config["Telegram"]["ChatId"])
