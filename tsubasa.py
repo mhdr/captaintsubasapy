@@ -492,13 +492,13 @@ class Tsubasa:
                     #     self.send_telegram_message(
                     #         "Close App : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
 
-                    if self.ad_saw <= self.config.energy_ad_left:
+                    if self.ad_saw < self.config.energy_ad_left:
 
                         # we want to go home
                         self.go_to_home = True
 
                         # click on cancel button
-                        CTDT.template("017").click()
+                        CTDT.template("090").click()
                     else:
 
                         if self.out_of_ad_energy_send_telegram_datetime is None:
