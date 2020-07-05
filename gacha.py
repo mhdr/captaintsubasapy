@@ -2,7 +2,7 @@ from random import seed
 from random import random
 import time
 
-percentage = 14
+percentage = 3
 multi = 10
 count = 1
 
