@@ -1190,7 +1190,7 @@ class Tsubasa:
 
     def run_046(self):
         """
-        go Home telegram command & go home mode
+        go Home telegram command
         :return:
         """
 
@@ -1200,18 +1200,6 @@ class Tsubasa:
             # go to Home
             if CTDT.template("074").click():
                 self.telegram.reset_go_home_flag()
-                return True
-
-        if self.go_to_home:
-            # go to Home
-
-            # go to Home
-            if CTDT.template("074").click():
-                return True
-            
-            elif CTDT.template("003").click():
-                # reset go home flag
-                self.go_to_home = False
                 return True
 
         return False
@@ -1342,6 +1330,30 @@ class Tsubasa:
         if CTDT.template("086").available():
             # new update data is available diaolg - ok button
             if CTDT.template("087").click():
+                return True
+
+        return False
+
+    ########################################################################################################################
+
+    def run_054(self, modes: set):
+        """
+        go Home mode
+        :return:
+        """
+
+        if self.config.mode not in modes: return False
+
+        if self.go_to_home:
+            # go to Home
+
+            # go to Home
+            if CTDT.template("074").click():
+                return True
+
+            elif CTDT.template("003").click():
+                # reset go home flag
+                self.go_to_home = False
                 return True
 
         return False
@@ -1644,6 +1656,15 @@ class Tsubasa:
         elif self.run_048(modes={self.MODE_GLOBAL_SHARED,
                                  self.MODE_CLUB_SHARED}):
             return "048"
+
+        # go home mode
+        elif self.run_054(modes={self.MODE_GLOBAL_JOIN,
+                                 self.MODE_CLUB_JOIN,
+                                 self.MODE_EVENT_SOLO,
+                                 self.MODE_STORY_SOLO,
+                                 self.MODE_SOLO,
+                                 self.MODE_EVOLE_PLAYER}):
+            return "054"
 
         # new update data is available diaolg
         elif self.run_053(modes={self.MODE_EVENT_SOLO,
