@@ -1204,7 +1204,12 @@ class Tsubasa:
 
         if self.go_to_home:
             # go to Home
-            if CTDT.template("003").click():
+
+            # go to Home
+            if CTDT.template("074").click():
+                return True
+            
+            elif CTDT.template("003").click():
                 # reset go home flag
                 self.go_to_home = False
                 return True
