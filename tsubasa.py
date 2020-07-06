@@ -226,6 +226,10 @@ class Tsubasa:
 
         if self.config.mode not in modes: return False
 
+        # skip play match if go home is active
+        if self.go_to_home == True:
+            return True
+
         # skip ticket button is not present beside play match button = 0
         if self.config.play_match_with_skip_ticket_button == 0:
 
