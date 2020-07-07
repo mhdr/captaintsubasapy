@@ -487,6 +487,9 @@ class Tsubasa:
                         # we want to go home
                         self.go_to_home = True
 
+                        # wait before going home
+                        time.sleep(self.config.wait_before_go_home)
+
                         # click on cancel button
                         CTDT.template("017").click()
                     else:

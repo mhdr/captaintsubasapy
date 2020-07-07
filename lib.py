@@ -95,7 +95,6 @@ class Config:
     wait_finish_ad: int
     wait_ad_view_interrupted: int
     max_count_now_loading: int
-    wait_exit_app_ad: int
     max_count_preparing: int
     max_count_sharing: int
     min_recovery_ball: int
@@ -112,6 +111,8 @@ class Config:
 
     # number of energy left for energy recovery
     energy_ad_left: int
+
+    wait_before_go_home: int
 
     @staticmethod
     def get_instance():
@@ -136,7 +137,6 @@ class Config:
             Config.wait_finish_ad = int(config["General"]["WaitFinishAd"])
             Config.wait_ad_view_interrupted = int(config["General"]["WaitAfterAdViewInterrupted"])
             Config.max_count_now_loading = int(config["General"]["MaxCountNowLoading"])
-            Config.wait_exit_app_ad = int(config["General"]["WaitExitAppForAd"])
             Config.max_count_preparing = int(config["General"]["MaxCountPreparing"])
             Config.max_count_sharing = int(config["General"]["MaxCountSearching"])
             Config.min_recovery_ball = int(config["General"]["MinRecoveryBall"])
@@ -144,6 +144,7 @@ class Config:
             Config.wait_after_member2_join = int(config["General"]["WaitAfterMember2Joined"])
             Config.wait_after_member3_join = int(config["General"]["WaitAfterMember3Joined"])
             Config.energy_ad_left = int(config["Game"]["EnergyAdLeft"])
+            Config.wait_before_go_home = int(config["General"]["WaitBeforeGoHome"])
 
             Config.telegram_token = str(config["Telegram"]["Token"])
             Config.telegram_chatid = int(config["Telegram"]["ChatId"])
