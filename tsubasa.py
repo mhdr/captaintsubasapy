@@ -160,6 +160,8 @@ class Tsubasa:
         if self.config.mode not in modes: return False
 
         if CTDT.template("003").click():
+            # reset go home flag
+            self.go_to_home = False
             return True
 
         return False
@@ -231,7 +233,7 @@ class Tsubasa:
             return False
 
         # skip ticket button is not present beside play match button = 0
-        if self.config.play_match_with_skip_ticket_button == 0:
+        elif self.config.play_match_with_skip_ticket_button == 0:
 
             # play match button without skip ticket
             if CTDT.template("028").click():
