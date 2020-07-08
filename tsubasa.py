@@ -1410,7 +1410,7 @@ class Tsubasa:
 
                     self.scroll_direction = self.Scroll_Down
                     CTDT.template("099", full_screen=True).move_mouse()
-                    pyautogui.scroll(-10)  # scroll down 10 "clicks"
+                    pyautogui.scroll(-1 * self.config.mouse_scroll_click)  # scroll down x "clicks"
                     time.sleep(3)
                     return True
 
@@ -1418,18 +1418,18 @@ class Tsubasa:
                 elif CTDT.template("095").available():
                     self.scroll_direction = self.Scroll_UP
                     CTDT.template("099", full_screen=True).move_mouse()
-                    pyautogui.scroll(10)  # scroll up 10 "clicks"
+                    pyautogui.scroll(1 * self.config.mouse_scroll_click)  # scroll up x "clicks"
                     time.sleep(3)
                     return True
                 else:
                     if self.scroll_direction == self.Scroll_Down:
                         CTDT.template("099", full_screen=True).move_mouse()
-                        pyautogui.scroll(-10)  # scroll down 10 "clicks"
+                        pyautogui.scroll(-1 * self.config.mouse_scroll_click)  # scroll down x "clicks"
                         time.sleep(3)
                         return True
                     elif self.scroll_direction == self.Scroll_UP:
                         CTDT.template("099", full_screen=True).move_mouse()
-                        pyautogui.scroll(10)  # scroll up 10 "clicks"
+                        pyautogui.scroll(1 * self.config.mouse_scroll_click)  # scroll up x "clicks"
                         time.sleep(3)
                         return True
 

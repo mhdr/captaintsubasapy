@@ -114,6 +114,9 @@ class Config:
 
     wait_before_go_home: int
 
+    # number of mouse clicks to scroll
+    mouse_scroll_click: int
+
     @staticmethod
     def get_instance():
         """
@@ -145,6 +148,7 @@ class Config:
             Config.wait_after_member3_join = int(config["General"]["WaitAfterMember3Joined"])
             Config.energy_ad_left = int(config["Game"]["EnergyAdLeft"])
             Config.wait_before_go_home = int(config["General"]["WaitBeforeGoHome"])
+            Config.mouse_scroll_click = int(config["General"]["MouseScrollClick"])
 
             Config.telegram_token = str(config["Telegram"]["Token"])
             Config.telegram_chatid = int(config["Telegram"]["ChatId"])
