@@ -244,6 +244,8 @@ class LocateResult:
             else:
                 center_x = self.position.left + self.template.image_width / 2
                 center_y = self.position.top + self.template.image_height / 2
+                print(center_x)
+                print(center_y)
 
             # pyautogui.moveTo(center_x, center_y)
             time.sleep(delay)
