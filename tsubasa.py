@@ -248,9 +248,16 @@ class Tsubasa:
         # skip ticket button is present beside play match button = 1
         elif self.config.play_match_with_skip_ticket_button == 1:
 
-            # play match button with skip ticket
-            if CTDT.template("008").click(1):
-                return True
+            if self.config.mode == self.MODE_FARM_STORY_MODE:
+                # play match button with skip ticket but unplayed
+                # farm story mode
+                if CTDT.template("098").click(1):
+                    return True
+            else:
+
+                # play match button with skip ticket
+                if CTDT.template("008").click(1):
+                    return True
 
         return False
 
