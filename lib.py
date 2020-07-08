@@ -237,7 +237,6 @@ class LocateResult:
 
     def click(self, wait: float = 2, delay=0) -> bool:
         if self.position is not None:
-
             center_x = self.template.region_start_x + self.position.left + self.template.image_width / 2
             center_y = self.template.region_start_y + self.position.top + self.template.image_height / 2
 
@@ -422,6 +421,7 @@ class CTDT:
         if len(loc[0]) == 0 & len(loc[1]) == 0:
             return result
         else:
+            print("{0}, {1)".format(loc[0][0], loc[1][0]))
             position = Box(loc[0][0], loc[1][0], caches.templates[template_number].image_width,
                            caches.templates[template_number].image_height)
             result = LocateResult(caches.templates[template_number], position)
