@@ -16,17 +16,17 @@ threshold = 0.97
 
 # file name like : 031f.jpg
 # Column A in excel
-index_fimage = 98
+index_fimage = 99
 
 # template number like : 007.jpg
 # Column F in excel
-index_template = 98
+index_template = 99
 
 # first match = 0
 match = 0
 
 # search on full screen
-full_screen = False
+full_screen = True
 
 # Window name in which image is displayed
 window_name = 'Image'
