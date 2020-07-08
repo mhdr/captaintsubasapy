@@ -1386,11 +1386,11 @@ class Tsubasa:
             if CTDT.template("093").available() is False:
 
                 # hard - unplayed
-                if CTDT.template("096", full_screen=True).click(full_screen=True):
+                if CTDT.template("096", full_screen=True).click():
                     return True
 
                 # very hard - unplayed
-                elif CTDT.template("097", full_screen=True).click(full_screen=True):
+                elif CTDT.template("097", full_screen=True).click():
                     return True
 
                 # scrollbar is on top
