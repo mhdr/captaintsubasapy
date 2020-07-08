@@ -31,6 +31,11 @@ class Tsubasa:
     Telegram_Disabled = 0
     Telegram_Enabled = 1
 
+    Scroll_UP = 1
+    Scroll_Down = -1
+
+    scroll_direction = Scroll_Down
+
     # the time energy recovery dialog is opened
     # we use this to open and close energy recovery dialog once in a three minutes
     energy_recovery_dialog_datetime: datetime = None
@@ -1388,13 +1393,22 @@ class Tsubasa:
 
                 # scrollbar is on top
                 elif CTDT.template("094").available():
-                    pyautogui.scroll(-10)  # scroll up 10 "clicks"
+                    self.scroll_direction = self.Scroll_Down
+                    pyautogui.scroll(10)  # scroll down 10 "clicks"
                     return True
 
                 # scrollbar is on bottom
                 elif CTDT.template("095").available():
-                    pyautogui.scroll(10)  # scroll down 10 "clicks"
+                    self.scroll_direction = self.Scroll_UP
+                    pyautogui.scroll(-10)  # scroll up 10 "clicks"
                     return True
+                else:
+                    if self.scroll_direction == self.Scroll_Down:
+                        pyautogui.scroll(10)  # scroll down 10 "clicks"
+                        return True
+                    elif self.scroll_direction == self.Scroll_UP:
+                        pyautogui.scroll(-10)  # scroll up 10 "clicks"
+                        return True
 
             else:
                 # all matches are played
