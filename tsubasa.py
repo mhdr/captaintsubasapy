@@ -1430,6 +1430,22 @@ class Tsubasa:
         return False
 
     ########################################################################################################################
+
+    def run_056(self, modes: set):
+        """
+        dreamball -> after match
+        :return:
+        """
+
+        if self.config.mode not in modes: return False
+
+        # dreamball after match
+        if CTDT.template("098").click():
+            return True
+
+        return False
+
+    ########################################################################################################################
     ########################################################################################################################
 
     def run(self):
@@ -1770,6 +1786,16 @@ class Tsubasa:
                                  self.MODE_CLUB_JOIN,
                                  self.MODE_GLOBAL_SHARED,
                                  self.MODE_GLOBAL_JOIN}):
+            return "053"
+
+        # dreamball after match
+        elif self.run_056(modes={self.MODE_EVENT_SOLO,
+                                 self.MODE_SOLO,
+                                 self.MODE_CLUB_SHARED,
+                                 self.MODE_CLUB_JOIN,
+                                 self.MODE_GLOBAL_SHARED,
+                                 self.MODE_GLOBAL_JOIN,
+                                 self.MODE_FARM_STORY_MODE}):
             return "053"
 
         # prevent screen off
