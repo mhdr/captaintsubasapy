@@ -164,6 +164,8 @@ class Config:
         # Club Join = 5
         # Global Shared = 6
         # Global Recruit = 7
+        # Evolve Player = 8
+        # Farm Story Mode = 9
 
         #  if 0 load from instance
         if mode == 0:
@@ -185,6 +187,10 @@ class Config:
             msg = "Mode 6 : Global Shared"
         elif mode == 7:
             msg = "Mode 7 : Global Recruit"
+        elif mode == 8:
+            msg = "Mode 8 : Evolve Player"
+        elif mode == 9:
+            msg = "Mode 9 : Farm Story Mode"
 
         return msg
 
