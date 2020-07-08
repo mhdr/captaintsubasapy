@@ -248,16 +248,9 @@ class Tsubasa:
         # skip ticket button is present beside play match button = 1
         elif self.config.play_match_with_skip_ticket_button == 1:
 
-            if self.config.mode == self.MODE_FARM_STORY_MODE:
-                # play match button with skip ticket but unplayed
-                # farm story mode
-                if CTDT.template("098").click(1):
-                    return True
-            else:
-
-                # play match button with skip ticket
-                if CTDT.template("008").click(1):
-                    return True
+            # play match button with skip ticket
+            if CTDT.template("008").click(1):
+                return True
 
         return False
 
@@ -1467,10 +1460,6 @@ class Tsubasa:
                                  self.MODE_GLOBAL_JOIN}):
             return "007"
 
-        # difficulty for story mode only
-        elif self.run_055(modes={self.MODE_FARM_STORY_MODE}):
-            return "055"
-
         # energy recovered dialog
         elif self.run_024(modes={self.MODE_STORY_SOLO,
                                  self.MODE_EVENT_SOLO,
@@ -1529,6 +1518,10 @@ class Tsubasa:
                                  self.MODE_GLOBAL_JOIN,
                                  self.MODE_FARM_STORY_MODE}):
             return "008"
+
+        # difficulty for story mode only
+        elif self.run_055(modes={self.MODE_FARM_STORY_MODE}):
+            return "055"
 
         # select friend
         elif self.run_010(modes={self.MODE_STORY_SOLO,
