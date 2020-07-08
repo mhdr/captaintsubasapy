@@ -333,6 +333,17 @@ class Tsubasa:
             if CTDT.template("063").click():
                 return True
 
+        elif self.config.mode == self.MODE_FARM_STORY_MODE:
+            
+            if self.config.global_shared_play_enabled == 1:
+
+                if CTDT.template("050").click():
+                    return True
+            else:
+
+                if CTDT.template("009").click():
+                    return True
+
         return False
 
     ########################################################################################################################
