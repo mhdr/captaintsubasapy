@@ -244,8 +244,6 @@ class LocateResult:
             else:
                 center_x = self.position.left + self.template.image_width / 2
                 center_y = self.position.top + self.template.image_height / 2
-                print(center_x)
-                print(center_y)
 
             # pyautogui.moveTo(center_x, center_y)
             time.sleep(delay)
@@ -430,6 +428,7 @@ class CTDT:
         else:
             position = Box(loc[0][0], loc[1][0], caches.templates[template_number].image_width,
                            caches.templates[template_number].image_height)
+            print(position)
             result = LocateResult(caches.templates[template_number], position)
             caches.templates[template_number].date_seen = datetime.datetime.now()
 
