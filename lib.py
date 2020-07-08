@@ -235,10 +235,16 @@ class LocateResult:
         self.template = temp
         self.position = pos
 
-    def click(self, wait: float = 2, delay=0) -> bool:
+    def click(self, wait: float = 2, delay=0, full_screen=False) -> bool:
         if self.position is not None:
-            center_x = self.template.region_start_x + self.position.left + self.template.image_width / 2
-            center_y = self.template.region_start_y + self.position.top + self.template.image_height / 2
+
+            if full_screen is False:
+                center_x = self.template.region_start_x + self.position.left + self.template.image_width / 2
+                center_y = self.template.region_start_y + self.position.top + self.template.image_height / 2
+            else:
+                center_x = self.position.left + self.template.image_width / 2
+                center_y = self.position.top + self.template.image_height / 2
+
             # pyautogui.moveTo(center_x, center_y)
             time.sleep(delay)
             pyautogui.click(center_x, center_y)
