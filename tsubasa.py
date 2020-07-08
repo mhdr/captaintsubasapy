@@ -334,7 +334,7 @@ class Tsubasa:
                 return True
 
         elif self.config.mode == self.MODE_FARM_STORY_MODE:
-            
+
             if self.config.global_shared_play_enabled == 1:
 
                 if CTDT.template("050").click():
@@ -738,7 +738,8 @@ class Tsubasa:
 
         modes1 = {self.MODE_STORY_SOLO,
                   self.MODE_EVENT_SOLO,
-                  self.MODE_SOLO}
+                  self.MODE_SOLO,
+                  self.MODE_FARM_STORY_MODE}
 
         # modes with join
         modes2 = {self.MODE_CLUB_JOIN, self.MODE_GLOBAL_JOIN}
