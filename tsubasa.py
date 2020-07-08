@@ -1379,8 +1379,10 @@ class Tsubasa:
 
         if self.config.mode not in modes: return False
 
+        # completion rate
         if CTDT.template("092").available():
 
+            # medals -> not all matches are played
             if CTDT.template("093").available() is False:
 
                 # hard - unplayed
