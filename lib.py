@@ -117,6 +117,9 @@ class Config:
     # number of mouse clicks to scroll
     mouse_scroll_click: int
 
+    # sending out of energy msg in telegram is allowed once per x seconds
+    wait_telegram_msg_farm_story_mode: int
+
     @staticmethod
     def get_instance():
         """
@@ -149,6 +152,7 @@ class Config:
             Config.energy_ad_left = int(config["Game"]["EnergyAdLeft"])
             Config.wait_before_go_home = int(config["General"]["WaitBeforeGoHome"])
             Config.mouse_scroll_click = int(config["General"]["MouseScrollClick"])
+            Config.wait_telegram_msg_farm_story_mode = int(config["General"]["WaitTelegramMsgFarmStoryModeEnd"])
 
             Config.telegram_token = str(config["Telegram"]["Token"])
             Config.telegram_chatid = int(config["Telegram"]["ChatId"])

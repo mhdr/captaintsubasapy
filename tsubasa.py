@@ -44,6 +44,10 @@ class Tsubasa:
     # because we send this msg once in an hour
     energy_recovery_send_telegram_datetime = None
 
+    # the time we sent a msg in telegram farming story is finished
+    # because we send this msg once in an hour
+    wait_telegram_msg_farm_story_mode_datetime = None
+
     # the time that there is a change in joining members in accepting members in join play
     # if None it means no member is joined or we are not on accepting members page
     member_joined_datetime: datetime = None
@@ -1435,6 +1439,31 @@ class Tsubasa:
 
             else:
                 # all matches are played
+
+                if self.wait_telegram_msg_farm_story_mode_datetime is None:
+                    # inform in telegram that we are at the End of Farming Story Mode
+                    self.send_telegram_message(
+                        "End of Farming Story Mode : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+
+                    # sleep to avoid problem in telegram bot
+                    time.sleep(0.2)
+
+                    self.send_telegram_message(
+                        "End of Farming Story Mode : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")), notify=True)
+
+                    self.wait_telegram_msg_farm_story_mode_datetime = datetime.now()
+                else:
+
+                    # check previous time we sent the telegram msg
+                    diff = datetime.now() - self.wait_telegram_msg_farm_story_mode_datetime
+                    seconds = diff.total_seconds()
+
+                    # reset time after timeout
+                    # after reaching timeout period which is 1 hour by default we will set datetime to None
+                    # so we can send out of energy msg in telegram again
+                    if seconds >= self.config.wait_telegram_msg_farm_story_mode:
+                        self.wait_telegram_msg_farm_story_mode_datetime = None
+
                 return True
         return False
 
