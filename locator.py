@@ -16,14 +16,17 @@ threshold = 0.97
 
 # file name like : 031f.jpg
 # Column A in excel
-index_fimage = 74
+index_fimage = 97
 
 # template number like : 007.jpg
 # Column F in excel
-index_template = 74
+index_template = 97
 
 # first match = 0
 match = 0
+
+# search on full screen
+full_screen = True
 
 # Window name in which image is displayed
 window_name = 'Image'
@@ -88,10 +91,18 @@ else:
     while row_index <= end_row:
 
         if ws["A" + str(row_index)].value == f_image_number:
-            ws.cell(row_index, 2, start_x - 5)
-            ws.cell(row_index, 3, start_y - 5)
-            ws.cell(row_index, 4, end_x + 5)
-            ws.cell(row_index, 5, end_y + 5)
+
+            if full_screen:
+                # if search on full screen is active set all values to zero
+                ws.cell(row_index, 2, 0)
+                ws.cell(row_index, 3, 0)
+                ws.cell(row_index, 4, 0)
+                ws.cell(row_index, 5, 0)
+            else:
+                ws.cell(row_index, 2, start_x - 5)
+                ws.cell(row_index, 3, start_y - 5)
+                ws.cell(row_index, 4, end_x + 5)
+                ws.cell(row_index, 5, end_y + 5)
             break
         row_index += 1
 

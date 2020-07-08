@@ -20,6 +20,7 @@ class Tsubasa:
     MODE_GLOBAL_SHARED = 6
     MODE_GLOBAL_JOIN = 7
     MODE_EVOLE_PLAYER = 8
+    MODE_FARM_STORY_MODE = 9
 
     EnergyRecovery_WaitToRecover = 2
     EnergyRecovery_Ad = 3
@@ -1364,6 +1365,43 @@ class Tsubasa:
         return False
 
     ########################################################################################################################
+
+    def run_055(self, modes: set):
+        """
+        difficulty for story mode only
+        :return:
+        """
+
+        if self.config.mode not in modes: return False
+
+        if CTDT.template("092").available():
+
+            if CTDT.template("093").available() is False:
+
+                # hard - unplayed
+                if CTDT.template("096", full_screen=True).click():
+                    return True
+
+                # very hard - unplayed
+                elif CTDT.template("097", full_screen=True).click():
+                    return True
+
+                # scrollbar is on top
+                elif CTDT.template("094").available():
+                    pyautogui.scroll(-10)  # scroll up 10 "clicks"
+                    return True
+
+                # scrollbar is on bottom
+                elif CTDT.template("095").available():
+                    pyautogui.scroll(10)  # scroll down 10 "clicks"
+                    return True
+
+            else:
+                # all matches are played
+                return True
+        return False
+
+    ########################################################################################################################
     ########################################################################################################################
 
     def run(self):
@@ -1397,20 +1435,26 @@ class Tsubasa:
                                  self.MODE_GLOBAL_SHARED}):
             return "026"
 
-        if self.run_007(modes={self.MODE_STORY_SOLO,
-                               self.MODE_EVENT_SOLO,
-                               self.MODE_SOLO,
-                               self.MODE_CLUB_JOIN,
-                               self.MODE_GLOBAL_SHARED,
-                               self.MODE_GLOBAL_JOIN}):
+        # difficulty
+        elif self.run_007(modes={self.MODE_STORY_SOLO,
+                                 self.MODE_EVENT_SOLO,
+                                 self.MODE_SOLO,
+                                 self.MODE_CLUB_JOIN,
+                                 self.MODE_GLOBAL_SHARED,
+                                 self.MODE_GLOBAL_JOIN}):
             return "007"
+
+        # difficulty for story mode only
+        elif self.run_055(modes={self.MODE_FARM_STORY_MODE}):
+            return "055"
 
         # energy recovered dialog
         elif self.run_024(modes={self.MODE_STORY_SOLO,
                                  self.MODE_EVENT_SOLO,
                                  self.MODE_SOLO,
                                  self.MODE_CLUB_JOIN,
-                                 self.MODE_GLOBAL_JOIN}):
+                                 self.MODE_GLOBAL_JOIN,
+                                 self.MODE_FARM_STORY_MODE}):
             return "024"
 
         # energy recovery dialog
@@ -1418,21 +1462,24 @@ class Tsubasa:
                                  self.MODE_EVENT_SOLO,
                                  self.MODE_SOLO,
                                  self.MODE_CLUB_JOIN,
-                                 self.MODE_GLOBAL_JOIN}):
+                                 self.MODE_GLOBAL_JOIN,
+                                 self.MODE_FARM_STORY_MODE}):
             return "016"
 
         # after ad - dreamball lottery dialog
         elif self.run_040(modes={self.MODE_STORY_SOLO,
                                  self.MODE_EVENT_SOLO,
                                  self.MODE_SOLO,
-                                 self.MODE_GLOBAL_JOIN}):
+                                 self.MODE_GLOBAL_JOIN,
+                                 self.MODE_FARM_STORY_MODE}):
             return "040"
 
         # after ad - ad viewing interrupted dialog
         elif self.run_041(modes={self.MODE_STORY_SOLO,
                                  self.MODE_EVENT_SOLO,
                                  self.MODE_SOLO,
-                                 self.MODE_GLOBAL_JOIN}):
+                                 self.MODE_GLOBAL_JOIN,
+                                 self.MODE_FARM_STORY_MODE}):
             return "041"
 
         # play type : solo, shared play, join
@@ -1441,7 +1488,8 @@ class Tsubasa:
                                  self.MODE_SOLO,
                                  self.MODE_CLUB_JOIN,
                                  self.MODE_GLOBAL_SHARED,
-                                 self.MODE_GLOBAL_JOIN}):
+                                 self.MODE_GLOBAL_JOIN,
+                                 self.MODE_FARM_STORY_MODE}):
             return "009"
 
         # recruit button - join
@@ -1455,20 +1503,23 @@ class Tsubasa:
                                  self.MODE_SOLO,
                                  self.MODE_CLUB_JOIN,
                                  self.MODE_GLOBAL_SHARED,
-                                 self.MODE_GLOBAL_JOIN}):
+                                 self.MODE_GLOBAL_JOIN,
+                                 self.MODE_FARM_STORY_MODE}):
             return "008"
 
         # select friend
         elif self.run_010(modes={self.MODE_STORY_SOLO,
                                  self.MODE_EVENT_SOLO,
-                                 self.MODE_SOLO}):
+                                 self.MODE_SOLO,
+                                 self.MODE_FARM_STORY_MODE}):
             return "010"
 
         # connection error dialog
         elif self.run_033(modes={self.MODE_STORY_SOLO,
                                  self.MODE_CLUB_SHARED,
                                  self.MODE_GLOBAL_SHARED,
-                                 self.MODE_GLOBAL_JOIN}):
+                                 self.MODE_GLOBAL_JOIN,
+                                 self.MODE_FARM_STORY_MODE}):
             return "033"
 
         # kick off button
@@ -1476,7 +1527,8 @@ class Tsubasa:
                                  self.MODE_EVENT_SOLO,
                                  self.MODE_SOLO,
                                  self.MODE_CLUB_JOIN,
-                                 self.MODE_GLOBAL_JOIN}):
+                                 self.MODE_GLOBAL_JOIN,
+                                 self.MODE_FARM_STORY_MODE}):
             return "028"
 
         # after match - add friend dialog
@@ -1484,7 +1536,8 @@ class Tsubasa:
                                  self.MODE_EVENT_SOLO,
                                  self.MODE_SOLO,
                                  self.MODE_CLUB_JOIN,
-                                 self.MODE_GLOBAL_JOIN}):
+                                 self.MODE_GLOBAL_JOIN,
+                                 self.MODE_FARM_STORY_MODE}):
             return "052"
 
         # go to scenario list
@@ -1495,7 +1548,8 @@ class Tsubasa:
                                  self.MODE_CLUB_SHARED,
                                  self.MODE_CLUB_JOIN,
                                  self.MODE_GLOBAL_SHARED,
-                                 self.MODE_GLOBAL_JOIN}):
+                                 self.MODE_GLOBAL_JOIN,
+                                 self.MODE_FARM_STORY_MODE}):
             return "012"
 
         # after match - you win
@@ -1505,7 +1559,8 @@ class Tsubasa:
                                  self.MODE_CLUB_SHARED,
                                  self.MODE_CLUB_JOIN,
                                  self.MODE_GLOBAL_SHARED,
-                                 self.MODE_GLOBAL_JOIN}):
+                                 self.MODE_GLOBAL_JOIN,
+                                 self.MODE_FARM_STORY_MODE}):
             return "013"
 
         # after match - breakdown
@@ -1515,7 +1570,8 @@ class Tsubasa:
                                  self.MODE_CLUB_SHARED,
                                  self.MODE_CLUB_JOIN,
                                  self.MODE_GLOBAL_SHARED,
-                                 self.MODE_GLOBAL_JOIN}):
+                                 self.MODE_GLOBAL_JOIN,
+                                 self.MODE_FARM_STORY_MODE}):
             return "014"
 
         # after match - rank up
@@ -1523,7 +1579,8 @@ class Tsubasa:
                                  self.MODE_EVENT_SOLO,
                                  self.MODE_SOLO,
                                  self.MODE_CLUB_JOIN,
-                                 self.MODE_GLOBAL_JOIN}):
+                                 self.MODE_GLOBAL_JOIN,
+                                 self.MODE_FARM_STORY_MODE}):
             return "015"
 
 
@@ -1538,7 +1595,8 @@ class Tsubasa:
                                  self.MODE_SOLO,
                                  self.MODE_CLUB_JOIN,
                                  self.MODE_GLOBAL_SHARED,
-                                 self.MODE_GLOBAL_JOIN}):
+                                 self.MODE_GLOBAL_JOIN,
+                                 self.MODE_FARM_STORY_MODE}):
             return "021"
 
         # after match -> clear rewards
@@ -1552,7 +1610,8 @@ class Tsubasa:
                                  self.MODE_CLUB_SHARED,
                                  self.MODE_CLUB_JOIN,
                                  self.MODE_GLOBAL_SHARED,
-                                 self.MODE_GLOBAL_JOIN}):
+                                 self.MODE_GLOBAL_JOIN,
+                                 self.MODE_FARM_STORY_MODE}):
             return "022"
 
         # failed to join dialog
@@ -1609,7 +1668,8 @@ class Tsubasa:
                                  self.MODE_EVENT_SOLO,
                                  self.MODE_CLUB_SHARED,
                                  self.MODE_GLOBAL_SHARED,
-                                 self.MODE_GLOBAL_JOIN}):
+                                 self.MODE_GLOBAL_JOIN,
+                                 self.MODE_FARM_STORY_MODE}):
             return "017"
 
         # restart match dialog
@@ -1617,7 +1677,8 @@ class Tsubasa:
                                  self.MODE_EVENT_SOLO,
                                  self.MODE_CLUB_SHARED,
                                  self.MODE_GLOBAL_SHARED,
-                                 self.MODE_GLOBAL_JOIN}):
+                                 self.MODE_GLOBAL_JOIN,
+                                 self.MODE_FARM_STORY_MODE}):
             return "018"
 
 
@@ -1625,14 +1686,16 @@ class Tsubasa:
         elif self.run_038(modes={self.MODE_STORY_SOLO,
                                  self.MODE_EVENT_SOLO,
                                  self.MODE_SOLO,
-                                 self.MODE_GLOBAL_JOIN}):
+                                 self.MODE_GLOBAL_JOIN,
+                                 self.MODE_FARM_STORY_MODE}):
             return "038"
 
         # after ad - you win
         elif self.run_039(modes={self.MODE_STORY_SOLO,
                                  self.MODE_EVENT_SOLO,
                                  self.MODE_SOLO,
-                                 self.MODE_GLOBAL_JOIN}):
+                                 self.MODE_GLOBAL_JOIN,
+                                 self.MODE_FARM_STORY_MODE}):
             return "039"
 
 
@@ -1643,7 +1706,8 @@ class Tsubasa:
                                  self.MODE_GLOBAL_JOIN,
                                  self.MODE_CLUB_JOIN,
                                  self.MODE_GLOBAL_SHARED,
-                                 self.MODE_CLUB_SHARED}):
+                                 self.MODE_CLUB_SHARED,
+                                 self.MODE_FARM_STORY_MODE}):
             return "042"
 
         # shared play - count preparing - detect inactive user
