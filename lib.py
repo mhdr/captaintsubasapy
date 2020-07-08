@@ -421,8 +421,7 @@ class CTDT:
         if len(loc[0]) == 0 & len(loc[1]) == 0:
             return result
         else:
-            print("{0}, {1}".format(loc[0][0], loc[1][0]))
-            position = Box(loc[0][0], loc[1][0], caches.templates[template_number].image_width,
+            position = Box(loc[1][0], loc[0][0], caches.templates[template_number].image_width,
                            caches.templates[template_number].image_height)
             result = LocateResult(caches.templates[template_number], position)
             caches.templates[template_number].date_seen = datetime.datetime.now()
