@@ -26,7 +26,7 @@ index_template = 59
 match = 0
 
 # search on full screen
-full_screen = True
+full_screen = False
 
 # Window name in which image is displayed
 window_name = 'Image'
