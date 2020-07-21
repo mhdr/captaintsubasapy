@@ -1449,7 +1449,8 @@ class Tsubasa:
                     time.sleep(0.2)
 
                     self.send_telegram_message(
-                        "End of Farming Story Mode : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")), notify=True)
+                        "End of Farming Story Mode : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")),
+                        notify=True)
 
                     self.wait_telegram_msg_farm_story_mode_datetime = datetime.now()
                 else:
@@ -1480,6 +1481,23 @@ class Tsubasa:
         # dreamball after match
         if CTDT.template("098").click():
             return True
+
+        return False
+
+    ########################################################################################################################
+
+    def run_057(self, modes: set):
+        """
+        team power boost
+        :return:
+        """
+
+        if self.config.mode not in modes: return False
+
+        # if team power boost then skip
+        if CTDT.template("100").available():
+            if CTDT.template("101").click():
+                return True
 
         return False
 
@@ -1834,7 +1852,15 @@ class Tsubasa:
                                  self.MODE_GLOBAL_SHARED,
                                  self.MODE_GLOBAL_JOIN,
                                  self.MODE_FARM_STORY_MODE}):
-            return "053"
+            return "056"
+
+        # team power boost
+        elif self.run_057(modes={self.MODE_STORY_SOLO,
+                                 self.MODE_EVENT_SOLO,
+                                 self.MODE_SOLO,
+                                 self.MODE_GLOBAL_JOIN,
+                                 self.MODE_FARM_STORY_MODE}):
+            return "057"
 
         # prevent screen off
         elif self.run_030():
