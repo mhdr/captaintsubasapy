@@ -1585,6 +1585,22 @@ class Tsubasa:
         return False
 
     ########################################################################################################################
+
+    def run_060(self, modes: set):
+        """
+        after match - rewards earned
+        :return:
+        """
+
+        if self.config.mode not in modes: return False
+
+        # if rewards earned
+        if CTDT.template("109").click():
+            return True
+
+        return False
+
+    ########################################################################################################################
     ########################################################################################################################
 
     def run(self):
@@ -1804,6 +1820,15 @@ class Tsubasa:
                                  self.MODE_FARM_STORY_MODE,
                                  self.MODE_LEAGUE}):
             return "022"
+
+        # after match -> rewards earned
+        elif self.run_060(modes={self.MODE_EVENT_SOLO,
+                                 self.MODE_SOLO,
+                                 self.MODE_CLUB_SHARED,
+                                 self.MODE_CLUB_JOIN,
+                                 self.MODE_GLOBAL_SHARED,
+                                 self.MODE_GLOBAL_JOIN}):
+            return "060"
 
         # failed to join dialog
         elif self.run_027(modes={self.MODE_CLUB_SHARED,
