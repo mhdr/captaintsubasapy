@@ -21,6 +21,7 @@ class Tsubasa:
     MODE_GLOBAL_JOIN = 7
     MODE_EVOLE_PLAYER = 8
     MODE_FARM_STORY_MODE = 9
+    MODE_LEAGUE = 10
 
     EnergyRecovery_WaitToRecover = 2
     EnergyRecovery_Ad = 3
@@ -163,16 +164,30 @@ class Tsubasa:
 
     def run_003(self, modes: set):
         """
-        go to story mode
+        go to story mode or league
         :return:
         """
 
         if self.config.mode not in modes: return False
 
-        if CTDT.template("003").click():
-            # reset go home flag
-            self.go_to_home = False
-            return True
+        modes1 = {self.MODE_STORY_SOLO, self.MODE_SOLO, self.MODE_EVENT_SOLO, self.MODE_GLOBAL_JOIN,
+                  self.MODE_GLOBAL_SHARED,
+                  self.MODE_FARM_STORY_MODE, self.MODE_EVOLE_PLAYER, self.MODE_CLUB_JOIN, self.MODE_CLUB_SHARED}
+
+        modes2 = {self.MODE_LEAGUE}
+
+        if self.config.mode in modes1:
+
+            # story mode
+            if CTDT.template("003").click():
+                # reset go home flag
+                self.go_to_home = False
+                return True
+        elif self.config.mode in modes2:
+
+            # league mode
+            if CTDT.template("102").click():
+                return True
 
         return False
 
@@ -238,22 +253,34 @@ class Tsubasa:
 
         if self.config.mode not in modes: return False
 
-        # skip play match if go home is active
-        if self.go_to_home == True:
-            return False
+        modes1 = {self.MODE_STORY_SOLO, self.MODE_SOLO, self.MODE_EVENT_SOLO, self.MODE_GLOBAL_JOIN,
+                  self.MODE_GLOBAL_SHARED,
+                  self.MODE_FARM_STORY_MODE, self.MODE_EVOLE_PLAYER, self.MODE_CLUB_JOIN, self.MODE_CLUB_SHARED}
 
-        # skip ticket button is not present beside play match button = 0
-        elif self.config.play_match_with_skip_ticket_button == 0:
+        modes2 = {self.MODE_LEAGUE}
 
-            # play match button without skip ticket
-            if CTDT.template("028").click():
-                return True
+        if self.config.mode in modes1:
+            # skip play match if go home is active
+            if self.go_to_home == True:
+                return False
 
-        # skip ticket button is present beside play match button = 1
-        elif self.config.play_match_with_skip_ticket_button == 1:
+            # skip ticket button is not present beside play match button = 0
+            elif self.config.play_match_with_skip_ticket_button == 0:
 
-            # play match button with skip ticket
-            if CTDT.template("008").click(1):
+                # play match button without skip ticket
+                if CTDT.template("028").click():
+                    return True
+
+            # skip ticket button is present beside play match button = 1
+            elif self.config.play_match_with_skip_ticket_button == 1:
+
+                # play match button with skip ticket
+                if CTDT.template("008").click(1):
+                    return True
+
+        elif self.config.mode in modes2:
+            # play match button in league mode
+            if CTDT.template("103").click():
                 return True
 
         return False
@@ -1502,6 +1529,22 @@ class Tsubasa:
         return False
 
     ########################################################################################################################
+
+    def run_058(self, modes: set):
+        """
+        total power -> select team in league mode
+        :return:
+        """
+
+        if self.config.mode not in modes: return False
+
+        # if total power -> select team in league mode
+        if CTDT.template("104").click():
+            return True
+
+        return False
+
+    ########################################################################################################################
     ########################################################################################################################
 
     def run(self):
@@ -1600,7 +1643,8 @@ class Tsubasa:
                                  self.MODE_CLUB_JOIN,
                                  self.MODE_GLOBAL_SHARED,
                                  self.MODE_GLOBAL_JOIN,
-                                 self.MODE_FARM_STORY_MODE}):
+                                 self.MODE_FARM_STORY_MODE,
+                                 self.MODE_LEAGUE}):
             return "008"
 
         # difficulty for story mode only
@@ -1754,7 +1798,8 @@ class Tsubasa:
                        self.MODE_EVENT_SOLO,
                        self.MODE_CLUB_SHARED,
                        self.MODE_GLOBAL_SHARED,
-                       self.MODE_GLOBAL_JOIN}):
+                       self.MODE_GLOBAL_JOIN,
+                       self.MODE_LEAGUE}):
             return "003"
 
         # *** go to game
@@ -1861,6 +1906,10 @@ class Tsubasa:
                                  self.MODE_GLOBAL_JOIN,
                                  self.MODE_FARM_STORY_MODE}):
             return "057"
+
+        # total power -> select team in league mode
+        elif self.run_058(modes={self.MODE_LEAGUE}):
+            return "058"
 
         # prevent screen off
         elif self.run_030():
