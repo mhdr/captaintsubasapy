@@ -439,8 +439,18 @@ class Tsubasa:
 
         if self.config.mode not in modes: return False
 
-        if CTDT.template("014").click():
-            return True
+        modes1 = {self.MODE_STORY_SOLO, self.MODE_SOLO, self.MODE_EVENT_SOLO, self.MODE_GLOBAL_JOIN,
+                  self.MODE_GLOBAL_SHARED,
+                  self.MODE_FARM_STORY_MODE, self.MODE_EVOLE_PLAYER, self.MODE_CLUB_JOIN, self.MODE_CLUB_SHARED}
+
+        modes2 = {self.MODE_LEAGUE}
+
+        if self.config.mode in modes1:
+            if CTDT.template("014").click():
+                return True
+        elif self.config.mode in modes2:
+            if CTDT.template("108").click():
+                return True
 
         return False
 
