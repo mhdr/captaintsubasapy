@@ -174,6 +174,7 @@ class Config:
         # Global Recruit = 7
         # Evolve Player = 8
         # Farm Story Mode = 9
+        # League Mode = 10
 
         #  if 0 load from instance
         if mode == 0:
@@ -199,6 +200,8 @@ class Config:
             msg = "Mode 8 : Evolve Player"
         elif mode == 9:
             msg = "Mode 9 : Farm Story Mode"
+        elif mode == 10:
+            msg = "Mode 10 : League Mode"
 
         return msg
 
