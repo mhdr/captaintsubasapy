@@ -16,14 +16,14 @@ threshold = 0.97
 
 # file name like : 031f.jpg
 # Column A in excel
-index_fimage = 104
+index_fimage = 107
 
 # template number like : 007.jpg
 # Column F in excel
-index_template = 104
+index_template = 107
 
 # first match = 0
-match = 3
+match = 0
 
 # search on full screen
 full_screen = False

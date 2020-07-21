@@ -775,6 +775,8 @@ class Tsubasa:
         # modes with join
         modes2 = {self.MODE_CLUB_JOIN, self.MODE_GLOBAL_JOIN}
 
+        modes3 = {self.MODE_LEAGUE}
+
         if self.config.mode in modes1:
 
             # kick off button for simple matches
@@ -840,6 +842,15 @@ class Tsubasa:
                         self.member_joined_count = 0
 
                 return True
+
+        elif self.config.mode in modes3:
+            # if not half time stamina recovery +30% -> league mode
+            # and if not stamina consumed -20% -> league mode
+            # then kick off -> league mode
+            if CTDT.template("104").available() is False and CTDT.template("105").available() is False:
+                # kick off -> league mode
+                if CTDT.template("106").click():
+                    return True
 
         return False
 
@@ -1545,6 +1556,25 @@ class Tsubasa:
         return False
 
     ########################################################################################################################
+
+    def run_059(self, modes: set):
+        """
+        prepare league match
+        :return:
+        """
+
+        if self.config.mode not in modes: return False
+
+        # if half time stamina recovery +30% -> league mode
+        if CTDT.template("105").click():
+            return True
+        # if stamina consumed -20% -> league mode
+        elif CTDT.template("106").click():
+            return True
+
+        return False
+
+    ########################################################################################################################
     ########################################################################################################################
 
     def run(self):
@@ -1672,7 +1702,8 @@ class Tsubasa:
                                  self.MODE_SOLO,
                                  self.MODE_CLUB_JOIN,
                                  self.MODE_GLOBAL_JOIN,
-                                 self.MODE_FARM_STORY_MODE}):
+                                 self.MODE_FARM_STORY_MODE,
+                                 self.MODE_LEAGUE}):
             return "028"
 
         # after match - add friend dialog
@@ -1910,6 +1941,10 @@ class Tsubasa:
         # total power -> select team in league mode
         elif self.run_058(modes={self.MODE_LEAGUE}):
             return "058"
+
+        # prepare league mode
+        elif self.run_059(modes={self.MODE_LEAGUE}):
+            return "059"
 
         # prevent screen off
         elif self.run_030():
