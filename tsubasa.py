@@ -1693,7 +1693,8 @@ class Tsubasa:
                                  self.MODE_CLUB_SHARED,
                                  self.MODE_GLOBAL_SHARED,
                                  self.MODE_GLOBAL_JOIN,
-                                 self.MODE_FARM_STORY_MODE}):
+                                 self.MODE_FARM_STORY_MODE,
+                                 self.MODE_LEAGUE}):
             return "033"
 
         # kick off button
@@ -1724,7 +1725,8 @@ class Tsubasa:
                                  self.MODE_CLUB_JOIN,
                                  self.MODE_GLOBAL_SHARED,
                                  self.MODE_GLOBAL_JOIN,
-                                 self.MODE_FARM_STORY_MODE}):
+                                 self.MODE_FARM_STORY_MODE,
+                                 self.MODE_LEAGUE}):
             return "012"
 
         # after match - you win
@@ -1735,7 +1737,8 @@ class Tsubasa:
                                  self.MODE_CLUB_JOIN,
                                  self.MODE_GLOBAL_SHARED,
                                  self.MODE_GLOBAL_JOIN,
-                                 self.MODE_FARM_STORY_MODE}):
+                                 self.MODE_FARM_STORY_MODE,
+                                 self.MODE_LEAGUE}):
             return "013"
 
         # after match - breakdown
@@ -1746,7 +1749,8 @@ class Tsubasa:
                                  self.MODE_CLUB_JOIN,
                                  self.MODE_GLOBAL_SHARED,
                                  self.MODE_GLOBAL_JOIN,
-                                 self.MODE_FARM_STORY_MODE}):
+                                 self.MODE_FARM_STORY_MODE,
+                                 self.MODE_LEAGUE}):
             return "014"
 
         # after match - rank up
@@ -1771,7 +1775,8 @@ class Tsubasa:
                                  self.MODE_CLUB_JOIN,
                                  self.MODE_GLOBAL_SHARED,
                                  self.MODE_GLOBAL_JOIN,
-                                 self.MODE_FARM_STORY_MODE}):
+                                 self.MODE_FARM_STORY_MODE,
+                                 self.MODE_LEAGUE}):
             return "021"
 
         # after match -> clear rewards
@@ -1786,7 +1791,8 @@ class Tsubasa:
                                  self.MODE_CLUB_JOIN,
                                  self.MODE_GLOBAL_SHARED,
                                  self.MODE_GLOBAL_JOIN,
-                                 self.MODE_FARM_STORY_MODE}):
+                                 self.MODE_FARM_STORY_MODE,
+                                 self.MODE_LEAGUE}):
             return "022"
 
         # failed to join dialog
@@ -1812,7 +1818,8 @@ class Tsubasa:
                                  self.MODE_EVENT_SOLO,
                                  self.MODE_CLUB_SHARED,
                                  self.MODE_GLOBAL_SHARED,
-                                 self.MODE_GLOBAL_JOIN}):
+                                 self.MODE_GLOBAL_JOIN,
+                                 self.MODE_LEAGUE}):
             return "001"
 
         # enter app
@@ -1820,10 +1827,11 @@ class Tsubasa:
                                  self.MODE_EVENT_SOLO,
                                  self.MODE_CLUB_SHARED,
                                  self.MODE_GLOBAL_SHARED,
-                                 self.MODE_GLOBAL_JOIN}):
+                                 self.MODE_GLOBAL_JOIN,
+                                 self.MODE_LEAGUE}):
             return "002"
 
-        # go to story mode
+        # go to story mode or league mode
         elif self.run_003(
                 modes={self.MODE_STORY_SOLO,
                        self.MODE_EVENT_SOLO,
@@ -1845,7 +1853,8 @@ class Tsubasa:
                                  self.MODE_CLUB_SHARED,
                                  self.MODE_GLOBAL_SHARED,
                                  self.MODE_GLOBAL_JOIN,
-                                 self.MODE_FARM_STORY_MODE}):
+                                 self.MODE_FARM_STORY_MODE,
+                                 self.MODE_LEAGUE}):
             return "017"
 
         # restart match dialog
@@ -1854,7 +1863,8 @@ class Tsubasa:
                                  self.MODE_CLUB_SHARED,
                                  self.MODE_GLOBAL_SHARED,
                                  self.MODE_GLOBAL_JOIN,
-                                 self.MODE_FARM_STORY_MODE}):
+                                 self.MODE_FARM_STORY_MODE,
+                                 self.MODE_LEAGUE}):
             return "018"
 
 
@@ -1883,7 +1893,8 @@ class Tsubasa:
                                  self.MODE_CLUB_JOIN,
                                  self.MODE_GLOBAL_SHARED,
                                  self.MODE_CLUB_SHARED,
-                                 self.MODE_FARM_STORY_MODE}):
+                                 self.MODE_FARM_STORY_MODE,
+                                 self.MODE_LEAGUE}):
             return "042"
 
         # shared play - count preparing - detect inactive user
@@ -1917,7 +1928,8 @@ class Tsubasa:
                                  self.MODE_CLUB_SHARED,
                                  self.MODE_CLUB_JOIN,
                                  self.MODE_GLOBAL_SHARED,
-                                 self.MODE_GLOBAL_JOIN}):
+                                 self.MODE_GLOBAL_JOIN,
+                                 self.MODE_LEAGUE}):
             return "053"
 
         # dreamball after match
