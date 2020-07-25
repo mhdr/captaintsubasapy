@@ -98,6 +98,9 @@ class Tsubasa:
     #  send msg to telegram that we used all of ads for recovery energy
     out_of_ad_energy_send_telegram_datetime = None
 
+    # times hold datetime values for the process
+    times = {"WaitTelegramMsg": None}
+
     def __init__(self, telegram: TelegramBot):
         self.config = Config.get_instance()
         if self.config.telegram_disabled == 0:
@@ -117,14 +120,31 @@ class Tsubasa:
         except Exception as ex:
             print(str(ex))
 
-    def send_telegram_message(self, msg: str, notify=False):
+    def send_telegram_message(self, msg: str, notify=False, dt: str = ""):
         try:
-            if self.config.telegram_disabled == 0:
 
-                if notify == False:
-                    self.bot.send_message(self.config.telegram_chatid, msg)
+            should_send = True
+
+            if len(dt) > 0:
+
+                if self.times[dt] is None:
+                    self.times[dt] = datetime.now()
                 else:
-                    self.bot_notify.send_message(self.config.telegram_chatid2, msg)
+                    diff = datetime.now() - self.times[dt]
+                    seconds = diff.total_seconds()
+
+                    if seconds >= self.config.seconds[dt]:
+                        self.times[dt] = None
+                    else:
+                        should_send = False
+
+            if should_send is True:
+                if self.config.telegram_disabled == 0:
+
+                    if notify == False:
+                        self.bot.send_message(self.config.telegram_chatid, msg)
+                    else:
+                        self.bot_notify.send_message(self.config.telegram_chatid2, msg)
 
         except Exception as ex:
             print(str(ex))
@@ -1601,6 +1621,24 @@ class Tsubasa:
         return False
 
     ########################################################################################################################
+
+    def run_061(self, modes: set):
+        """
+        all your slots are full
+        :return:
+        """
+
+        if self.config.mode not in modes: return False
+
+        # if all slots are full
+        if CTDT.template("110").available():
+            msg = "All your slots are full : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+            self.send_telegram_message(msg=msg, dt="WaitTelegramMsg")
+            return True
+
+        return False
+
+    ########################################################################################################################
     ########################################################################################################################
 
     def run(self):
@@ -1984,6 +2022,16 @@ class Tsubasa:
                                  self.MODE_GLOBAL_JOIN,
                                  self.MODE_FARM_STORY_MODE}):
             return "057"
+
+        # all your slots are full
+        elif self.run_061(modes={self.MODE_EVENT_SOLO,
+                                 self.MODE_SOLO,
+                                 self.MODE_CLUB_SHARED,
+                                 self.MODE_CLUB_JOIN,
+                                 self.MODE_GLOBAL_SHARED,
+                                 self.MODE_GLOBAL_JOIN,
+                                 self.MODE_FARM_STORY_MODE}):
+            return "061"
 
         # total power -> select team in league mode
         elif self.run_058(modes={self.MODE_LEAGUE}):
