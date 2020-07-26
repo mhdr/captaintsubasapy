@@ -1635,6 +1635,7 @@ class Tsubasa:
         if CTDT.template("110").available():
             msg = "All your slots are full : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
             self.send_telegram_message(msg=msg, dt="WaitTelegramMsg")
+            time.sleep(2)
             self.send_telegram_message(msg=msg, notify=True, dt="WaitTelegramMsg")
             return True
 
@@ -1654,6 +1655,7 @@ class Tsubasa:
         if CTDT.template("112").available():
             msg = "Out of league ticket : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
             self.send_telegram_message(msg=msg, dt="WaitTelegramMsg")
+            time.sleep(2)
             self.send_telegram_message(msg=msg, notify=True, dt="WaitTelegramMsg")
             return True
 
