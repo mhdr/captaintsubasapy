@@ -1640,6 +1640,24 @@ class Tsubasa:
         return False
 
     ########################################################################################################################
+
+    def run_062(self, modes: set):
+        """
+        add league tikcet dialog
+        :return:
+        """
+
+        if self.config.mode not in modes: return False
+
+        # if add league ticket dialog is open
+        if CTDT.template("112").available():
+            msg = "Out of league ticket : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+            self.send_telegram_message(msg=msg, dt="WaitTelegramMsg")
+            return True
+
+        return False
+
+    ########################################################################################################################
     ########################################################################################################################
 
     def run(self):
@@ -2041,6 +2059,10 @@ class Tsubasa:
         # total power -> select team in league mode
         elif self.run_058(modes={self.MODE_LEAGUE}):
             return "058"
+
+        # add league ticket dialog
+        elif self.run_062(modes={self.MODE_LEAGUE}):
+            return "062"
 
         # prevent screen off
         elif self.run_030():
