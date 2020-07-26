@@ -877,10 +877,11 @@ class Tsubasa:
             # if not half time stamina recovery +30% -> league mode
             # and if not stamina consumed -20% -> league mode
             # then kick off -> league mode
-            if CTDT.template("105").available() is False and CTDT.template("106").available() is False:
-                # kick off -> league mode
-                if CTDT.template("107").click():
-                    return True
+            if CTDT.template("105").available() is False:
+                if CTDT.template("106").available() is False:
+                    # kick off -> league mode
+                    if CTDT.template("107").click():
+                        return True
 
         return False
 
