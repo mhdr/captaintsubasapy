@@ -1662,6 +1662,26 @@ class Tsubasa:
         return False
 
     ########################################################################################################################
+
+    def run_063(self, modes: set):
+        """
+        penalty in league mode
+        :return:
+        """
+
+        if self.config.mode not in modes: return False
+
+        # penalty kick center
+        if CTDT.template("111").click():
+            return True
+
+        # penalty gk center
+        elif CTDT.template("113").click():
+            return True
+
+        return False
+
+    ########################################################################################################################
     ########################################################################################################################
 
     def run(self):
@@ -2067,6 +2087,10 @@ class Tsubasa:
         # add league ticket dialog
         elif self.run_062(modes={self.MODE_LEAGUE}):
             return "062"
+
+        # penalty in league mode
+        elif self.run_063(modes={self.MODE_LEAGUE}):
+            return "063"
 
         # prevent screen off
         elif self.run_030():
