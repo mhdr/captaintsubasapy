@@ -1762,6 +1762,10 @@ class Tsubasa:
                                  self.MODE_LEAGUE}):
             return "033"
 
+        # prepare league mode
+        elif self.run_059(modes={self.MODE_LEAGUE}):
+            return "059"
+
         # kick off button
         elif self.run_028(modes={self.MODE_STORY_SOLO,
                                  self.MODE_EVENT_SOLO,
@@ -2037,10 +2041,6 @@ class Tsubasa:
         # total power -> select team in league mode
         elif self.run_058(modes={self.MODE_LEAGUE}):
             return "058"
-
-        # prepare league mode
-        elif self.run_059(modes={self.MODE_LEAGUE}):
-            return "059"
 
         # prevent screen off
         elif self.run_030():
