@@ -99,7 +99,8 @@ class Tsubasa:
     out_of_ad_energy_send_telegram_datetime = None
 
     # times hold datetime values for the process
-    times = {"WaitTelegramMsg": None}
+    times = {"WaitTelegramMsg": None,
+             "WaitTelegramMsgNotify": None}
 
     def __init__(self, telegram: TelegramBot):
         self.config = Config.get_instance()
@@ -1636,7 +1637,7 @@ class Tsubasa:
             msg = "All your slots are full : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
             self.send_telegram_message(msg=msg, dt="WaitTelegramMsg")
             time.sleep(1)
-            self.send_telegram_message(msg=msg, notify=True, dt="WaitTelegramMsg")
+            self.send_telegram_message(msg=msg, notify=True, dt="WaitTelegramMsgNotify")
             return True
 
         return False
@@ -1656,7 +1657,7 @@ class Tsubasa:
             msg = "Out of league ticket : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
             self.send_telegram_message(msg=msg, dt="WaitTelegramMsg")
             time.sleep(1)
-            self.send_telegram_message(msg=msg, notify=True, dt="WaitTelegramMsg")
+            self.send_telegram_message(msg=msg, notify=True, dt="WaitTelegramMsgNotify")
             return True
 
         return False
