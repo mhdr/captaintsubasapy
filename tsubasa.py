@@ -1883,7 +1883,6 @@ class Tsubasa:
         elif self.run_021(modes={self.MODE_EVENT_SOLO,
                                  self.MODE_SOLO,
                                  self.MODE_CLUB_SHARED,
-                                 self.MODE_SOLO,
                                  self.MODE_CLUB_JOIN,
                                  self.MODE_GLOBAL_SHARED,
                                  self.MODE_GLOBAL_JOIN,
