@@ -345,8 +345,8 @@ class CTDT:
                 # using separate file name help to use one image with multiple location
                 # for most of the templates file name is the same as template number
                 # but for some of them it is not
-                template_file_name: str = str(ws["F" + str(row_index)].value)
-                filename = join(dir, template_file_name + ".jpg")
+                # template_file_name: str = str(ws["F" + str(row_index)].value)
+                filename = join(dir, template_number + ".jpg")
 
                 # Using 0 to read image in grayscale mode
                 image = cv2.imread(filename, 0)
