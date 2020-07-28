@@ -1759,6 +1759,25 @@ class Tsubasa:
         return False
 
     ########################################################################################################################
+
+    def run_066(self, modes: set):
+        """
+        you have already watched this story dialog
+        :return:
+        """
+
+        if self.config.mode not in modes: return False
+
+        # you have already watched this story dialog - title
+        if CTDT.template("125").available():
+
+            # you have already watched this story dialog - cancel button
+            if CTDT.template("126").click():
+                return True
+
+        return False
+
+    ########################################################################################################################
     ########################################################################################################################
 
     def run(self):
@@ -2175,6 +2194,10 @@ class Tsubasa:
         # reroll
         elif self.run_065(modes={self.MODE_REROLL}):
             return "065"
+
+        # you have already watched this story dialog
+        elif self.run_066(modes={self.MODE_FARM_STORY_MODE}):
+            return "066"
 
         # prevent screen off
         elif self.run_030():
