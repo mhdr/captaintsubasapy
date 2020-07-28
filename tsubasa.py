@@ -1473,7 +1473,7 @@ class Tsubasa:
             if CTDT.template("093").available() is False:
 
                 # new story animation
-                if CTDT.template("119", full_screen=True, threshold=0.8).click():
+                if CTDT.template("119", full_screen=True).click():
                     return True
 
                 # normal - unplayed
