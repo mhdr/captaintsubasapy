@@ -2121,7 +2121,7 @@ class Tsubasa:
             return "063"
 
         # skip animation in story mode
-        elif self.run_064(modes={self.MODE_LEAGUE}):
+        elif self.run_064(modes={self.MODE_FARM_STORY_MODE}):
             return "064"
 
         # prevent screen off
