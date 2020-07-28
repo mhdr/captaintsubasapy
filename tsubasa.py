@@ -22,6 +22,7 @@ class Tsubasa:
     MODE_EVOLE_PLAYER = 8
     MODE_FARM_STORY_MODE = 9
     MODE_LEAGUE = 10
+    MODE_REROLL = 11
 
     EnergyRecovery_WaitToRecover = 2
     EnergyRecovery_Ad = 3
@@ -1472,7 +1473,7 @@ class Tsubasa:
             if CTDT.template("093").available() is False:
 
                 # new story animation
-                if CTDT.template("119", full_screen=True).click():
+                if CTDT.template("119", full_screen=True, threshold=0.8).click():
                     return True
 
                 # normal - unplayed
@@ -1706,6 +1707,53 @@ class Tsubasa:
 
         # skip button in animation
         elif CTDT.template("121").click():
+            return True
+
+        return False
+
+    ########################################################################################################################
+
+    def run_065(self, modes: set):
+        """
+        reroll banner
+        :return:
+        """
+
+        if self.config.mode not in modes: return False
+
+        # shoot while pulling in banner
+        if CTDT.template("114").click():
+            return True
+
+        # skip while pulling in banner
+        elif CTDT.template("115").click():
+            return True
+
+        # tap screen while pulling in banner
+        elif CTDT.template("116").click():
+            return True
+
+        # if retry button while pulling in banner
+        elif CTDT.template("117").available():
+
+            # if found blue roberto
+            if CTDT.template("123").available():
+                msg = "Found Blue Roberto : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+                self.send_telegram_message(msg=msg, dt="WaitTelegramMsg")
+                time.sleep(1)
+                self.send_telegram_message(msg=msg, notify=True, dt="WaitTelegramMsgNotify")
+                return True
+            else:
+                # click retry button while pulling in banner
+                if CTDT.template("117").click():
+                    return True
+
+        # do you want to try again dialog -> title -> banner
+        elif CTDT.template("118").click():
+            return True
+
+        # ok button in do you want to try again dialog in banner
+        elif CTDT.template("124").click():
             return True
 
         return False
@@ -2123,6 +2171,10 @@ class Tsubasa:
         # skip animation in story mode
         elif self.run_064(modes={self.MODE_FARM_STORY_MODE}):
             return "064"
+
+        # reroll
+        elif self.run_065(modes={self.MODE_REROLL}):
+            return "065"
 
         # prevent screen off
         elif self.run_030():
