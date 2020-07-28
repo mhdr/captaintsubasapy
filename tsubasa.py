@@ -1838,6 +1838,10 @@ class Tsubasa:
                                  self.MODE_FARM_STORY_MODE}):
             return "016"
 
+        # you have already watched this story dialog
+        elif self.run_066(modes={self.MODE_FARM_STORY_MODE}):
+            return "066"
+
         # after ad - dreamball lottery dialog
         elif self.run_040(modes={self.MODE_STORY_SOLO,
                                  self.MODE_EVENT_SOLO,
@@ -2194,10 +2198,6 @@ class Tsubasa:
         # reroll
         elif self.run_065(modes={self.MODE_REROLL}):
             return "065"
-
-        # you have already watched this story dialog
-        elif self.run_066(modes={self.MODE_FARM_STORY_MODE}):
-            return "066"
 
         # prevent screen off
         elif self.run_030():
