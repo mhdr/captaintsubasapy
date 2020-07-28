@@ -1471,8 +1471,16 @@ class Tsubasa:
             # medals -> not all matches are played
             if CTDT.template("093").available() is False:
 
+                # new story
+                if CTDT.template("119", full_screen=True).click():
+                    return True
+
+                # normal - unplayed
+                elif CTDT.template("122", full_screen=True).click():
+                    return True
+
                 # hard - unplayed
-                if CTDT.template("096", full_screen=True).click():
+                elif CTDT.template("096", full_screen=True).click():
                     return True
 
                 # very hard - unplayed
@@ -1678,6 +1686,26 @@ class Tsubasa:
 
         # penalty gk center
         elif CTDT.template("113").click():
+            return True
+
+        return False
+
+    ########################################################################################################################
+
+    def run_064(self, modes: set):
+        """
+        skip animation in story mode
+        :return:
+        """
+
+        if self.config.mode not in modes: return False
+
+        # menu button in animation
+        if CTDT.template("120").click():
+            return True
+
+        # skip button in animation
+        elif CTDT.template("121").click():
             return True
 
         return False
@@ -2091,6 +2119,10 @@ class Tsubasa:
         # penalty in league mode
         elif self.run_063(modes={self.MODE_LEAGUE}):
             return "063"
+
+        # skip animation in story mode
+        elif self.run_064(modes={self.MODE_LEAGUE}):
+            return "064"
 
         # prevent screen off
         elif self.run_030():
