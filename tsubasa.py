@@ -1471,7 +1471,7 @@ class Tsubasa:
             # medals -> not all matches are played
             if CTDT.template("093").available() is False:
 
-                # new story
+                # new story animation
                 if CTDT.template("119", full_screen=True).click():
                     return True
 
