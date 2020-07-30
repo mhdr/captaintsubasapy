@@ -2038,6 +2038,7 @@ class Tsubasa:
                                  self.MODE_CLUB_SHARED,
                                  self.MODE_GLOBAL_SHARED,
                                  self.MODE_GLOBAL_JOIN,
+                                 self.MODE_FARM_STORY_MODE,
                                  self.MODE_LEAGUE}):
             return "001"
 
@@ -2047,6 +2048,7 @@ class Tsubasa:
                                  self.MODE_CLUB_SHARED,
                                  self.MODE_GLOBAL_SHARED,
                                  self.MODE_GLOBAL_JOIN,
+                                 self.MODE_FARM_STORY_MODE,
                                  self.MODE_LEAGUE}):
             return "002"
 
