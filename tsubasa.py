@@ -161,7 +161,7 @@ class Tsubasa:
 
         if self.config.mode not in modes: return False
 
-        if CTDT.template("001").click(wait=5):
+        if CTDT.template("001",full_screen=True).click(wait=5):
             self.send_telegram_message("Run App : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
             return True
 
