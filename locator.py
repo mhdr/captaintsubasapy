@@ -16,7 +16,7 @@ threshold = 0.97
 
 # file name like : 031f.jpg
 # Column A in excel
-index_fimage = 61
+index_fimage = 60
 
 # first match = 0
 match = 0
