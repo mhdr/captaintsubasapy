@@ -161,7 +161,7 @@ class Tsubasa:
 
         if self.config.mode not in modes: return False
 
-        if CTDT.template("001",full_screen=True).click(wait=5):
+        if CTDT.template("001", full_screen=True).click(wait=5):
             self.send_telegram_message("Run App : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
             return True
 
@@ -1121,6 +1121,22 @@ class Tsubasa:
 
                 # close ad after number of seconds we set in config
                 if CTDT.template("091").click():
+                    self.ad_viewing_time = None
+                    self.send_telegram_message(
+                        "End Watching AD : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+                    return True
+
+            return True
+
+        elif CTDT.template("127").available():
+            # check the amount of time energy recovery dialog is open
+            diff = datetime.now() - self.ad_viewing_time
+            seconds = diff.total_seconds()
+
+            if seconds > self.config.wait_finish_ad:
+
+                # close ad after number of seconds we set in config
+                if CTDT.template("127").click():
                     self.ad_viewing_time = None
                     self.send_telegram_message(
                         "End Watching AD : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
