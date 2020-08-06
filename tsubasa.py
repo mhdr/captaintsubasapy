@@ -1742,12 +1742,11 @@ class Tsubasa:
             return True
 
         # do you want to try again dialog -> title -> banner
-        elif CTDT.template("118").click():
-            return True
+        elif CTDT.template("118").available():
 
-        # ok button in do you want to try again dialog in banner
-        elif CTDT.template("124").click():
-            return True
+            # ok button in do you want to try again dialog in banner
+            if CTDT.template("124").click():
+                return True
 
         # skip while pulling in banner
         elif CTDT.template("115").click():
