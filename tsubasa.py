@@ -1740,6 +1740,7 @@ class Tsubasa:
         # shoot while pulling in banner
         if CTDT.template("114").available():
 
+            # move mouse to the center of screen then scroll up to pull next player
             width, height = CTDT.screen_size()
             center_x = width / 2
             center_y = height / 2
