@@ -1744,7 +1744,7 @@ class Tsubasa:
             center_x = width / 2
             center_y = height / 2
             pyautogui.moveTo(center_x, center_y)
-            pyautogui.scroll(3 * self.config.mouse_scroll_click)  # scroll up x "clicks"
+            pyautogui.scroll(-3 * self.config.mouse_scroll_click)  # scroll up x "clicks"
             time.sleep(3)
             return True
 
