@@ -1738,13 +1738,13 @@ class Tsubasa:
         if self.config.mode not in modes: return False
 
         # shoot while pulling in banner
-        if CTDT.template("114").click():
+        if CTDT.template("114").available():
 
             width, height = CTDT.screen_size()
             center_x = width / 2
             center_y = height / 2
             pyautogui.moveTo(center_x, center_y)
-            pyautogui.scroll(1 * self.config.mouse_scroll_click)  # scroll up x "clicks"
+            pyautogui.scroll(2 * self.config.mouse_scroll_click)  # scroll up x "clicks"
             time.sleep(3)
             return True
 
