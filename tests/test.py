@@ -1,12 +1,7 @@
-from random import seed
-from random import random
+from lib import CTDT
 
-# seed random number generator
-seed(1)
-# generate some random numbers
-print(random(), random(), random())
-
-# reset the seed
-seed(1)
-# generate some random numbers
-print(random(), random(), random())
+print(type(CTDT.screen_size()))
+print(CTDT.screen_size())
+width,height=CTDT.screen_size()
+print(width)
+print(height)

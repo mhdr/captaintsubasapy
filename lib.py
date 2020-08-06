@@ -269,7 +269,7 @@ class LocateResult:
 
         return False
 
-    def move_mouse(self):
+    def move_mouse(self, width=0, height=0):
         if self.position is not None:
             center_x = self.template.region_start_x + self.position.left + self.template.image_width / 2
             center_y = self.template.region_start_y + self.position.top + self.template.image_height / 2
@@ -518,3 +518,10 @@ class CTDT:
             return int(new_data)
         except:
             return 0
+
+    @staticmethod
+    def screen_size():
+        user32 = ctypes.windll.user32
+        user32.SetProcessDPIAware()
+        screensize = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
+        return screensize
