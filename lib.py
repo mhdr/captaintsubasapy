@@ -207,6 +207,8 @@ class Config:
             msg = "Mode 9 : Farm Story Mode"
         elif mode == 10:
             msg = "Mode 10 : League Mode"
+        elif mode == 11:
+            msg = "Mode 11 : Reroll"
 
         return msg
 
