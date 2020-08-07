@@ -1721,6 +1721,10 @@ class Tsubasa:
         if CTDT.template("120").click():
             return True
 
+        # menu 2 button in animation
+        elif CTDT.template("128").click():
+            return True
+
         # skip button in animation
         elif CTDT.template("121").click():
             return True
