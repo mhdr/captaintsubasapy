@@ -2,9 +2,13 @@ from random import seed
 from random import random
 import time
 
+#####################################################
+
 percentage = 3
 multi = 10
 count = 1
+
+#####################################################
 
 index_count = 1
 index_multi = 1
