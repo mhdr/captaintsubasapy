@@ -1098,20 +1098,23 @@ class Tsubasa:
 
         # close ad button
         if CTDT.template("067").available():
-            # check the amount of time energy recovery dialog is open
-            diff = datetime.now() - self.ad_viewing_time
-            seconds = diff.total_seconds()
 
-            if seconds > self.config.wait_finish_ad:
+            if self.ad_viewing_time is not None:
+            
+                # check the amount of time energy recovery dialog is open
+                diff = datetime.now() - self.ad_viewing_time
+                seconds = diff.total_seconds()
 
-                # close ad after number of seconds we set in config
-                if CTDT.template("067").click():
-                    self.ad_viewing_time = None
-                    self.send_telegram_message(
-                        "End Watching AD : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
-                    return True
+                if seconds > self.config.wait_finish_ad:
 
-            return True
+                    # close ad after number of seconds we set in config
+                    if CTDT.template("067").click():
+                        self.ad_viewing_time = None
+                        self.send_telegram_message(
+                            "End Watching AD : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+                        return True
+
+                return True
         elif CTDT.template("091").available():
             # check the amount of time energy recovery dialog is open
             diff = datetime.now() - self.ad_viewing_time
