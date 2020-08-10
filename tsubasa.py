@@ -19,7 +19,7 @@ class Tsubasa:
     MODE_CLUB_JOIN = 5
     MODE_GLOBAL_SHARED = 6
     MODE_GLOBAL_JOIN = 7
-    MODE_EVOLE_PLAYER = 8
+    # MODE_EVOLE_PLAYER = 8
     MODE_FARM_STORY_MODE = 9
     MODE_LEAGUE = 10
     MODE_REROLL = 11
@@ -1100,7 +1100,7 @@ class Tsubasa:
         if CTDT.template("067").available():
 
             if self.ad_viewing_time is not None:
-            
+
                 # check the amount of time energy recovery dialog is open
                 diff = datetime.now() - self.ad_viewing_time
                 seconds = diff.total_seconds()
