@@ -1037,7 +1037,7 @@ class Tsubasa:
             # end scroll
             # exact game picture ( it should change always to match)
             # for now -> story mode - evolve -> get drills all types
-            elif CTDT.template("006").click():
+            elif CTDT.template("006", full_screen=True).click():
                 return True
 
         elif self.config.mode in {self.MODE_EVOLE_PLAYER}:
