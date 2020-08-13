@@ -862,7 +862,10 @@ class Tsubasa:
         modes1 = {self.MODE_STORY_SOLO,
                   self.MODE_EVENT_SOLO,
                   self.MODE_SOLO,
-                  self.MODE_FARM_STORY_MODE}
+                  self.MODE_FARM_STORY_MODE,
+                  self.MODE_EVOLE_PLAYER_HIDDEN_T,
+                  self.MODE_EVOLE_PLAYER_HIDDEN_S,
+                  self.MODE_EVOLE_PLAYER_HIDDEN_A}
 
         # modes with join
         modes2 = {self.MODE_CLUB_JOIN, self.MODE_GLOBAL_JOIN}
