@@ -421,6 +421,41 @@ class Tsubasa:
                 if CTDT.template("009").click():
                     return True
 
+        elif self.config.mode == self.MODE_EVOLE_PLAYER_HIDDEN_T:
+
+            if self.config.global_shared_play_enabled == 1:
+
+                if CTDT.template("050").click():
+                    return True
+            else:
+
+                if CTDT.template("009").click():
+                    return True
+
+
+        elif self.config.mode == self.MODE_EVOLE_PLAYER_HIDDEN_S:
+
+            if self.config.global_shared_play_enabled == 1:
+
+                if CTDT.template("050").click():
+                    return True
+            else:
+
+                if CTDT.template("009").click():
+                    return True
+
+
+        elif self.config.mode == self.MODE_EVOLE_PLAYER_HIDDEN_A:
+
+            if self.config.global_shared_play_enabled == 1:
+
+                if CTDT.template("050").click():
+                    return True
+            else:
+
+                if CTDT.template("009").click():
+                    return True
+
         return False
 
     ########################################################################################################################
@@ -1090,7 +1125,7 @@ class Tsubasa:
                         pyautogui.moveTo(center_x, center_y)
 
                         # scroll right
-                        pyautogui.dragTo(center_x + self.config.mouse_scroll_click, center_y, 2, button='left')
+                        pyautogui.dragTo(center_x - 5 * self.config.mouse_scroll_click, center_y, 2, button='left')
                         time.sleep(3)
                         return True
 
@@ -1106,7 +1141,7 @@ class Tsubasa:
                         pyautogui.moveTo(center_x, center_y)
 
                         # scroll right
-                        pyautogui.dragTo(center_x + self.config.mouse_scroll_click, center_y, 2, button='left')
+                        pyautogui.dragTo(center_x - 5 * self.config.mouse_scroll_click, center_y, 2, button='left')
                         time.sleep(3)
                         return True
 
@@ -1122,7 +1157,7 @@ class Tsubasa:
                         pyautogui.moveTo(center_x, center_y)
 
                         # scroll right
-                        pyautogui.dragTo(center_x + self.config.mouse_scroll_click, center_y, 2, button='left')
+                        pyautogui.dragTo(center_x - 5 * self.config.mouse_scroll_click, center_y, 2, button='left')
                         time.sleep(3)
                         return True
 
