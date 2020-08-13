@@ -1090,7 +1090,7 @@ class Tsubasa:
                         pyautogui.moveTo(center_x, center_y)
 
                         # scroll right
-                        pyautogui.hscroll(self.Scroll_Right * self.config.mouse_scroll_click)
+                        pyautogui.dragTo(center_x + self.config.mouse_scroll_click, center_y, 2, button='left')
                         time.sleep(3)
                         return True
 
@@ -1106,7 +1106,7 @@ class Tsubasa:
                         pyautogui.moveTo(center_x, center_y)
 
                         # scroll right
-                        pyautogui.hscroll(self.Scroll_Right * self.config.mouse_scroll_click)
+                        pyautogui.dragTo(center_x + self.config.mouse_scroll_click, center_y, 2, button='left')
                         time.sleep(3)
                         return True
 
@@ -1122,7 +1122,7 @@ class Tsubasa:
                         pyautogui.moveTo(center_x, center_y)
 
                         # scroll right
-                        pyautogui.hscroll(self.Scroll_Right * self.config.mouse_scroll_click)
+                        pyautogui.dragTo(center_x + self.config.mouse_scroll_click, center_y, 2, button='left')
                         time.sleep(3)
                         return True
 
