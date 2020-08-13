@@ -314,14 +314,14 @@ class Tsubasa:
             elif self.config.play_match_with_skip_ticket_button == 0:
 
                 # play match button without skip ticket
-                if CTDT.template("028", full_screen=True).click():
+                if CTDT.template("028").click():
                     return True
 
             # skip ticket button is present beside play match button = 1
             elif self.config.play_match_with_skip_ticket_button == 1:
 
                 # play match button with skip ticket
-                if CTDT.template("008", full_screen=True).click(1):
+                if CTDT.template("008").click(1):
                     return True
 
         elif self.config.mode in modes2:
