@@ -41,8 +41,8 @@ class TelegramBot:
         self.bot = Bot(token=self.config.telegram_token)
         msg1 = "Starting Bot: {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
         self.bot.send_message(self.config.telegram_chatid, msg1)
-        self.bot.send_message(self.config.telegram_chatid, self.config.get_text_mode())
-        self.bot.send_message(self.config.telegram_chatid, self.config.get_text_difficulty())
+        # self.bot.send_message(self.config.telegram_chatid, self.config.get_text_mode())
+        # self.bot.send_message(self.config.telegram_chatid, self.config.get_text_difficulty())
 
         msg2 = "Mode : "
 

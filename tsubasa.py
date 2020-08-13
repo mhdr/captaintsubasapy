@@ -23,6 +23,9 @@ class Tsubasa:
     MODE_FARM_STORY_MODE = 9
     MODE_LEAGUE = 10
     MODE_REROLL = 11
+    MODE_EVOLE_PLAYER_HIDDEN_T = 12
+    MODE_EVOLE_PLAYER_HIDDEN_S = 13
+    MODE_EVOLE_PLAYER_HIDDEN_A = 14
 
     EnergyRecovery_WaitToRecover = 2
     EnergyRecovery_Ad = 3
@@ -35,8 +38,11 @@ class Tsubasa:
 
     Scroll_UP = 1
     Scroll_Down = -1
+    Scroll_Right = 1
+    Scroll_Left = -1
 
     scroll_direction = Scroll_Down
+    scroll_h_direction = Scroll_Right
 
     # the time energy recovery dialog is opened
     # we use this to open and close energy recovery dialog once in a three minutes
@@ -194,7 +200,8 @@ class Tsubasa:
 
         modes1 = {self.MODE_STORY_SOLO, self.MODE_SOLO, self.MODE_EVENT_SOLO, self.MODE_GLOBAL_JOIN,
                   self.MODE_GLOBAL_SHARED,
-                  self.MODE_FARM_STORY_MODE, self.MODE_EVOLE_PLAYER, self.MODE_CLUB_JOIN, self.MODE_CLUB_SHARED}
+                  self.MODE_FARM_STORY_MODE, self.MODE_EVOLE_PLAYER, self.MODE_CLUB_JOIN, self.MODE_CLUB_SHARED,
+                  self.MODE_EVOLE_PLAYER_HIDDEN_T, self.MODE_EVOLE_PLAYER_HIDDEN_S, self.MODE_EVOLE_PLAYER_HIDDEN_A}
 
         modes2 = {self.MODE_LEAGUE}
 
@@ -223,6 +230,9 @@ class Tsubasa:
 
         if self.config.mode not in modes: return False
 
+        # modes with verticall button
+        modes1 = {self.MODE_EVOLE_PLAYER_HIDDEN_T, self.MODE_EVOLE_PLAYER_HIDDEN_S, self.MODE_EVOLE_PLAYER_HIDDEN_A}
+
         # normal
         if self.config.difficulty == 1:
 
@@ -246,12 +256,25 @@ class Tsubasa:
         # very hard
         elif self.config.difficulty == 3:
 
-            # difficulty very hard
-            if CTDT.template("059").click():
-                # exit app gracefully if required
-                self.run_044()
+            # if mode is horizontal
+            if self.config.mode not in modes1:
+                # difficulty very hard
+                if CTDT.template("059").click():
+                    # exit app gracefully if required
+                    self.run_044()
 
-                return True
+                    return True
+            else:
+                # if mode is vertical
+
+                # difficulty very hard vertical
+                if CTDT.template("131").click():
+                    # exit app gracefully if required
+                    self.run_044()
+
+                    return True
+
+
 
         # extreme
         elif self.config.difficulty == 4:
@@ -277,7 +300,8 @@ class Tsubasa:
 
         modes1 = {self.MODE_STORY_SOLO, self.MODE_SOLO, self.MODE_EVENT_SOLO, self.MODE_GLOBAL_JOIN,
                   self.MODE_GLOBAL_SHARED,
-                  self.MODE_FARM_STORY_MODE, self.MODE_EVOLE_PLAYER, self.MODE_CLUB_JOIN, self.MODE_CLUB_SHARED}
+                  self.MODE_FARM_STORY_MODE, self.MODE_EVOLE_PLAYER, self.MODE_CLUB_JOIN, self.MODE_CLUB_SHARED,
+                  self.MODE_EVOLE_PLAYER_HIDDEN_T, self.MODE_EVOLE_PLAYER_HIDDEN_S, self.MODE_EVOLE_PLAYER_HIDDEN_A}
 
         modes2 = {self.MODE_LEAGUE}
 
@@ -463,7 +487,8 @@ class Tsubasa:
 
         modes1 = {self.MODE_STORY_SOLO, self.MODE_SOLO, self.MODE_EVENT_SOLO, self.MODE_GLOBAL_JOIN,
                   self.MODE_GLOBAL_SHARED,
-                  self.MODE_FARM_STORY_MODE, self.MODE_EVOLE_PLAYER, self.MODE_CLUB_JOIN, self.MODE_CLUB_SHARED}
+                  self.MODE_FARM_STORY_MODE, self.MODE_EVOLE_PLAYER, self.MODE_CLUB_JOIN, self.MODE_CLUB_SHARED,
+                  self.MODE_EVOLE_PLAYER_HIDDEN_T, self.MODE_EVOLE_PLAYER_HIDDEN_S, self.MODE_EVOLE_PLAYER_HIDDEN_A}
 
         modes2 = {self.MODE_LEAGUE}
 
@@ -1040,10 +1065,67 @@ class Tsubasa:
             elif CTDT.template("006", full_screen=True).click():
                 return True
 
-        elif self.config.mode in {self.MODE_EVOLE_PLAYER}:
+        elif self.config.mode in {self.MODE_EVOLE_PLAYER, self.MODE_EVOLE_PLAYER_HIDDEN_T,
+                                  self.MODE_EVOLE_PLAYER_HIDDEN_S, self.MODE_EVOLE_PLAYER_HIDDEN_A}:
 
             # go to evolve player
-            if CTDT.template("054").click():
+            if CTDT.template("054", full_screen=True).click():
+                return True
+
+            # evolve player scenario
+            elif CTDT.template("129").available():
+
+                print("129")
+
+                if self.config.mode == self.MODE_EVOLE_PLAYER_HIDDEN_T:
+
+                    # get toughness hidden skill drills
+                    if CTDT.template("130", full_screen=True).click():
+                        return True
+                    else:
+                        # move mouse to the center of screen then scroll up to pull next player
+                        width, height = CTDT.screen_size()
+                        center_x = width / 2
+                        center_y = height / 2
+                        pyautogui.moveTo(center_x, center_y)
+
+                        # scroll right
+                        pyautogui.hscroll(self.Scroll_Right * self.config.mouse_scroll_click)
+                        time.sleep(3)
+                        return True
+
+                elif self.config.mode == self.MODE_EVOLE_PLAYER_HIDDEN_S:
+
+                    if CTDT.template("130", full_screen=True).click():
+                        return True
+                    else:
+                        # move mouse to the center of screen then scroll up to pull next player
+                        width, height = CTDT.screen_size()
+                        center_x = width / 2
+                        center_y = height / 2
+                        pyautogui.moveTo(center_x, center_y)
+
+                        # scroll right
+                        pyautogui.hscroll(self.Scroll_Right * self.config.mouse_scroll_click)
+                        time.sleep(3)
+                        return True
+
+                elif self.config.mode == self.MODE_EVOLE_PLAYER_HIDDEN_A:
+
+                    if CTDT.template("130", full_screen=True).click():
+                        return True
+                    else:
+                        # move mouse to the center of screen then scroll up to pull next player
+                        width, height = CTDT.screen_size()
+                        center_x = width / 2
+                        center_y = height / 2
+                        pyautogui.moveTo(center_x, center_y)
+
+                        # scroll right
+                        pyautogui.hscroll(self.Scroll_Right * self.config.mouse_scroll_click)
+                        time.sleep(3)
+                        return True
+
                 return True
 
         return False
@@ -1847,7 +1929,10 @@ class Tsubasa:
                                  self.MODE_SOLO,
                                  self.MODE_CLUB_JOIN,
                                  self.MODE_GLOBAL_SHARED,
-                                 self.MODE_GLOBAL_JOIN}):
+                                 self.MODE_GLOBAL_JOIN,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_T,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_S,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_A}):
             return "007"
 
         # energy recovered dialog
@@ -1856,7 +1941,10 @@ class Tsubasa:
                                  self.MODE_SOLO,
                                  self.MODE_CLUB_JOIN,
                                  self.MODE_GLOBAL_JOIN,
-                                 self.MODE_FARM_STORY_MODE}):
+                                 self.MODE_FARM_STORY_MODE,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_T,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_S,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_A}):
             return "024"
 
         # energy recovery dialog
@@ -1865,7 +1953,10 @@ class Tsubasa:
                                  self.MODE_SOLO,
                                  self.MODE_CLUB_JOIN,
                                  self.MODE_GLOBAL_JOIN,
-                                 self.MODE_FARM_STORY_MODE}):
+                                 self.MODE_FARM_STORY_MODE,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_T,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_S,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_A}):
             return "016"
 
         # you have already watched this story dialog
@@ -1877,7 +1968,10 @@ class Tsubasa:
                                  self.MODE_EVENT_SOLO,
                                  self.MODE_SOLO,
                                  self.MODE_GLOBAL_JOIN,
-                                 self.MODE_FARM_STORY_MODE}):
+                                 self.MODE_FARM_STORY_MODE,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_T,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_S,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_A}):
             return "040"
 
         # after ad - ad viewing interrupted dialog
@@ -1885,7 +1979,10 @@ class Tsubasa:
                                  self.MODE_EVENT_SOLO,
                                  self.MODE_SOLO,
                                  self.MODE_GLOBAL_JOIN,
-                                 self.MODE_FARM_STORY_MODE}):
+                                 self.MODE_FARM_STORY_MODE,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_T,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_S,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_A}):
             return "041"
 
         # play type : solo, shared play, join
@@ -1895,7 +1992,10 @@ class Tsubasa:
                                  self.MODE_CLUB_JOIN,
                                  self.MODE_GLOBAL_SHARED,
                                  self.MODE_GLOBAL_JOIN,
-                                 self.MODE_FARM_STORY_MODE}):
+                                 self.MODE_FARM_STORY_MODE,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_T,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_S,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_A}):
             return "009"
 
         # recruit button - join
@@ -1911,7 +2011,10 @@ class Tsubasa:
                                  self.MODE_GLOBAL_SHARED,
                                  self.MODE_GLOBAL_JOIN,
                                  self.MODE_FARM_STORY_MODE,
-                                 self.MODE_LEAGUE}):
+                                 self.MODE_LEAGUE,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_T,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_S,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_A}):
             return "008"
 
         # difficulty for story mode only
@@ -1922,7 +2025,10 @@ class Tsubasa:
         elif self.run_010(modes={self.MODE_STORY_SOLO,
                                  self.MODE_EVENT_SOLO,
                                  self.MODE_SOLO,
-                                 self.MODE_FARM_STORY_MODE}):
+                                 self.MODE_FARM_STORY_MODE,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_T,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_S,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_A}):
             return "010"
 
         # connection error dialog
@@ -1931,7 +2037,10 @@ class Tsubasa:
                                  self.MODE_GLOBAL_SHARED,
                                  self.MODE_GLOBAL_JOIN,
                                  self.MODE_FARM_STORY_MODE,
-                                 self.MODE_LEAGUE}):
+                                 self.MODE_LEAGUE,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_T,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_S,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_A}):
             return "033"
 
         # prepare league mode
@@ -1945,7 +2054,10 @@ class Tsubasa:
                                  self.MODE_CLUB_JOIN,
                                  self.MODE_GLOBAL_JOIN,
                                  self.MODE_FARM_STORY_MODE,
-                                 self.MODE_LEAGUE}):
+                                 self.MODE_LEAGUE,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_T,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_S,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_A}):
             return "028"
 
         # after match - add friend dialog
@@ -1954,7 +2066,10 @@ class Tsubasa:
                                  self.MODE_SOLO,
                                  self.MODE_CLUB_JOIN,
                                  self.MODE_GLOBAL_JOIN,
-                                 self.MODE_FARM_STORY_MODE}):
+                                 self.MODE_FARM_STORY_MODE,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_T,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_S,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_A}):
             return "052"
 
         # go to scenario list
@@ -1967,7 +2082,10 @@ class Tsubasa:
                                  self.MODE_GLOBAL_SHARED,
                                  self.MODE_GLOBAL_JOIN,
                                  self.MODE_FARM_STORY_MODE,
-                                 self.MODE_LEAGUE}):
+                                 self.MODE_LEAGUE,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_T,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_S,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_A}):
             return "012"
 
         # after match - you win
@@ -1979,7 +2097,10 @@ class Tsubasa:
                                  self.MODE_GLOBAL_SHARED,
                                  self.MODE_GLOBAL_JOIN,
                                  self.MODE_FARM_STORY_MODE,
-                                 self.MODE_LEAGUE}):
+                                 self.MODE_LEAGUE,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_T,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_S,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_A}):
             return "013"
 
         # after match - breakdown
@@ -1991,7 +2112,10 @@ class Tsubasa:
                                  self.MODE_GLOBAL_SHARED,
                                  self.MODE_GLOBAL_JOIN,
                                  self.MODE_FARM_STORY_MODE,
-                                 self.MODE_LEAGUE}):
+                                 self.MODE_LEAGUE,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_T,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_S,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_A}):
             return "014"
 
         # after match - rank up
@@ -2000,7 +2124,10 @@ class Tsubasa:
                                  self.MODE_SOLO,
                                  self.MODE_CLUB_JOIN,
                                  self.MODE_GLOBAL_JOIN,
-                                 self.MODE_FARM_STORY_MODE}):
+                                 self.MODE_FARM_STORY_MODE,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_T,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_S,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_A}):
             return "015"
 
 
@@ -2016,7 +2143,10 @@ class Tsubasa:
                                  self.MODE_GLOBAL_SHARED,
                                  self.MODE_GLOBAL_JOIN,
                                  self.MODE_FARM_STORY_MODE,
-                                 self.MODE_LEAGUE}):
+                                 self.MODE_LEAGUE,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_T,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_S,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_A}):
             return "021"
 
         # after match -> clear rewards
@@ -2032,7 +2162,10 @@ class Tsubasa:
                                  self.MODE_GLOBAL_SHARED,
                                  self.MODE_GLOBAL_JOIN,
                                  self.MODE_FARM_STORY_MODE,
-                                 self.MODE_LEAGUE}):
+                                 self.MODE_LEAGUE,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_T,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_S,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_A}):
             return "022"
 
         # after match -> rewards earned
@@ -2041,7 +2174,10 @@ class Tsubasa:
                                  self.MODE_CLUB_SHARED,
                                  self.MODE_CLUB_JOIN,
                                  self.MODE_GLOBAL_SHARED,
-                                 self.MODE_GLOBAL_JOIN}):
+                                 self.MODE_GLOBAL_JOIN,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_T,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_S,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_A}):
             return "060"
 
         # failed to join dialog
@@ -2069,7 +2205,10 @@ class Tsubasa:
                                  self.MODE_GLOBAL_SHARED,
                                  self.MODE_GLOBAL_JOIN,
                                  self.MODE_FARM_STORY_MODE,
-                                 self.MODE_LEAGUE}):
+                                 self.MODE_LEAGUE,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_T,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_S,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_A}):
             return "001"
 
         # enter app
@@ -2079,7 +2218,10 @@ class Tsubasa:
                                  self.MODE_GLOBAL_SHARED,
                                  self.MODE_GLOBAL_JOIN,
                                  self.MODE_FARM_STORY_MODE,
-                                 self.MODE_LEAGUE}):
+                                 self.MODE_LEAGUE,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_T,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_S,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_A}):
             return "002"
 
         # go to story mode or league mode
@@ -2089,13 +2231,19 @@ class Tsubasa:
                        self.MODE_CLUB_SHARED,
                        self.MODE_GLOBAL_SHARED,
                        self.MODE_GLOBAL_JOIN,
-                       self.MODE_LEAGUE}):
+                       self.MODE_LEAGUE,
+                       self.MODE_EVOLE_PLAYER_HIDDEN_T,
+                       self.MODE_EVOLE_PLAYER_HIDDEN_S,
+                       self.MODE_EVOLE_PLAYER_HIDDEN_A}):
             return "003"
 
         # *** go to game
         elif self.run_035(modes={self.MODE_STORY_SOLO,
                                  self.MODE_GLOBAL_SHARED,
-                                 self.MODE_GLOBAL_JOIN}):
+                                 self.MODE_GLOBAL_JOIN,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_T,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_S,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_A}):
             return "035"
 
         # close news dialog
@@ -2105,7 +2253,10 @@ class Tsubasa:
                                  self.MODE_GLOBAL_SHARED,
                                  self.MODE_GLOBAL_JOIN,
                                  self.MODE_FARM_STORY_MODE,
-                                 self.MODE_LEAGUE}):
+                                 self.MODE_LEAGUE,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_T,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_S,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_A}):
             return "017"
 
         # restart match dialog
@@ -2115,7 +2266,10 @@ class Tsubasa:
                                  self.MODE_GLOBAL_SHARED,
                                  self.MODE_GLOBAL_JOIN,
                                  self.MODE_FARM_STORY_MODE,
-                                 self.MODE_LEAGUE}):
+                                 self.MODE_LEAGUE,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_T,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_S,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_A}):
             return "018"
 
 
@@ -2124,7 +2278,10 @@ class Tsubasa:
                                  self.MODE_EVENT_SOLO,
                                  self.MODE_SOLO,
                                  self.MODE_GLOBAL_JOIN,
-                                 self.MODE_FARM_STORY_MODE}):
+                                 self.MODE_FARM_STORY_MODE,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_T,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_S,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_A}):
             return "038"
 
         # after ad - you win
@@ -2132,7 +2289,10 @@ class Tsubasa:
                                  self.MODE_EVENT_SOLO,
                                  self.MODE_SOLO,
                                  self.MODE_GLOBAL_JOIN,
-                                 self.MODE_FARM_STORY_MODE}):
+                                 self.MODE_FARM_STORY_MODE,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_T,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_S,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_A}):
             return "039"
 
 
@@ -2170,7 +2330,10 @@ class Tsubasa:
                                  self.MODE_EVENT_SOLO,
                                  self.MODE_STORY_SOLO,
                                  self.MODE_SOLO,
-                                 self.MODE_EVOLE_PLAYER}):
+                                 self.MODE_EVOLE_PLAYER,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_T,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_S,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_A}):
             return "054"
 
         # new update data is available diaolg
@@ -2180,7 +2343,10 @@ class Tsubasa:
                                  self.MODE_CLUB_JOIN,
                                  self.MODE_GLOBAL_SHARED,
                                  self.MODE_GLOBAL_JOIN,
-                                 self.MODE_LEAGUE}):
+                                 self.MODE_LEAGUE,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_T,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_S,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_A}):
             return "053"
 
         # dreamball after match
@@ -2190,7 +2356,10 @@ class Tsubasa:
                                  self.MODE_CLUB_JOIN,
                                  self.MODE_GLOBAL_SHARED,
                                  self.MODE_GLOBAL_JOIN,
-                                 self.MODE_FARM_STORY_MODE}):
+                                 self.MODE_FARM_STORY_MODE,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_T,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_S,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_A}):
             return "056"
 
         # team power boost
@@ -2198,7 +2367,10 @@ class Tsubasa:
                                  self.MODE_EVENT_SOLO,
                                  self.MODE_SOLO,
                                  self.MODE_GLOBAL_JOIN,
-                                 self.MODE_FARM_STORY_MODE}):
+                                 self.MODE_FARM_STORY_MODE,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_T,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_S,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_A}):
             return "057"
 
         # all your slots are full
@@ -2208,7 +2380,10 @@ class Tsubasa:
                                  self.MODE_CLUB_JOIN,
                                  self.MODE_GLOBAL_SHARED,
                                  self.MODE_GLOBAL_JOIN,
-                                 self.MODE_FARM_STORY_MODE}):
+                                 self.MODE_FARM_STORY_MODE,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_T,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_S,
+                                 self.MODE_EVOLE_PLAYER_HIDDEN_A}):
             return "061"
 
         # total power -> select team in league mode
