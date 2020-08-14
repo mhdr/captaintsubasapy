@@ -138,5 +138,6 @@ if __name__ == '__main__':
         *ScreenRes.get()
         ))
     print(ScreenRes.get_modes())
-    #ScreenRes.set(1920, 1080)
-    #ScreenRes.set() # Set defaults
+    # ScreenRes.set(1920, 1080)
+    # ScreenRes.set(1440, 900)
+    ScreenRes.set() # Set defaults
