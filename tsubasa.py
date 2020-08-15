@@ -1435,6 +1435,8 @@ class Tsubasa:
         :return:
         """
 
+        if self.telegram is None: return False
+
         # if go home flag is true
         if self.telegram.go_home_flag:
 
