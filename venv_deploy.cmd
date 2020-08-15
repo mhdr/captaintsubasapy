@@ -1,0 +1,1 @@
+venv\Scripts\pyinstaller.exe main.py --name CaptainTsubasa --onefile
