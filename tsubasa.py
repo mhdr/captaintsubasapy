@@ -1932,6 +1932,20 @@ class Tsubasa:
         return False
 
     ########################################################################################################################
+
+    def run_067(self):
+        """
+        bluestacks
+        :return:
+        """
+
+        # if bluestacks menu button is closed click on it and open
+        if CTDT.template("132").click():
+            return True
+
+        return False
+
+    ########################################################################################################################
     ########################################################################################################################
 
     def run(self):
@@ -2447,6 +2461,10 @@ class Tsubasa:
         # reroll
         elif self.run_065(modes={self.MODE_REROLL}):
             return "065"
+
+        # bluestacks
+        elif self.run_067():
+            return "067"
 
         # prevent screen off
         elif self.run_030():
