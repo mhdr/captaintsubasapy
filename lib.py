@@ -18,6 +18,7 @@ import ctypes
 import shutil
 from openpyxl.worksheet.worksheet import Worksheet
 import pytesseract
+import os
 
 
 #######################################################################################################################
@@ -320,7 +321,10 @@ class CTDT:
         user32 = ctypes.windll.user32
         user32.SetProcessDPIAware()
         pyautogui.FAILSAFE = False
-        pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files (x86)\\Tesseract-OCR\\tesseract.exe'
+
+        tesseract_path = 'C:\\Program Files (x86)\\Tesseract-OCR\\tesseract.exe'
+        if os.path.isfile(tesseract_path):
+            pytesseract.pytesseract.tesseract_cmd = tesseract_path
 
     @staticmethod
     def initialize_cache():
@@ -384,6 +388,9 @@ class CTDT:
     def convert_templates_to_jpeg():
         dest_dir = "templates"
         src_dir = "templates_original"
+
+        if os.path.isdir(src_dir) is False:
+            return
 
         files_to_remove = [f for f in listdir(dest_dir) if isfile(join(dest_dir, f))]
         for fr in files_to_remove:

@@ -131,6 +131,10 @@ class Tsubasa:
     def send_telegram_message(self, msg: str, notify=False, dt: str = ""):
         try:
 
+            # if telegram bot is disabled return
+            if self.config.telegram_disabled == 1:
+                return
+
             should_send = True
 
             if len(dt) > 0:
