@@ -331,6 +331,7 @@ class Tsubasa:
         elif self.config.mode in modes2:
             # play match button in league mode
             if CTDT.template("103").click():
+                self.send_count_played_match()
                 return True
 
         return False
