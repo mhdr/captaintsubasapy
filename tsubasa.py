@@ -212,7 +212,7 @@ class Tsubasa:
         if self.config.mode in modes1:
 
             # story mode
-            if CTDT.template("003").click():
+            if CTDT.template("003",full_screen=True).click():
                 # reset go home flag
                 self.go_to_home = False
                 return True
@@ -1086,7 +1086,7 @@ class Tsubasa:
             elif not CTDT.template("061").available():
 
                 # 3rd anni pre event
-                if CTDT.template("024").click():
+                if CTDT.template("024",full_screen=True).click():
                     return True
 
         elif self.config.mode in {self.MODE_STORY_SOLO}:
@@ -1596,7 +1596,7 @@ class Tsubasa:
             if CTDT.template("074").click():
                 return True
 
-            elif CTDT.template("003").click():
+            elif CTDT.template("003",full_screen=True).click():
                 # reset go home flag
                 self.go_to_home = False
                 return True
