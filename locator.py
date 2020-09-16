@@ -22,7 +22,7 @@ index_fimage = 68
 match = 0
 
 # search on full screen
-full_screen = True
+full_screen = False
 
 # template number like : 007.jpg
 # Column F in excel
