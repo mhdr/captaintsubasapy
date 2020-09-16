@@ -421,12 +421,16 @@ class CTDT:
         return result
 
     @staticmethod
-    def template(template_number: str, threshold=0.9, full_screen=False) -> LocateResult:
+    def template(template_number: str, threshold=0.9) -> LocateResult:
         caches: Cache = Cache.get_instance()
         region_start_x = caches.templates[template_number].region_start_x
         region_start_y = caches.templates[template_number].region_start_y
         region_end_x = caches.templates[template_number].region_end_x
         region_end_y = caches.templates[template_number].region_end_y
+
+        full_screen = False
+        if region_start_x == 0 and region_start_y == 0 and region_end_x == 0 and region_end_y == 0:
+            full_screen = True
 
         if full_screen is False:
             image_region = ImageGrab.grab(bbox=(region_start_x, region_start_y, region_end_x, region_end_y))

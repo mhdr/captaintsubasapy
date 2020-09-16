@@ -171,7 +171,7 @@ class Tsubasa:
 
         if self.config.mode not in modes: return False
 
-        if CTDT.template("001", full_screen=True).click(wait=5):
+        if CTDT.template("001").click(wait=5):
             self.send_telegram_message("Run App : {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
             return True
 
@@ -212,7 +212,7 @@ class Tsubasa:
         if self.config.mode in modes1:
 
             # story mode
-            if CTDT.template("003",full_screen=True).click():
+            if CTDT.template("003").click():
                 # reset go home flag
                 self.go_to_home = False
                 return True
@@ -490,6 +490,10 @@ class Tsubasa:
         # sometimes 012 and sometimes 028 appears fo scenario list
         # this one is when the result is win
         if self.config.mode not in modes: return False
+
+        if self.config.energy_recovery == self.EnergyRecovery_Ad:
+            if CTDT.template("133").click():
+                return True
 
         if CTDT.template("012").click():
             return True
@@ -1086,7 +1090,7 @@ class Tsubasa:
             elif not CTDT.template("061").available():
 
                 # 3rd anni pre event
-                if CTDT.template("024",full_screen=True).click():
+                if CTDT.template("024").click():
                     return True
 
         elif self.config.mode in {self.MODE_STORY_SOLO}:
@@ -1106,14 +1110,14 @@ class Tsubasa:
             # end scroll
             # exact game picture ( it should change always to match)
             # for now -> story mode - evolve -> get drills all types
-            elif CTDT.template("006", full_screen=True).click():
+            elif CTDT.template("006").click():
                 return True
 
         elif self.config.mode in {self.MODE_EVOLE_PLAYER, self.MODE_EVOLE_PLAYER_HIDDEN_T,
                                   self.MODE_EVOLE_PLAYER_HIDDEN_S, self.MODE_EVOLE_PLAYER_HIDDEN_A}:
 
             # go to evolve player
-            if CTDT.template("054", full_screen=True).click():
+            if CTDT.template("054").click():
                 return True
 
             # evolve player scenario
@@ -1124,7 +1128,7 @@ class Tsubasa:
                 if self.config.mode == self.MODE_EVOLE_PLAYER_HIDDEN_T:
 
                     # get toughness hidden skill drills
-                    if CTDT.template("130", full_screen=True).click():
+                    if CTDT.template("130").click():
                         return True
                     else:
                         # move mouse to the center of screen then scroll up to pull next player
@@ -1140,7 +1144,7 @@ class Tsubasa:
 
                 elif self.config.mode == self.MODE_EVOLE_PLAYER_HIDDEN_S:
 
-                    if CTDT.template("130", full_screen=True).click():
+                    if CTDT.template("130").click():
                         return True
                     else:
                         # move mouse to the center of screen then scroll up to pull next player
@@ -1156,7 +1160,7 @@ class Tsubasa:
 
                 elif self.config.mode == self.MODE_EVOLE_PLAYER_HIDDEN_A:
 
-                    if CTDT.template("130", full_screen=True).click():
+                    if CTDT.template("130").click():
                         return True
                     else:
                         # move mouse to the center of screen then scroll up to pull next player
@@ -1326,8 +1330,14 @@ class Tsubasa:
 
         if self.config.mode not in modes: return False
 
+        # ads was stopped dialog
+        if CTDT.template("135").available():
+            # ads was stopped dialog -> ok button
+            if CTDT.template("136").click():
+                return True
+
         # ad viewing interrupted dialog -> title
-        if CTDT.template("071").available():
+        elif CTDT.template("071").available():
 
             # ad viewing interrupted dialog -> ok button
             if CTDT.template("072").click(wait=self.config.wait_ad_view_interrupted):
@@ -1596,7 +1606,7 @@ class Tsubasa:
             if CTDT.template("074").click():
                 return True
 
-            elif CTDT.template("003",full_screen=True).click():
+            elif CTDT.template("003").click():
                 # reset go home flag
                 self.go_to_home = False
                 return True
@@ -1620,26 +1630,26 @@ class Tsubasa:
             if CTDT.template("093").available() is False:
 
                 # new story animation
-                if CTDT.template("119", full_screen=True).click():
+                if CTDT.template("119").click():
                     return True
 
                 # normal - unplayed
-                elif CTDT.template("122", full_screen=True).click():
+                elif CTDT.template("122").click():
                     return True
 
                 # hard - unplayed
-                elif CTDT.template("096", full_screen=True).click():
+                elif CTDT.template("096").click():
                     return True
 
                 # very hard - unplayed
-                elif CTDT.template("097", full_screen=True).click():
+                elif CTDT.template("097").click():
                     return True
 
                 # scrollbar is on top
                 elif CTDT.template("094").available():
 
                     self.scroll_direction = self.Scroll_Down
-                    CTDT.template("099", full_screen=True).move_mouse()
+                    CTDT.template("099").move_mouse()
                     pyautogui.scroll(-1 * self.config.mouse_scroll_click)  # scroll down x "clicks"
                     time.sleep(3)
                     return True
@@ -1647,18 +1657,18 @@ class Tsubasa:
                 # scrollbar is on bottom
                 elif CTDT.template("095").available():
                     self.scroll_direction = self.Scroll_UP
-                    CTDT.template("099", full_screen=True).move_mouse()
+                    CTDT.template("099").move_mouse()
                     pyautogui.scroll(1 * self.config.mouse_scroll_click)  # scroll up x "clicks"
                     time.sleep(3)
                     return True
                 else:
                     if self.scroll_direction == self.Scroll_Down:
-                        CTDT.template("099", full_screen=True).move_mouse()
+                        CTDT.template("099").move_mouse()
                         pyautogui.scroll(-1 * self.config.mouse_scroll_click)  # scroll down x "clicks"
                         time.sleep(3)
                         return True
                     elif self.scroll_direction == self.Scroll_UP:
-                        CTDT.template("099", full_screen=True).move_mouse()
+                        CTDT.template("099").move_mouse()
                         pyautogui.scroll(1 * self.config.mouse_scroll_click)  # scroll up x "clicks"
                         time.sleep(3)
                         return True
@@ -1950,6 +1960,24 @@ class Tsubasa:
         return False
 
     ########################################################################################################################
+
+    def run_068(self, modes: set):
+        """
+        watch an ad
+        :return:
+        """
+
+        if self.config.mode not in modes: return False
+
+        if self.config.energy_recovery == self.EnergyRecovery_Ad:
+
+            # watch an ad button
+            if CTDT.template("134").click():
+                return True
+
+        return False
+
+    ########################################################################################################################
     ########################################################################################################################
 
     def run(self):
@@ -2131,6 +2159,11 @@ class Tsubasa:
                                  self.MODE_EVOLE_PLAYER_HIDDEN_S,
                                  self.MODE_EVOLE_PLAYER_HIDDEN_A}):
             return "052"
+
+        # watch an ad
+        elif self.run_068(modes={self.MODE_STORY_SOLO,
+                                 self.MODE_FARM_STORY_MODE}):
+            return "068"
 
         # go to scenario list
         # it should run before owned FP (run_014)
